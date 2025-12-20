@@ -23,6 +23,18 @@ npm run generate -- --zip path/to/your-letterboxd-export.zip
 npm run generate -- --zip my-data.zip --output my-site
 ```
 
+### Minify for deployment
+
+```bash
+npm run generate -- --zip my-data.zip --output dist --minify
+```
+
+You can also generate the committed example output:
+
+```bash
+npm run generate -- --example --output dist
+```
+
 ### 2b. (Optional) Enable TMDB enrichment + caching
 
 TMDB enrichment runs **during generation** (never in the browser) and is cached locally so repeated generator runs don’t spam the API.

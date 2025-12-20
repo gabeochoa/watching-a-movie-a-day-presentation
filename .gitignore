@@ -20,6 +20,5 @@ example/
 secrets.js
 app/secrets.js
 
-# generated static site output
-dist/
+# generated static site output (keep dist/ committed for review)
 test-output/
