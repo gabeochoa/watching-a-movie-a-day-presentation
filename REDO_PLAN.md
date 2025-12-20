@@ -14,7 +14,6 @@
 
 ## Non-goals (for now)
 
-- Multi-user “shared cache” at runtime. Without a backend, a browser cache (IndexedDB/localStorage) is per-device and cannot be “cross-user”.
 - Perfect parity with every Letterboxd export variant on day 1.
 - Full UI polish; first ensure correctness and caching flow.
 
@@ -33,16 +32,18 @@
 
 At runtime, enrichment should behave like:
 
-1. Load committed cache file(s) from the repo (e.g. `cache/tmdb.v1.json`).
+1. Load **cross-user portable cache file(s)** (user-imported) and the **committed repo cache** (e.g. `cache/tmdb.v1.json`).
 2. For each needed TMDB request, compute a **cache key** (stable, human-reviewable).
 3. If cache hit: return cached payload, no network.
 4. If cache miss:
    - If an API key is configured locally, fetch from TMDB, then store in an **in-memory + local persistent cache** for this browser session/device.
    - Mark the entry as “new” so it can be exported back into a file for committing.
-5. Provide a **one-click “Export cache updates”** button that downloads a JSON file containing only new entries (or a merged full cache).
-   - Dev workflow: run the app, click export, add the updated cache file to git.
+5. Provide **Import/Export cache** UX:
+   - **Import cache file** (JSON or ZIP): merges into an in-memory “shared cache” that is checked first. This is how you send a cache to other users to avoid API calls.
+   - **Export cache updates**: downloads a JSON file containing only new entries (or a merged full cache) so it can be shared with others and/or committed to git.
+   - **Merge policy**: prefer existing entries (portable/repo) unless explicitly overridden; keep a record of conflicts.
 
-This meets the requirement “cached into a file that we can add into GitHub” without a backend (browsers can’t silently write to the repo; they can only download a file the developer commits).
+This meets the requirement “cross-user cache” without a backend: users can share a cache file, and the app will check it first. Browsers still can’t silently write to the repo; they can only download a file for someone to commit.
 
 ### Optional: “cache warmer” script (recommended)
 
@@ -55,6 +56,18 @@ To speed up cache growth and reduce manual browsing, add a Node script that:
 This keeps the project “no backend” while still generating a committed cache deterministically.
 
 ## Caching design details
+
+### Cross-user cache distribution model (no backend)
+
+We support **three cache sources** with a deterministic lookup order:
+
+1. **Portable cache (imported by user)**: a file you can email/DM or attach to a ticket/PR.
+2. **Repo cache (committed)**: shipped with the app (`cache/tmdb.v1.json`).
+3. **Local device cache (optional)**: persisted in the browser (IndexedDB/localStorage) for convenience.
+
+Lookup always checks #1 → #2 → #3 → network.
+
+The portable cache is the cross-user mechanism: anyone can load it, instantly reducing or eliminating API calls.
 
 ### What gets cached
 
@@ -87,6 +100,16 @@ Include a top-level cache schema version:
 - `cache/`
   - `tmdb.v1.json` (primary committed cache)
   - `tmdb.v1.delta.json` (optional, for incremental PRs; can be merged later)
+
+### Portable cache file format (shared across users)
+
+Use the same schema as the committed cache so import/merge is trivial:
+
+- `cacheSchemaVersion: 1`
+- `entries: { [cacheKey]: { fetchedAt, status, payload } }`
+- Optional `source` metadata (who generated it, which app version)
+
+Optionally wrap in a ZIP as `wrapboxd-cache.zip` containing `tmdb.v1.json` to make sharing easier.
 
 Keep caches sorted by key so diffs are stable:
 
@@ -148,6 +171,7 @@ Tooling (optional):
 3. **Cache subsystem (core)**
    - Define cache schema v1 and key format.
    - Implement “read committed cache file” + “cache-first lookup”.
+   - Implement “import portable cache file” (JSON/ZIP) + deterministic merge.
    - Implement “track new entries” + “export cache updates” download.
 
 4. **TMDB integration (minimal endpoints)**
