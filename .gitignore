@@ -1,0 +1,22 @@
+node_modules/
+npm-debug.log*
+.DS_Store
+
+# local runtime data
+data/*.db
+data/*.db-*
+data/*.sqlite
+data/*.sqlite-*
+
+# local env files
+.env
+.env.*
+config.local.json
+
+# example data (optional, often large/sensitive)
+example/
+
+# local secrets file (if used)
+secrets.js
+app/secrets.js
+
