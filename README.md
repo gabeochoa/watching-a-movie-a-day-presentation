@@ -52,14 +52,22 @@ Open `http://localhost:3000/`.
     - watches by month
     - release year distribution
     - average rating by month
+    - cumulative watches
+    - rewatches by month
+    - watches by weekday
+    - average rating by release year
+    - top months / top years (by watches)
   - “Enrich with TMDB” to populate additional charts (via cached server calls):
     - top directors
     - genre distribution
     - runtime distribution
+    - rating vs runtime (scatter)
+    - rating vs release year (scatter)
   - Export buttons:
     - analysis JSON
     - config JSON (placeholder for now)
     - cache stats JSON
+    - export all (ZIP bundle)
 
 ## Repo layout (current)
 
