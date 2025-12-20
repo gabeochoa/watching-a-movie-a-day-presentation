@@ -81,6 +81,7 @@ function render() {
       `diary rows: ${counts.diaryEntries}`,
       `films rows: ${counts.films}`,
       `parsed watches: ${counts.watches}`,
+      `unique films: ${counts.uniqueFilms}`,
       `parsed ratings: ${counts.ratings}`,
       `rewatches: ${counts.rewatches}`,
       `avg rating: ${counts.avgRating == null ? "n/a" : counts.avgRating.toFixed(2)}`,
@@ -107,6 +108,28 @@ function render() {
 
   renderLineChart(el("#chartAvgRating"), series.avgRatingByMonth, {
     xKey: "yearMonth",
+    yKey: "avgRating",
+  });
+
+  renderLineChart(el("#chartCumulative"), series.cumulativeWatches, {
+    xKey: "yearMonth",
+    yKey: "cumulative",
+  });
+
+  renderBarChart(el("#chartRewatches"), series.rewatchesByMonth, {
+    xKey: "yearMonth",
+    yKey: "count",
+    xLabelFormatter: (v) => v.slice(2),
+  });
+
+  renderBarChart(el("#chartWeekdays"), series.watchesByWeekday, {
+    xKey: "weekday",
+    yKey: "count",
+    xLabelFormatter: (v) => v,
+  });
+
+  renderLineChart(el("#chartRatingByYear"), series.avgRatingByReleaseYear, {
+    xKey: "year",
     yKey: "avgRating",
   });
 
@@ -173,14 +196,6 @@ function normalizeDiaryFilms(parsed) {
 async function promisePool(items, worker, { concurrency = 3 } = {}) {
   const executing = new Set();
   const results = new Array(items.length);
-
-  async function runOne(i) {
-    try {
-      results[i] = await worker(items[i], i);
-    } finally {
-      executing.delete(p);
-    }
-  }
 
   for (let i = 0; i < items.length; i += 1) {
     const p = (async () => worker(items[i], i))();
@@ -367,6 +382,42 @@ function initUi() {
     const res = await fetchCacheStats();
     downloadJson("wrapboxd-cache-stats.json", res.payload);
     logLine("Exported cache stats JSON.");
+  });
+
+  on(el("#exportAllBtn"), "click", async () => {
+    try {
+      const JSZip = window.JSZip;
+      if (!JSZip) throw new Error("JSZip not loaded.");
+      const zip = new JSZip();
+
+      const cacheStats = await fetchCacheStats();
+      const analysis = state.computed
+        ? {
+            computed: state.computed,
+            enriched: state.enriched,
+            tmdbRequestStats: state.tmdbRequestStats,
+          }
+        : { error: "No analysis yet (run Analyze first)." };
+      const config = { version: 1 };
+
+      zip.file("analysis.json", JSON.stringify(analysis, null, 2));
+      zip.file("config.json", JSON.stringify(config, null, 2));
+      zip.file("cache-stats.json", JSON.stringify(cacheStats.payload, null, 2));
+
+      const blob = await zip.generateAsync({ type: "blob" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "wrapboxd-export.zip";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      logLine("Exported wrapboxd-export.zip.");
+    } catch (e) {
+      logLine(`Export all failed: ${String(e)}`);
+    }
   });
 
   on(el("#fetchMovieBtn"), "click", async () => {
