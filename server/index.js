@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { openDb } from "./db.js";
 import { createTmdbService } from "./tmdb.js";
+import { computeFromLetterboxd } from "./compute.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,12 +32,29 @@ const tmdb = createTmdbService({
 const app = express();
 app.disable("x-powered-by");
 
+// Middleware for parsing JSON bodies
+app.use(express.json({ limit: '50mb' }));
+
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
 
 app.get("/api/cache/stats", (_req, res) => {
   res.json(db.stats());
+});
+
+// Data computation endpoint
+app.post("/api/compute", (req, res) => {
+  try {
+    const { diary, films } = req.body;
+    if (!diary || !Array.isArray(diary)) {
+      return res.status(400).json({ error: "Missing or invalid diary data" });
+    }
+    const computed = computeFromLetterboxd({ diary, films: films || [] });
+    res.json(computed);
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
 });
 
 // Minimal TMDB proxy endpoints (cached in SQLite).
@@ -115,7 +133,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, "index.html"));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "127.0.0.1", () => {
   // eslint-disable-next-line no-console
   console.log(`Wrapboxd server running on http://localhost:${PORT}`);
 });

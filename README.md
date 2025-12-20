@@ -1,41 +1,114 @@
-# Wrapboxd
+# Wrapboxd - Static Site Generator
 
-Letterboxd analytics with a **server-side, cross-user TMDB cache** backed by **SQLite**, plus a
-vanilla JS + D3 client for charts.
+Generate beautiful, interactive movie analytics from your Letterboxd data. **No servers, no uploads** - just a static HTML file that works offline.
 
-The server is what makes the cache cross-user: once anyone hits a TMDB endpoint, the response is
-stored in `data/cache.sqlite` and shared for all users of that server.
+## Quick Start
 
-## Run locally
+### 1. Export your Letterboxd data
 
-### 1) Install dependencies
+1. Go to [Letterboxd Settings → Import & Export](https://letterboxd.com/settings/data/)
+2. Click "Export your data"
+3. Download the ZIP file when ready
+
+### 2. Generate your site
 
 ```bash
+# Install dependencies
 npm install
+
+# Generate your personal movie analytics site
+npm run generate -- --zip path/to/your-letterboxd-export.zip
+
+# Or specify custom output directory
+npm run generate -- --zip my-data.zip --output my-site
 ```
 
-### 2) Set TMDB credentials (server-side)
+### 3. View your analytics
 
-Pick one:
+Open `dist/index.html` in any web browser - works completely offline!
 
-- **Preferred**: `TMDB_BEARER_TOKEN` (TMDB v4 read token)
-- **Alternative**: `TMDB_API_KEY` (v3 key)
+## What You Get
 
-Example:
+🎬 **Interactive Charts:**
+- Rating distribution (1-5 stars)
+- Decade breakdown (1920s, 1990s, etc.)
+- Monthly viewing patterns
+- Genre preferences
+- Release year timeline
+- Rewatch patterns
+
+📊 **Key Stats:**
+- Total films watched
+- Average rating
+- Number of rewatches
+- Most watched genres
+
+🎨 **Beautiful Design:**
+- Responsive layout
+- Modern charts with Chart.js
+- Clean, shareable interface
+
+## How It Works
+
+1. **Privacy-First**: Your data never leaves your computer
+2. **Static Generation**: Creates a single HTML file with embedded data
+3. **Offline-Ready**: Works without internet once generated
+4. **Fast**: No server calls, instant loading
+
+## Technical Details
+
+- **Input**: Letterboxd export ZIP (diary.csv, reviews.csv, etc.)
+- **Processing**: Node.js script parses CSV and generates charts
+- **Output**: Single HTML file with embedded Chart.js visualizations
+- **Dependencies**: Chart.js (CDN), no build tools required
+
+## Features
+
+### Current Charts
+- ⭐ **Rating Distribution**: See your rating patterns
+- 📅 **Decade Analysis**: Which eras do you prefer?
+- 📈 **Monthly Trends**: When do you watch the most?
+- 🎭 **Genre Preferences**: Your favorite film categories
+- 📊 **Year Timeline**: Recent releases vs. classics
+- 🔄 **Rewatch Patterns**: Which films you return to
+
+### Data Processing
+- Handles missing ratings gracefully
+- Merges diary and review data
+- Extracts genres from tags
+- Calculates viewing patterns and statistics
+
+## Future Enhancements
+
+- TMDB integration for richer metadata
+- More chart types (directors, actors, franchises)
+- Advanced analytics (binge patterns, mood analysis)
+- Custom time period filtering
+- Social sharing features
+
+## Development
 
 ```bash
-export TMDB_BEARER_TOKEN="...your token..."
+# Test with sample data
+npm run generate -- --zip example/letterboxd-choicehoney-2025-12-20-17-50-utc.zip
+
+# Custom output directory
+npm run generate -- --zip my-data.zip --output ./my-analytics
+
+# Help
+npm run generate -- --help
 ```
 
-Or, for local development, create `app/secrets.js` (gitignored) by copying `app/secrets.example.js`.
+## Project Structure
 
-### 3) Start the server
-
-```bash
-npm run dev
 ```
-
-Open `http://localhost:3000/`.
+wrapboxd/
+├── scripts/generate.js    # Main generator script
+├── example/              # Sample Letterboxd data
+├── dist/                 # Generated site (created)
+├── package.json          # Dependencies and scripts
+└── README.md            # This file
+```
 
 ## What’s implemented right now
 

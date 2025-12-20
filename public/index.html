@@ -1,377 +1,396 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Wrapboxd</title>
-    <style>
-      :root {
-        color-scheme: dark;
-        --bg: #0b0e14;
-        --panel: #111726;
-        --text: #e6e9ef;
-        --muted: #a0a6b3;
-        --border: #26304a;
-        --accent: #6ea8ff;
-        --danger: #ff6b6b;
-        --ok: #4cd28a;
-      }
-      body {
-        margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
-          Noto Sans, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-      }
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 24px;
-      }
-      header {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 16px;
-      }
-      .badges {
-        display: inline-flex;
-        gap: 10px;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      }
-      header h1 {
-        margin: 0;
-        font-size: 20px;
-        letter-spacing: 0.2px;
-      }
-      header .sub {
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .grid {
-        display: none;
-      }
-      .tabs {
-        display: flex;
-        gap: 6px;
-        margin: 10px 0 0;
-        border-bottom: 1px solid var(--border);
-      }
-      .tab-btn {
-        background: #0e1422;
-        border: 1px solid var(--border);
-        color: var(--muted);
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        padding: 10px 14px;
-        font-size: 13px;
-        cursor: pointer;
-        position: relative;
-        top: 1px; /* overlap the bottom border for the selected tab */
-      }
-      .tab-btn[aria-selected="true"] {
-        color: var(--text);
-        border-color: #3c4d76;
-        background: var(--panel);
-        border-bottom-color: var(--panel);
-      }
-      .tab-panel[hidden] {
-        display: none;
-      }
-      .card {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 16px;
-      }
-      .card h2 {
-        margin: 0 0 10px;
-        font-size: 14px;
-        color: var(--muted);
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        text-transform: uppercase;
-      }
-      .row {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      label {
-        font-size: 13px;
-        color: var(--muted);
-      }
-      input[type="file"],
-      input[type="text"],
-      input[type="password"],
-      select {
-        background: #0e1422;
-        border: 1px solid var(--border);
-        color: var(--text);
-        border-radius: 10px;
-        padding: 10px 12px;
-        font-size: 14px;
-        width: 100%;
-      }
-      button {
-        background: #142341;
-        border: 1px solid var(--border);
-        color: var(--text);
-        border-radius: 10px;
-        padding: 10px 12px;
-        font-size: 14px;
-        cursor: pointer;
-      }
-      button.primary {
-        background: #1b3a73;
-        border-color: #2b56a5;
-      }
-      button.danger {
-        background: #2a0f14;
-        border-color: #6a2631;
-        color: #ffd6d6;
-      }
-      .mono {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-          "Courier New", monospace;
-        font-size: 12px;
-        color: var(--muted);
-      }
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border-radius: 999px;
-        padding: 4px 10px;
-        border: 1px solid var(--border);
-        background: #0e1422;
-        font-size: 12px;
-        color: var(--muted);
-      }
-      .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--muted);
-      }
-      .dot.ok {
-        background: var(--ok);
-      }
-      .dot.bad {
-        background: var(--danger);
-      }
-      .hint {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.4;
-      }
-      .charts {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-      .chart {
-        background: #0e1422;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 12px;
-      }
-      .chart h3 {
-        margin: 0 0 8px;
-        font-size: 13px;
-        color: var(--muted);
-        font-weight: 600;
-      }
-      svg {
-        width: 100%;
-        height: 260px;
-        display: block;
-      }
-      .log {
-        margin-top: 10px;
-        border-top: 1px solid var(--border);
-        padding-top: 10px;
-        max-height: 220px;
-        overflow: auto;
-        white-space: pre-wrap;
-      }
-    </style>
-    <script defer src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  </head>
-  <body>
-    <div class="wrap">
-      <header>
-        <div>
-          <h1>Wrapboxd</h1>
-          <div class="sub">Server + client (SQLite TMDB cache, vanilla JS + D3)</div>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wrapboxd</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0e14;
+      --panel: #111726;
+      --text: #e6e9ef;
+      --muted: #a0a6b3;
+      --border: #26304a;
+      --accent: #6ea8ff;
+      --danger: #ff6b6b;
+      --ok: #4cd28a;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+        Noto Sans, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .badges {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0.2px;
+    }
+
+    header .sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: none;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin: 10px 0 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      background: #0e1422;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      padding: 10px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      position: relative;
+      top: 1px;
+      /* overlap the bottom border for the selected tab */
+      z-index: 1;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      color: var(--text);
+      border-color: #3c4d76;
+      background: var(--panel);
+      border-bottom-color: var(--panel);
+    }
+
+    .tab-panel[hidden] {
+      display: none;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input[type="file"],
+    input[type="text"],
+    input[type="password"],
+    select {
+      background: #0e1422;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    button {
+      background: #142341;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: #1b3a73;
+      border-color: #2b56a5;
+    }
+
+    button.danger {
+      background: #2a0f14;
+      border-color: #6a2631;
+      color: #ffd6d6;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      background: #0e1422;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+
+    .dot.ok {
+      background: var(--ok);
+    }
+
+    .dot.bad {
+      background: var(--danger);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .chart {
+      background: #0e1422;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .chart h3 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    svg {
+      width: 100%;
+      height: 260px;
+      display: block;
+    }
+
+    .log {
+      margin-top: 10px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      max-height: 220px;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+  <script defer src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Wrapboxd</h1>
+        <div class="sub">Server + client (SQLite TMDB cache, vanilla JS + D3)</div>
+      </div>
+      <div class="badges">
+        <div class="pill" id="serverPill" title="Server health">
+          <span class="dot" id="serverDot"></span>
+          <span id="serverText">Server: checking…</span>
         </div>
-        <div class="badges">
-          <div class="pill" id="serverPill" title="Server health">
-            <span class="dot" id="serverDot"></span>
-            <span id="serverText">Server: checking…</span>
+        <div class="pill" id="tmdbPill" title="TMDB connectivity">
+          <span class="dot" id="tmdbDot"></span>
+          <span id="tmdbText">TMDB: checking…</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Wrapboxd tabs">
+      <button class="tab-btn" id="tabBtnPresentation" type="button" role="tab" aria-controls="tabPresentation"
+        aria-selected="false">
+        Presentation
+      </button>
+      <button class="tab-btn" id="tabBtnData" type="button" role="tab" aria-controls="tabData" aria-selected="true">
+        Data
+      </button>
+    </nav>
+
+    <section class="tab-panel" id="tabPresentation" role="tabpanel" hidden>
+      <section class="card">
+        <h2>Presentation</h2>
+        <div class="row" style="margin-bottom: 10px">
+          <label for="rangeStart">Start</label>
+          <input id="rangeStart" type="date" />
+          <label for="rangeEnd">End</label>
+          <input id="rangeEnd" type="date" />
+          <button id="applyRangeBtn">Apply</button>
+          <button class="primary" id="show2025Btn">Show 2025</button>
+          <button class="danger" id="clearRangeBtn">Clear</button>
+        </div>
+        <div class="hint" id="rangeHint" style="margin-bottom: 12px">
+          Filter charts by watch date. “Show 2025” sets Jan 1 → Dec 31, 2025.
+        </div>
+        <div class="charts">
+          <div class="chart">
+            <h3>Ratings histogram</h3>
+            <svg id="chartRatings" role="img" aria-label="Ratings histogram"></svg>
           </div>
-          <div class="pill" id="tmdbPill" title="TMDB connectivity">
-            <span class="dot" id="tmdbDot"></span>
-            <span id="tmdbText">TMDB: checking…</span>
+          <div class="chart">
+            <h3>Watches by month</h3>
+            <svg id="chartMonths" role="img" aria-label="Watches by month"></svg>
+          </div>
+          <div class="chart">
+            <h3>Release year distribution</h3>
+            <svg id="chartYears" role="img" aria-label="Release year distribution"></svg>
+          </div>
+          <div class="chart">
+            <h3>Average rating by month</h3>
+            <svg id="chartAvgRating" role="img" aria-label="Average rating by month"></svg>
+          </div>
+          <div class="chart">
+            <h3>Cumulative watches</h3>
+            <svg id="chartCumulative" role="img" aria-label="Cumulative watches"></svg>
+          </div>
+          <div class="chart">
+            <h3>Rewatches by month</h3>
+            <svg id="chartRewatches" role="img" aria-label="Rewatches by month"></svg>
+          </div>
+          <div class="chart">
+            <h3>Watches by weekday</h3>
+            <svg id="chartWeekdays" role="img" aria-label="Watches by weekday"></svg>
+          </div>
+          <div class="chart">
+            <h3>Average rating by release year</h3>
+            <svg id="chartRatingByYear" role="img" aria-label="Average rating by release year"></svg>
+          </div>
+          <div class="chart">
+            <h3>Top months (watches)</h3>
+            <svg id="chartTopMonths" role="img" aria-label="Top months by watches"></svg>
+          </div>
+          <div class="chart">
+            <h3>Top years (watches)</h3>
+            <svg id="chartTopYears" role="img" aria-label="Top years by watches"></svg>
+          </div>
+          <div class="chart">
+            <h3>Rating vs runtime (TMDB)</h3>
+            <svg id="chartRatingRuntime" role="img" aria-label="Rating vs runtime scatter"></svg>
+          </div>
+          <div class="chart">
+            <h3>Rating vs release year</h3>
+            <svg id="chartRatingReleaseYear" role="img" aria-label="Rating vs release year scatter"></svg>
+          </div>
+          <div class="chart">
+            <h3>Top directors (TMDB)</h3>
+            <svg id="chartDirectors" role="img" aria-label="Top directors"></svg>
+          </div>
+          <div class="chart">
+            <h3>Genres (TMDB)</h3>
+            <svg id="chartGenres" role="img" aria-label="Genres distribution"></svg>
+          </div>
+          <div class="chart">
+            <h3>Runtime distribution (TMDB)</h3>
+            <svg id="chartRuntime" role="img" aria-label="Runtime distribution"></svg>
           </div>
         </div>
-      </header>
-
-      <nav class="tabs" role="tablist" aria-label="Wrapboxd tabs">
-        <button
-          class="tab-btn"
-          id="tabBtnPresentation"
-          type="button"
-          role="tab"
-          aria-controls="tabPresentation"
-          aria-selected="true"
-        >
-          Presentation
-        </button>
-        <button
-          class="tab-btn"
-          id="tabBtnData"
-          type="button"
-          role="tab"
-          aria-controls="tabData"
-          aria-selected="false"
-        >
-          Data
-        </button>
-      </nav>
-
-      <section class="tab-panel" id="tabPresentation" role="tabpanel">
-        <section class="card">
-          <h2>Presentation</h2>
-          <div class="row" style="margin-bottom: 10px">
-            <label for="rangeStart">Start</label>
-            <input id="rangeStart" type="date" />
-            <label for="rangeEnd">End</label>
-            <input id="rangeEnd" type="date" />
-            <button id="applyRangeBtn">Apply</button>
-            <button class="primary" id="show2025Btn">Show 2025</button>
-            <button class="danger" id="clearRangeBtn">Clear</button>
-          </div>
-          <div class="hint" id="rangeHint" style="margin-bottom: 12px">
-            Filter charts by watch date. “Show 2025” sets Jan 1 → Dec 31, 2025.
-          </div>
-          <div class="charts">
-            <div class="chart">
-              <h3>Ratings histogram</h3>
-              <svg id="chartRatings" role="img" aria-label="Ratings histogram"></svg>
-            </div>
-            <div class="chart">
-              <h3>Watches by month</h3>
-              <svg id="chartMonths" role="img" aria-label="Watches by month"></svg>
-            </div>
-            <div class="chart">
-              <h3>Release year distribution</h3>
-              <svg id="chartYears" role="img" aria-label="Release year distribution"></svg>
-            </div>
-            <div class="chart">
-              <h3>Average rating by month</h3>
-              <svg id="chartAvgRating" role="img" aria-label="Average rating by month"></svg>
-            </div>
-            <div class="chart">
-              <h3>Cumulative watches</h3>
-              <svg id="chartCumulative" role="img" aria-label="Cumulative watches"></svg>
-            </div>
-            <div class="chart">
-              <h3>Rewatches by month</h3>
-              <svg id="chartRewatches" role="img" aria-label="Rewatches by month"></svg>
-            </div>
-            <div class="chart">
-              <h3>Watches by weekday</h3>
-              <svg id="chartWeekdays" role="img" aria-label="Watches by weekday"></svg>
-            </div>
-            <div class="chart">
-              <h3>Average rating by release year</h3>
-              <svg id="chartRatingByYear" role="img" aria-label="Average rating by release year"></svg>
-            </div>
-            <div class="chart">
-              <h3>Top months (watches)</h3>
-              <svg id="chartTopMonths" role="img" aria-label="Top months by watches"></svg>
-            </div>
-            <div class="chart">
-              <h3>Top years (watches)</h3>
-              <svg id="chartTopYears" role="img" aria-label="Top years by watches"></svg>
-            </div>
-            <div class="chart">
-              <h3>Rating vs runtime (TMDB)</h3>
-              <svg id="chartRatingRuntime" role="img" aria-label="Rating vs runtime scatter"></svg>
-            </div>
-            <div class="chart">
-              <h3>Rating vs release year</h3>
-              <svg id="chartRatingReleaseYear" role="img" aria-label="Rating vs release year scatter"></svg>
-            </div>
-            <div class="chart">
-              <h3>Top directors (TMDB)</h3>
-              <svg id="chartDirectors" role="img" aria-label="Top directors"></svg>
-            </div>
-            <div class="chart">
-              <h3>Genres (TMDB)</h3>
-              <svg id="chartGenres" role="img" aria-label="Genres distribution"></svg>
-            </div>
-            <div class="chart">
-              <h3>Runtime distribution (TMDB)</h3>
-              <svg id="chartRuntime" role="img" aria-label="Runtime distribution"></svg>
-            </div>
-          </div>
-          <p class="hint" style="margin-top: 12px">
-            Charts update automatically after you select a Letterboxd export ZIP on the Data tab.
-          </p>
-        </section>
+        <p class="hint" style="margin-top: 12px">
+          Charts update automatically after you select a Letterboxd export ZIP on the Data tab.
+        </p>
       </section>
+    </section>
 
-      <section class="tab-panel" id="tabData" role="tabpanel" hidden>
-        <section class="card">
-          <h2>Data</h2>
-          <div class="row" style="margin-bottom: 10px">
-            <label for="lbZip">Letterboxd export ZIP</label>
-            <input id="lbZip" type="file" accept=".zip,application/zip" />
-          </div>
-          <div class="hint" style="margin-bottom: 10px">
-            Selecting a ZIP will automatically analyze and enrich (no buttons required).
-          </div>
-          <div class="row" style="margin-bottom: 10px">
-            <button class="primary" id="analyzeBtn">Analyze</button>
-            <button id="enrichBtn">Enrich with TMDB</button>
-            <button class="danger" id="resetBtn">Reset</button>
-          </div>
-          <div class="row" style="margin-bottom: 10px">
-            <button id="exportAnalysisBtn">Export analysis (JSON)</button>
-            <button id="exportConfigBtn">Export config (JSON)</button>
-            <button id="exportCacheStatsBtn">Export cache stats (JSON)</button>
-            <button id="exportAllBtn">Export all (ZIP)</button>
-          </div>
-          <div class="mono" id="stats"></div>
+    <section class="tab-panel" id="tabData" role="tabpanel">
+      <section class="card">
+        <h2>Data</h2>
+        <div class="row" style="margin-bottom: 10px">
+          <label for="lbZip">Letterboxd export ZIP</label>
+          <input id="lbZip" type="file" accept=".zip,application/zip" />
+        </div>
+        <div class="hint" style="margin-bottom: 10px">
+          Selecting a ZIP will automatically analyze and enrich (no buttons required).
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+          <button class="danger" id="resetBtn">Reset</button>
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+          <button id="exportAnalysisBtn">Export analysis (JSON)</button>
+          <button id="exportConfigBtn">Export config (JSON)</button>
+          <button id="exportCacheStatsBtn">Export cache stats (JSON)</button>
+          <button id="exportAllBtn">Export all (ZIP)</button>
+        </div>
+        <div class="mono" id="stats"></div>
 
-          <h2 style="margin-top: 16px">TMDB cache (cross-user via server)</h2>
-          <div class="hint">
-            TMDB responses are cached in the server’s SQLite DB. If someone already fetched a movie,
-            other users hitting the same server will get cache hits automatically.
-          </div>
-          <div class="hint" id="tmdbError" style="margin-top: 8px; color: var(--danger)"></div>
-          <div class="row" style="margin-top: 10px">
-            <label for="demoTmdbId">Demo TMDB ID</label>
-            <input id="demoTmdbId" type="text" value="550" />
-            <button id="fetchMovieBtn">Fetch movie</button>
-          </div>
-          <div class="mono" id="cacheStats"></div>
-          <div class="mono log" id="log"></div>
-        </section>
+        <h2 style="margin-top: 16px">TMDB cache (cross-user via server)</h2>
+        <div class="hint">
+          TMDB responses are cached in the server’s SQLite DB. If someone already fetched a movie,
+          other users hitting the same server will get cache hits automatically.
+        </div>
+        <div class="hint" id="tmdbError" style="margin-top: 8px; color: var(--danger)"></div>
+        <div class="row" style="margin-top: 10px">
+          <label for="demoTmdbId">Demo TMDB ID</label>
+          <input id="demoTmdbId" type="text" value="550" />
+          <button id="fetchMovieBtn">Fetch movie</button>
+        </div>
+        <div class="mono" id="cacheStats"></div>
+        <div class="mono log" id="log"></div>
       </section>
-    </div>
+    </section>
+  </div>
 
-    <script type="module" src="./src/app.js"></script>
-  </body>
+  <script type="module" src="./src/app.js"></script>
+</body>
+
 </html>
-

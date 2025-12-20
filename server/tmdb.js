@@ -57,14 +57,28 @@ export function createTmdbService({ db, fetchImpl = fetch, bearerToken, apiKey }
     const url = new URL(`${base}${pathname}`);
 
     const resolvedApiKey = getTmdbApiKey({ apiKey });
-    for (const [k, v] of Object.entries(query ?? {})) url.searchParams.set(k, v);
-    if (resolvedApiKey) url.searchParams.set("api_key", resolvedApiKey);
+    console.log(`TMDB Request to ${pathname}:`);
+    console.log(`- Resolved API Key: ${resolvedApiKey ? 'present' : 'missing'}`);
+    console.log(`- API Key length: ${resolvedApiKey ? resolvedApiKey.length : 0}`);
 
-    const headers = getTmdbAuthHeaders({ bearerToken }) ?? undefined;
-    const res = await fetchImpl(url, { headers });
+    for (const [k, v] of Object.entries(query ?? {})) url.searchParams.set(k, v);
+
+    // TMDB v3 API requires api_key in query parameters for all endpoints
+    if (resolvedApiKey) {
+      url.searchParams.set("api_key", resolvedApiKey);
+      console.log(`- Final URL: ${url.toString().replace(resolvedApiKey, '***API_KEY***')}`);
+    } else {
+      console.log(`- Final URL: ${url.toString()}`);
+    }
+
+    const res = await fetchImpl(url);
+    console.log(`- Response status: ${res.status}`);
+
     const contentType = res.headers.get("content-type") || "";
     const isJson = contentType.includes("application/json");
     const payload = isJson ? await res.json() : await res.text();
+
+    console.log(`- Response payload:`, payload);
     return { status: res.status, ok: res.ok, payload };
   }
 
