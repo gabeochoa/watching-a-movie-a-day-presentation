@@ -1,58 +1,30 @@
-# Wrapboxd - Static Site Generator
+# Wrapboxd — one presentation workflow
 
-Generate beautiful, interactive movie analytics from your Letterboxd data. **No servers, no uploads** - just a static HTML file that works offline.
+This repo is optimized to generate **one Reveal.js presentation** (“my year in film”) from:
 
-## Quick Start
+- a **Letterboxd export zip**
+- optional **TMDB enrichment** (cached locally)
 
-### 1. Export your Letterboxd data
+The workflow is folder-based and documented in `process_files.md`.
 
-1. Go to [Letterboxd Settings → Import & Export](https://letterboxd.com/settings/data/)
-2. Click "Export your data"
-3. Download the ZIP file when ready
-
-### 2. Generate your site
+## Quick start (recommended)
 
 ```bash
-# Install dependencies
 npm install
 
-# Generate your personal movie analytics site
-npm run generate -- --zip path/to/your-letterboxd-export.zip
+# put your export zip at: raw_data/letterboxd-export.zip
+cp secrets.example.js secrets.js   # optional, for TMDB
 
-# Or specify custom output directory
-npm run generate -- --zip my-data.zip --output my-site
+npm run make:presentation
 ```
 
-### Minify for deployment
+Output:
 
-```bash
-npm run generate -- --zip my-data.zip --output dist --minify
-```
+- `10_produce_presentation/dist-reveal/index.html`
 
-You can also generate the committed example output:
+## Alternative: run steps manually
 
-```bash
-npm run generate -- --example --output dist
-```
-
-### 2b. (Optional) Enable TMDB enrichment + caching
-
-TMDB enrichment runs **during generation** (never in the browser) and is cached locally so repeated generator runs don’t spam the API.
-
-```bash
-cp secrets.example.js secrets.js
-# edit secrets.js and set either TMDB_BEARER_TOKEN or TMDB_API_KEY
-```
-
-Cache details:
-
-- **SQLite cache**: `data/cache.sqlite` (gitignored)
-- **Cache keys**: stable per TMDB endpoint + sorted query params
-- **TTL**: optional via `TMDB_CACHE_TTL_DAYS` (default: never expire)
-
-### 3. View your analytics
-
-Open `dist/index.html` in any web browser - works completely offline!
+See `process_files.md`.
 
 ## What You Get
 
@@ -105,13 +77,10 @@ Open `dist/index.html` in any web browser - works completely offline!
 - Extracts genres from tags
 - Calculates viewing patterns and statistics
 
-## Future Enhancements
+## Notes
 
-- TMDB integration for richer metadata
-- More chart types (directors, actors, franchises)
-- Advanced analytics (binge patterns, mood analysis)
-- Custom time period filtering
-- Social sharing features
+- The files in `raw_data/`, `01_csvs_processed/`, and `02_tmdb_db_info/` are intended to be **local/private** (gitignored).
+- The final presentation output embeds your data; be mindful before committing/sharing it.
 
 ## Development
 

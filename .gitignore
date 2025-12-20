@@ -8,6 +8,17 @@ data/*.db-*
 data/*.sqlite
 data/*.sqlite-*
 
+# presentation workflow folders (usually private)
+raw_data/*
+01_csvs_processed/*
+02_tmdb_db_info/*
+
+# keep the folder READMEs tracked
+!raw_data/README.md
+!01_csvs_processed/README.md
+!02_tmdb_db_info/README.md
+!10_produce_presentation/README.md
+
 # local env files
 .env
 .env.*
