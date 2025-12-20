@@ -11,8 +11,22 @@ const PORT = Number(process.env.PORT || 3000);
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "..", "data");
 const PUBLIC_DIR = path.join(__dirname, "..", "public");
 
+async function loadLocalSecrets() {
+  try {
+    const mod = await import(path.join(__dirname, "..", "app", "secrets.js"));
+    return mod?.default ?? {};
+  } catch {
+    return {};
+  }
+}
+
 const db = openDb({ dataDir: DATA_DIR });
-const tmdb = createTmdbService({ db });
+const secrets = await loadLocalSecrets();
+const tmdb = createTmdbService({
+  db,
+  bearerToken: secrets.TMDB_BEARER_TOKEN,
+  apiKey: secrets.TMDB_API_KEY,
+});
 
 const app = express();
 app.disable("x-powered-by");

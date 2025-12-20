@@ -11,15 +11,15 @@ function tmdbKeyFor(pathname, query) {
   return `tmdb:v3:${pathname}${q ? `?${q}` : ""}`;
 }
 
-function getTmdbAuthHeaders() {
+function getTmdbAuthHeaders({ bearerToken } = {}) {
   // Prefer bearer token (TMDB v4 read token). Allow v3 api key too.
-  const bearer = process.env.TMDB_BEARER_TOKEN?.trim();
+  const bearer = bearerToken?.trim() || process.env.TMDB_BEARER_TOKEN?.trim();
   if (bearer) return { Authorization: `Bearer ${bearer}` };
   return null;
 }
 
-function getTmdbApiKey() {
-  return process.env.TMDB_API_KEY?.trim() || null;
+function getTmdbApiKey({ apiKey } = {}) {
+  return apiKey?.trim() || process.env.TMDB_API_KEY?.trim() || null;
 }
 
 function getCacheTtlDays() {
@@ -48,7 +48,7 @@ function isInvalidApiKeyPayload(payload) {
   );
 }
 
-export function createTmdbService({ db, fetchImpl = fetch } = {}) {
+export function createTmdbService({ db, fetchImpl = fetch, bearerToken, apiKey } = {}) {
   if (!db) throw new Error("db is required");
   const ttlDays = getCacheTtlDays();
 
@@ -56,11 +56,11 @@ export function createTmdbService({ db, fetchImpl = fetch } = {}) {
     const base = "https://api.themoviedb.org/3";
     const url = new URL(`${base}${pathname}`);
 
-    const apiKey = getTmdbApiKey();
+    const resolvedApiKey = getTmdbApiKey({ apiKey });
     for (const [k, v] of Object.entries(query ?? {})) url.searchParams.set(k, v);
-    if (apiKey) url.searchParams.set("api_key", apiKey);
+    if (resolvedApiKey) url.searchParams.set("api_key", resolvedApiKey);
 
-    const headers = getTmdbAuthHeaders() ?? undefined;
+    const headers = getTmdbAuthHeaders({ bearerToken }) ?? undefined;
     const res = await fetchImpl(url, { headers });
     const contentType = res.headers.get("content-type") || "";
     const isJson = contentType.includes("application/json");

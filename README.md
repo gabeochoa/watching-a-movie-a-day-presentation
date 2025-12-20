@@ -27,6 +27,8 @@ Example:
 export TMDB_BEARER_TOKEN="...your token..."
 ```
 
+Or, for local development, create `app/secrets.js` (gitignored) by copying `app/secrets.example.js`.
+
 ### 3) Start the server
 
 ```bash
