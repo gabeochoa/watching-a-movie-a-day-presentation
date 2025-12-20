@@ -2,11 +2,11 @@ node_modules/
 npm-debug.log*
 .DS_Store
 
-# local runtime data
-data/*.db
-data/*.db-*
-data/*.sqlite
-data/*.sqlite-*
+# keep the folder READMEs tracked
+!raw_data/README.md
+!01_csvs_processed/README.md
+!02_tmdb_db_info/README.md
+!10_produce_presentation/README.md
 
 # local env files
 .env

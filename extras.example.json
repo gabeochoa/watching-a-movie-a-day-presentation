@@ -1,0 +1,30 @@
+{
+  "_comment": "Optional manual inputs / presentation context for Wrapboxd. Pass with: node scripts/generate.js --zip export.zip --extras extras.json -o dist-reveal",
+  "presentation": {
+    "audience": "coworkers",
+    "context": "An end-of-year fun show-and-tell: my Letterboxd year in review."
+  },
+  "voice": {
+    "vibe": "punchy, Gen-Z, self-aware",
+    "boundaries": [
+      "keep it playful, not mean",
+      "no spoilers"
+    ]
+  },
+  "manual": {
+    "favoriteGenre": "Drama",
+    "topDirector": {
+      "name": "Greta Gerwig",
+      "filmsWatched": 3
+    },
+    "hotTakes": [
+      "I’m a 3.5-star maximalist.",
+      "Long movies have to earn it."
+    ],
+    "superlatives": [
+      "Most Likely to Cry at a Coming-of-Age",
+      "Certified Rewatch Enjoyer"
+    ]
+  }
+}
+

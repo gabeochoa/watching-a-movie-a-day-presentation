@@ -18,6 +18,10 @@ const POSTER_PLACEHOLDERS = {
   thriller: 'https://picsum.photos/seed/thriller/400/600',
 };
 
+// Per STYLE_GUIDE.md: mostly black/white, one accent moment per slide.
+const SECTION_BG_COLORS = ["black", "black", "black", "accent", "black", "black", "black", "black"];
+let sectionBgIndex = 0;
+
 /**
  * Generate all slides for the presentation
  * @param {Object} data - The computed data payload
@@ -178,11 +182,42 @@ export function generateAIPrompts(data) {
   const prompts = [];
   const counts = data.computedAll?.counts || {};
   const series = data.computedAll?.series || {};
+  const diary = data.parsed?.diary || [];
+  const enriched = data.enrichedAll || null;
+  const extras = data.extras || null;
+
+  const hasGenres = Boolean(enriched?.topGenres?.length);
+  const hasDirectors = Boolean(enriched?.topDirectors?.length);
+  const hasRuntime = Boolean(enriched?.runtimeBins?.some((b) => (b?.count || 0) > 0));
+
+  const topTags = getTopTags(diary, 10);
+  const hasTags = topTags.length > 0;
+
+  const busiestMonth = getBusiestMonth(series.watchesByMonth || []);
+  const quietestMonth = getQuietestMonth(series.watchesByMonth || []);
+  const topWeekday = getTopWeekday(series.watchesByWeekday || []);
+  const weekendSharePct = getWeekendSharePct(series.watchesByWeekday || []);
+  const longestStreakDays = calculateLongestStreak(diary);
+  const biggestGapDays = calculateBiggestGap(diary);
+  const topRewatches = getTopRewatchedFilms(diary, 10);
   
   prompts.push(`# AI Prompts for Wrapboxd Insights
 
 These prompts can be passed to an AI to generate additional insights for the presentation.
 Copy each prompt and ask your favorite AI model.
+
+## Data availability (so the AI doesn’t hallucinate)
+- TMDB enrichment enabled: ${Boolean(data?.meta?.tmdbEnabled)}
+- TMDB genres available: ${hasGenres}
+- TMDB directors available: ${hasDirectors}
+- TMDB runtimes available: ${hasRuntime}
+- Letterboxd tags available: ${hasTags}
+
+${extras ? `## Extra context (from --extras)
+\`\`\`json
+${JSON.stringify(extras, null, 2)}
+\`\`\`
+` : ''}
 
 ---
 
@@ -190,12 +225,18 @@ Copy each prompt and ask your favorite AI model.
 
 ### Prompt 1: Movie Personality Profile
 Based on these movie watching stats, write a fun, Gen-Z style "movie personality profile" in 2-3 sentences:
-- Total films: ${counts.uniqueFilms || 0}
+- Total watches: ${counts.watches || 0}
+- Total unique films: ${counts.uniqueFilms || 0}
 - Average rating: ${counts.avgRating?.toFixed(2) || 'N/A'}
 - Most common rating: ${getMostCommonRating(series.ratingsHistogram)}
 - Rewatches: ${counts.rewatches || 0} (${Math.round((counts.rewatches || 0) / (counts.watches || 1) * 100)}%)
-${data.enrichedAll?.topGenres?.length ? `- Top genres: ${data.enrichedAll.topGenres.slice(0, 3).map(g => g.name).join(', ')}` : ''}
-${data.enrichedAll?.topDirectors?.length ? `- Top directors: ${data.enrichedAll.topDirectors.slice(0, 3).map(d => d.name).join(', ')}` : ''}
+- Busiest month: ${busiestMonth ? `${busiestMonth.yearMonth} (${busiestMonth.count})` : 'N/A'}
+- Favorite weekday: ${topWeekday ? `${topWeekday.weekday} (${topWeekday.count})` : 'N/A'}
+- Weekend share: ${weekendSharePct != null ? `${weekendSharePct}%` : 'N/A'}
+- Longest streak: ${longestStreakDays} days
+- Biggest gap: ${biggestGapDays} days
+${hasGenres ? `- Top genres (TMDB): ${enriched.topGenres.slice(0, 5).map((g) => g.name).join(', ')}` : (hasTags ? `- Top tags (Letterboxd): ${topTags.slice(0, 5).map((t) => t.name).join(', ')}` : '')}
+${hasDirectors ? `- Top directors (TMDB): ${enriched.topDirectors.slice(0, 5).map((d) => d.name).join(', ')}` : (extras?.manual?.topDirector?.name ? `- Top director (manual): ${extras.manual.topDirector.name}` : '')}
 
 ---
 
@@ -204,6 +245,11 @@ Analyze my watching patterns and give me one surprising insight in a punchy, soc
 - Films by month: ${JSON.stringify(series.watchesByMonth?.slice(-6) || [])}
 - Films by weekday: ${JSON.stringify(series.watchesByWeekday || [])}
 - Busiest month had ${Math.max(...(series.watchesByMonth?.map(m => m.count) || [0]))} films
+- Quietest month: ${quietestMonth ? `${quietestMonth.yearMonth} (${quietestMonth.count})` : 'N/A'}
+- Longest streak: ${longestStreakDays} days
+- Biggest gap: ${biggestGapDays} days
+- Weekend share: ${weekendSharePct != null ? `${weekendSharePct}%` : 'N/A'}
+- Top rewatches: ${JSON.stringify(topRewatches)}
 
 ---
 
@@ -215,25 +261,38 @@ ${JSON.stringify(series.ratingsHistogram || [])}
 
 `);
 
-  if (data.enrichedAll) {
+  // Genre & director prompts only if we have usable inputs.
+  // If TMDB is missing, we fall back to Letterboxd tags or extras.
+  if (hasGenres || hasDirectors || hasTags || extras?.manual?.favoriteGenre || extras?.manual?.topDirector) {
     prompts.push(`## Genre & Director Analysis
 
 ### Prompt 4: Genre Identity
 Based on these genre stats, give me a fun "genre identity" (like "certified drama queen" or "action junkie"):
-${JSON.stringify(data.enrichedAll.topGenres?.slice(0, 10) || [])}
+${hasGenres
+  ? JSON.stringify(enriched.topGenres.slice(0, 10))
+  : (hasTags
+    ? JSON.stringify(topTags)
+    : JSON.stringify({ note: "No TMDB genre data and no Letterboxd tags found. Use --extras manual.favoriteGenre to provide a favorite genre." }))}
+${extras?.manual?.favoriteGenre ? `\nManual favorite genre (extras): ${extras.manual.favoriteGenre}` : ''}
 
 ---
 
 ### Prompt 5: Director Relationship
 Describe my relationship with my top director in one sentence, as if they were a person I'm dating:
-Top director: ${data.enrichedAll.topDirectors?.[0]?.name || 'Unknown'}
-Films watched: ${data.enrichedAll.topDirectors?.[0]?.count || 0}
+Top director: ${hasDirectors ? (enriched.topDirectors?.[0]?.name || 'Unknown') : (extras?.manual?.topDirector?.name || 'Unknown')}
+Films watched: ${hasDirectors ? (enriched.topDirectors?.[0]?.count || 0) : (extras?.manual?.topDirector?.filmsWatched || 0)}
+${!hasDirectors ? `\nNote: Directors require TMDB enrichment. To enable: set TMDB_BEARER_TOKEN (or TMDB_API_KEY) and rerun without --no-tmdb, or provide --extras manual.topDirector.` : ''}
 
 ---
 
 ### Prompt 6: Hot Takes
 Based on the general perception of these genres and my watch counts, write 2-3 "hot takes" I might have about movies:
-${JSON.stringify(data.enrichedAll.topGenres?.slice(0, 8) || [])}
+${hasGenres
+  ? JSON.stringify(enriched.topGenres.slice(0, 8))
+  : (hasTags
+    ? JSON.stringify(topTags.slice(0, 8))
+    : JSON.stringify({ note: "No genre inputs available. Use --extras manual.hotTakes to provide seed takes." }))}
+${extras?.manual?.hotTakes?.length ? `\nManual hot takes (extras):\n- ${extras.manual.hotTakes.join('\n- ')}` : ''}
 
 ---
 
@@ -253,22 +312,30 @@ ${JSON.stringify({
   avgRating: counts.avgRating,
   totalFilms: counts.uniqueFilms,
   rewatchPct: Math.round((counts.rewatches || 0) / (counts.watches || 1) * 100),
-  topGenres: data.enrichedAll?.topGenres?.slice(0, 3).map(g => g.name),
-  avgRuntime: getAvgRuntime(data.enrichedAll?.runtimeBins),
+  topGenres: hasGenres
+    ? enriched.topGenres.slice(0, 3).map((g) => g.name)
+    : (hasTags ? topTags.slice(0, 3).map((t) => t.name) : undefined),
+  avgRuntime: hasRuntime ? getAvgRuntime(enriched.runtimeBins) : undefined,
+  busiestMonth: busiestMonth?.yearMonth,
+  topWeekday: topWeekday?.weekday,
+  longestStreakDays,
 })}
+${extras?.manual?.superlatives?.length ? `\nManual superlatives (extras):\n- ${extras.manual.superlatives.join('\n- ')}` : ''}
 
 ---
 
 ### Prompt 9: Next Year Predictions
 Based on my ${new Date().getFullYear()} watching patterns, make 3 predictions for next year in a fun, horoscope-style format:
 - This year: ${counts.uniqueFilms} films
-- Favorite genre: ${data.enrichedAll?.topGenres?.[0]?.name || 'Unknown'}
+- Favorite genre: ${hasGenres ? (enriched.topGenres?.[0]?.name || 'Unknown') : (extras?.manual?.favoriteGenre || (hasTags ? topTags?.[0]?.name : 'Unknown'))}
 - Rating tendency: ${counts.avgRating?.toFixed(1) || 'N/A'} average
 
 ---
 
 ### Prompt 10: Presentation Opener
 Write a punchy, confident 2-sentence opener I can use when presenting this to coworkers. Make it self-aware and slightly self-deprecating about being a movie nerd.
+${extras?.presentation?.audience ? `\nAudience: ${extras.presentation.audience}` : ''}
+${extras?.presentation?.context ? `\nContext: ${extras.presentation.context}` : ''}
 
 ---
 
@@ -276,7 +343,7 @@ Write a punchy, confident 2-sentence opener I can use when presenting this to co
 
 ### Prompt 11: Five-Star Analysis
 I gave these films 5 stars: 
-${getFiveStarFilms(data.parsed?.diary || []).map(f => `- ${f.Name} (${f.Year})`).join('\n') || 'None'}
+${getFiveStarFilmsUnique(diary, 25).map((f) => `- ${f.Name} (${f.Year})`).join('\n') || 'None'}
 
 What do these films have in common? Give me one insight about my taste.
 
@@ -284,7 +351,7 @@ What do these films have in common? Give me one insight about my taste.
 
 ### Prompt 12: Controversial Picks
 Write a "controversial opinion" style statement about my movie taste that I could use in the presentation, based on:
-- Top genre: ${data.enrichedAll?.topGenres?.[0]?.name || 'Drama'}
+- Top genre: ${hasGenres ? (enriched.topGenres?.[0]?.name || 'Unknown') : (extras?.manual?.favoriteGenre || (hasTags ? topTags?.[0]?.name : 'Unknown'))}
 - Average rating: ${counts.avgRating?.toFixed(1) || '3.5'}
 - Total films: ${counts.uniqueFilms || 0}
 
@@ -303,11 +370,17 @@ function titleSlide(data) {
   const filmCount = data.computedAll?.counts?.uniqueFilms || '???';
   
   return `
-<section class="slide-title" data-background-color="black">
+<section class="slide-title bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('wrapboxd-title')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.16">
   <h1>MY ${year} IN FILM</h1>
   <p style="margin-top: 64px;">
     <span class="sticker sticker-yellow">${filmCount} FILMS</span>
   </p>
+  <div class="photo-collage" style="max-width: 1500px;">
+    ${collageImages(['popcorn', 'redcarpet', 'cinema', 'camera'], 4)}
+  </div>
 </section>`;
 }
 
@@ -316,18 +389,30 @@ function introSlide(data) {
   const hours = estimateHours(data);
   
   return `
-<section class="slide-statement" data-background-color="black">
+<section class="slide-statement bg-noise" data-background-color="white"
+  data-background-image="https://picsum.photos/seed/${seed('wrapboxd-intro')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.08">
   <h2>HERE'S WHAT I WATCHED</h2>
   <p class="text-muted" style="font-size: 48px; margin-top: 32px;">
     ${count} films • ~${hours} hours • a lot of opinions
   </p>
+  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('wrapboxd-corner-1')}/640/420" alt="">
 </section>`;
 }
 
 function sectionDivider(title) {
+  const bg = SECTION_BG_COLORS[sectionBgIndex % SECTION_BG_COLORS.length];
+  sectionBgIndex += 1;
   return `
-<section class="slide-divider" data-background-color="black">
+<section class="slide-divider bg-noise" data-background-color="${bg}"
+  data-background-image="https://picsum.photos/seed/${seed(`section-${title}`)}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.12">
   <h1>${escapeHtml(title)}</h1>
+  <div class="photo-collage" style="max-width: 1500px;">
+    ${collageImages([`sec-${title}-1`, `sec-${title}-2`, `sec-${title}-3`, `sec-${title}-4`], 4)}
+  </div>
 </section>`;
 }
 
@@ -342,10 +427,14 @@ function totalFilmsSlide(data) {
   else insight = "quality over quantity";
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('total-films-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.08">
   <div class="stat-number accent">${count}</div>
   <div class="stat-label">unique films</div>
   <p class="chart-insight" style="margin-top: 48px;">${insight}</p>
+  <img class="corner-photo" src="https://picsum.photos/seed/${seed('total-films-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -355,10 +444,14 @@ function totalWatchesSlide(data) {
   const diff = watches - unique;
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('total-watches-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.06">
   <div class="stat-number">${watches}</div>
   <div class="stat-label">total watches</div>
   ${diff > 0 ? `<p class="chart-insight" style="margin-top: 48px;">${diff} were rewatches</p>` : ''}
+  <img class="corner-photo" src="https://picsum.photos/seed/${seed('total-watches-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -374,10 +467,14 @@ function avgRatingSlide(data) {
   else personality = "I'm a professional hater";
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="white"
+  data-background-image="https://picsum.photos/seed/${seed('avg-rating-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.08">
   <div class="stat-number">${displayAvg}</div>
   <div class="stat-label">average rating</div>
   <p class="chart-insight" style="margin-top: 48px;">${personality}</p>
+  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('avg-rating-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -393,10 +490,14 @@ function rewatchesSlide(data) {
   else insight = "always chasing the new";
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="white"
+  data-background-image="https://picsum.photos/seed/${seed('rewatches-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.08">
   <div class="stat-number">${rewatches}</div>
   <div class="stat-label">rewatches</div>
   <p class="chart-insight" style="margin-top: 48px;">${pct}% of all watches • ${insight}</p>
+  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('rewatches-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -425,10 +526,14 @@ function estimatedHoursSlide(data) {
   const days = Math.round(hours / 24 * 10) / 10;
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="blue"
+  data-background-image="https://picsum.photos/seed/${seed('hours-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.10">
   <div class="stat-number accent">${hours}</div>
   <div class="stat-label">hours of movies</div>
   <p class="chart-insight" style="margin-top: 48px;">that's ${days} full days of my life</p>
+  <img class="corner-photo" src="https://picsum.photos/seed/${seed('hours-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -437,9 +542,10 @@ function filmsPerWeekSlide(data) {
   const perWeek = (count / 52).toFixed(1);
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="white">
   <div class="stat-number">${perWeek}</div>
   <div class="stat-label">films per week (average)</div>
+  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('per-week-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -449,15 +555,22 @@ function filmsPerMonthSlide(data) {
   const avg = counts.length ? (counts.reduce((a, b) => a + b, 0) / counts.length).toFixed(1) : 0;
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="green"
+  data-background-image="https://picsum.photos/seed/${seed('per-month-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.10">
   <div class="stat-number">${avg}</div>
   <div class="stat-label">films per month (average)</div>
+  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('per-month-photo')}/640/420" alt="">
 </section>`;
 }
 
 function ratingsChartSlide(data) {
   return `
-<section class="slide-chart" data-background-color="black">
+<section class="slide-chart bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('ratings-chart-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.06">
   <h2>MY RATINGS</h2>
   <div class="chart-container" data-chart="ratings-histogram"></div>
 </section>`;
@@ -495,7 +608,10 @@ function ratingDistributionBreakdownSlide(data) {
   const meh = histogram.filter(h => h.rating <= 2).reduce((sum, h) => sum + h.count, 0);
   
   return `
-<section class="slide-chart" data-background-color="black">
+<section class="slide-chart bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('breakdown-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.06">
   <h2>THE BREAKDOWN</h2>
   <div class="grid-3col" style="margin-top: 64px;">
     <div class="text-center">
@@ -605,7 +721,10 @@ function watchesByMonthSlide(data) {
   });
   
   return `
-<section class="slide-chart" data-background-color="black">
+<section class="slide-chart bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('watches-by-month-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.06">
   <h2>WHEN I WATCHED</h2>
   <div class="chart-container" data-chart="watches-by-month"></div>
   ${busiestMonth ? `<p class="chart-insight">${busiestMonth}: ${maxCount} films (peak movie mode)</p>` : ''}
@@ -627,10 +746,14 @@ function busiestMonthSlide(data) {
   const monthName = formatMonth(busiestMonth);
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="accent"
+  data-background-image="https://picsum.photos/seed/${seed('busiest-month-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.12">
   <h3 class="text-muted">BUSIEST MONTH</h3>
   <div class="stat-number accent" style="font-size: 140px; margin-top: 24px;">${monthName}</div>
   <div class="stat-label" style="margin-top: 24px;">${maxCount} films</div>
+  <img class="corner-photo" src="https://picsum.photos/seed/${seed('busiest-month-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -650,10 +773,14 @@ function quietestMonthSlide(data) {
   const monthName = formatMonth(quietestMonth);
   
   return `
-<section class="slide-stat" data-background-color="black">
+<section class="slide-stat bg-noise" data-background-color="white"
+  data-background-image="https://picsum.photos/seed/${seed('quietest-month-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.08">
   <h3 class="text-muted">QUIETEST MONTH</h3>
   <div class="stat-number" style="font-size: 140px; margin-top: 24px;">${monthName}</div>
   <div class="stat-label" style="margin-top: 24px;">${minCount} films (busy with life, probably)</div>
+  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('quietest-month-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -670,7 +797,10 @@ function weekdaySlide(data) {
   });
   
   return `
-<section class="slide-chart" data-background-color="black">
+<section class="slide-chart bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('weekday-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.06">
   <h2>MY MOVIE DAYS</h2>
   <div class="chart-container" data-chart="weekdays"></div>
   ${topDay ? `<p class="chart-insight">${topDay} is my day</p>` : ''}
@@ -697,7 +827,7 @@ function weekendVsWeekdaySlide(data) {
   const weekdayPct = Math.round(weekday / total * 100);
   
   return `
-<section class="slide-chart" data-background-color="black">
+<section class="slide-chart bg-noise" data-background-color="white">
   <h2>WEEKEND VS. WEEKDAY</h2>
   <div class="grid-2col" style="margin-top: 64px;">
     <div class="text-center">
@@ -794,7 +924,10 @@ function releaseYearsSlide(data) {
   });
   
   return `
-<section class="slide-chart" data-background-color="black">
+<section class="slide-chart bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('release-years-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.06">
   <h2>MY MOVIE ERAS</h2>
   <div class="chart-container" data-chart="release-years"></div>
   <p class="chart-insight">the ${topDecade}s are my era</p>
@@ -1252,7 +1385,10 @@ function randomFactsSlide(data) {
   const hours = estimateHours(data);
   
   return `
-<section class="slide-chart" data-background-color="black">
+<section class="slide-chart bg-noise" data-background-color="white"
+  data-background-image="https://picsum.photos/seed/${seed('fun-facts-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.08">
   <h2>FUN FACTS</h2>
   <ul style="font-size: 48px; margin-top: 48px;">
     <li style="margin-bottom: 24px;">Watched <span class="text-accent">${count}</span> unique films</li>
@@ -1260,6 +1396,9 @@ function randomFactsSlide(data) {
     <li style="margin-bottom: 24px;">That's <span class="text-accent">${Math.round(hours/24)}</span> full days</li>
     <li style="margin-bottom: 24px;">Or <span class="text-accent">${(hours/8760*100).toFixed(1)}%</span> of the year</li>
   </ul>
+  <div class="photo-collage" style="max-width: 1500px;">
+    ${collageImages(['fact-1','fact-2','fact-3','fact-4'], 4)}
+  </div>
 </section>`;
 }
 
@@ -1305,7 +1444,10 @@ function equivalentToSlide(data) {
   ];
   
   return `
-<section class="slide-chart" data-background-color="black">
+<section class="slide-chart bg-noise" data-background-color="black"
+  data-background-image="https://picsum.photos/seed/${seed('equivalent-bg')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.06">
   <h2>EQUIVALENT TO...</h2>
   <ul style="font-size: 42px; margin-top: 48px;">
     ${equivalents.map(e => `<li style="margin-bottom: 20px;">${e}</li>`).join('')}
@@ -1432,7 +1574,10 @@ function closingSlide(data) {
   const films = data.computedAll?.counts?.uniqueFilms || 0;
   
   return `
-<section class="slide-title" data-background-color="black">
+<section class="slide-title bg-noise" data-background-color="blue"
+  data-background-image="https://picsum.photos/seed/${seed('wrapboxd-outro')}/1920/1080"
+  data-background-size="cover"
+  data-background-opacity="0.14">
   <h1 style="font-size: 140px;">THAT'S A WRAP</h1>
   <p class="text-muted" style="font-size: 48px; margin-top: 48px;">
     ${films} films in ${year}
@@ -1455,6 +1600,16 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+function seed(x) {
+  return encodeURIComponent(String(x ?? "seed").slice(0, 80));
+}
+
+function collageImages(seeds, count = 4) {
+  const chosen = (seeds || []).slice(0, count);
+  while (chosen.length < count) chosen.push(`filler-${chosen.length}`);
+  return chosen.map((s) => `<img src="https://picsum.photos/seed/${seed(s)}/520/340" alt="">`).join("");
 }
 
 function estimateHours(data) {
@@ -1495,6 +1650,97 @@ function getMostCommonRating(histogram) {
 
 function getFiveStarFilms(diary) {
   return diary.filter(d => parseFloat(d.Rating) === 5);
+}
+
+function getFiveStarFilmsUnique(diary, limit = 25) {
+  const seen = new Set();
+  const out = [];
+  for (const row of diary ?? []) {
+    if (parseFloat(row?.Rating) !== 5) continue;
+    const name = String(row?.Name ?? '').trim();
+    const year = String(row?.Year ?? '').trim();
+    const key = `${name} (${year || 'n/a'})`;
+    if (!name || seen.has(key)) continue;
+    seen.add(key);
+    out.push(row);
+    if (out.length >= limit) break;
+  }
+  return out;
+}
+
+function splitTags(raw) {
+  if (!raw) return [];
+  const s = String(raw).trim();
+  if (!s) return [];
+  return s
+    .split(/[,;|]/g)
+    .map((t) => t.trim())
+    .filter(Boolean);
+}
+
+function getTopTags(diary, limit = 10) {
+  const counts = new Map();
+  for (const row of diary ?? []) {
+    const tags = splitTags(row?.Tags ?? row?.tags);
+    for (const t of tags) {
+      counts.set(t, (counts.get(t) || 0) + 1);
+    }
+  }
+  return Array.from(counts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => (b.count - a.count) || a.name.localeCompare(b.name))
+    .slice(0, limit);
+}
+
+function getBusiestMonth(watchesByMonth) {
+  const arr = watchesByMonth || [];
+  if (!arr.length) return null;
+  return arr.reduce((best, cur) => (!best || (cur.count > best.count) ? cur : best), null);
+}
+
+function getQuietestMonth(watchesByMonth) {
+  const arr = (watchesByMonth || []).filter((m) => (m?.count || 0) > 0);
+  if (!arr.length) return null;
+  return arr.reduce((best, cur) => (!best || (cur.count < best.count) ? cur : best), null);
+}
+
+function getTopWeekday(watchesByWeekday) {
+  const arr = watchesByWeekday || [];
+  if (!arr.length) return null;
+  return arr.reduce((best, cur) => (!best || (cur.count > best.count) ? cur : best), null);
+}
+
+function getWeekendSharePct(watchesByWeekday) {
+  const arr = watchesByWeekday || [];
+  if (!arr.length) return null;
+  const weekendDays = new Set(['Sat', 'Sun', 'Saturday', 'Sunday']);
+  let weekend = 0;
+  let total = 0;
+  for (const d of arr) {
+    const c = Number(d?.count || 0);
+    total += c;
+    if (weekendDays.has(d?.weekday)) weekend += c;
+  }
+  if (!total) return 0;
+  return Math.round((weekend / total) * 100);
+}
+
+function getTopRewatchedFilms(diary, limit = 10) {
+  const byFilm = new Map();
+  for (const row of diary ?? []) {
+    const name = String(row?.Name ?? '').trim();
+    const year = String(row?.Year ?? '').trim();
+    if (!name) continue;
+    const key = `${name} (${year || 'n/a'})`;
+    const s = String(row?.Rewatch ?? row?.rewatch ?? "").trim().toLowerCase();
+    const isRewatch = s === "yes" || s === "true" || s === "1" || s === "rewatch";
+    if (!isRewatch) continue;
+    byFilm.set(key, (byFilm.get(key) || 0) + 1);
+  }
+  return Array.from(byFilm.entries())
+    .map(([film, count]) => ({ film, count }))
+    .sort((a, b) => (b.count - a.count) || a.film.localeCompare(b.film))
+    .slice(0, limit);
 }
 
 function formatMonth(yearMonth) {
