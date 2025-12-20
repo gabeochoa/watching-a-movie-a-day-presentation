@@ -1,0 +1,15 @@
+node_modules/
+npm-debug.log*
+.DS_Store
+
+# local runtime data
+data/*.db
+data/*.db-*
+data/*.sqlite
+data/*.sqlite-*
+
+# local env files
+.env
+.env.*
+config.local.json
+

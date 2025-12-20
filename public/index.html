@@ -24,7 +24,7 @@
         color: var(--text);
       }
       .wrap {
-        max-width: 1100px;
+        max-width: 1200px;
         margin: 0 auto;
         padding: 24px;
       }
@@ -49,9 +49,10 @@
         grid-template-columns: 1fr;
         gap: 16px;
       }
-      @media (min-width: 900px) {
+      @media (min-width: 980px) {
         .grid {
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 420px 1fr;
+          align-items: start;
         }
       }
       .card {
@@ -61,7 +62,7 @@
         padding: 16px;
       }
       .card h2 {
-        margin: 0 0 8px;
+        margin: 0 0 10px;
         font-size: 14px;
         color: var(--muted);
         font-weight: 600;
@@ -70,7 +71,7 @@
       }
       .row {
         display: flex;
-        gap: 12px;
+        gap: 10px;
         align-items: center;
         flex-wrap: wrap;
       }
@@ -79,6 +80,7 @@
         color: var(--muted);
       }
       input[type="file"],
+      input[type="text"],
       input[type="password"],
       select {
         background: #0e1422;
@@ -87,6 +89,7 @@
         border-radius: 10px;
         padding: 10px 12px;
         font-size: 14px;
+        width: 100%;
       }
       button {
         background: #142341;
@@ -96,9 +99,6 @@
         padding: 10px 12px;
         font-size: 14px;
         cursor: pointer;
-      }
-      button:hover {
-        border-color: #3c4d76;
       }
       button.primary {
         background: #1b3a73;
@@ -114,10 +114,6 @@
           "Courier New", monospace;
         font-size: 12px;
         color: var(--muted);
-      }
-      .status {
-        display: grid;
-        gap: 6px;
       }
       .pill {
         display: inline-flex;
@@ -142,6 +138,33 @@
       .dot.bad {
         background: var(--danger);
       }
+      .hint {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .charts {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .chart {
+        background: #0e1422;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+      }
+      .chart h3 {
+        margin: 0 0 8px;
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      svg {
+        width: 100%;
+        height: 260px;
+        display: block;
+      }
       .log {
         margin-top: 10px;
         border-top: 1px solid var(--border);
@@ -150,16 +173,9 @@
         overflow: auto;
         white-space: pre-wrap;
       }
-      .hint {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.4;
-      }
-      a {
-        color: var(--accent);
-      }
     </style>
-    <!-- Optional: used only if you import a .zip portable cache -->
+    <script defer src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   </head>
   <body>
@@ -167,68 +183,64 @@
       <header>
         <div>
           <h1>Wrapboxd</h1>
-          <div class="sub">Client-side Letterboxd analytics + portable cross-user TMDB cache</div>
+          <div class="sub">Server + client (SQLite TMDB cache, vanilla JS + D3)</div>
         </div>
-        <div class="pill" id="repoCachePill" title="Whether repo cache loaded successfully">
-          <span class="dot" id="repoCacheDot"></span>
-          <span id="repoCacheText">Repo cache: loading…</span>
+        <div class="pill" id="serverPill" title="Server health">
+          <span class="dot" id="serverDot"></span>
+          <span id="serverText">Server: checking…</span>
         </div>
       </header>
 
       <div class="grid">
         <section class="card">
-          <h2>Cross-user cache (portable)</h2>
+          <h2>Data</h2>
           <div class="row" style="margin-bottom: 10px">
-            <label for="cacheFile">Import cache file</label>
-            <input id="cacheFile" type="file" accept=".json,.zip,application/json,application/zip" />
-            <label for="mergeMode">Merge mode</label>
-            <select id="mergeMode">
-              <option value="prefer-existing" selected>Prefer existing (safe)</option>
-              <option value="prefer-incoming">Prefer incoming (overwrite)</option>
-            </select>
-            <button class="primary" id="importCacheBtn">Import</button>
+            <label for="lbZip">Letterboxd export ZIP</label>
+            <input id="lbZip" type="file" accept=".zip,application/zip" />
           </div>
           <div class="row" style="margin-bottom: 10px">
-            <button id="exportDeltaBtn">Export cache updates (delta)</button>
-            <button id="exportFullBtn">Export merged cache (full)</button>
-            <button class="danger" id="resetSessionBtn">Reset session cache</button>
+            <button class="primary" id="analyzeBtn">Analyze</button>
+            <button class="danger" id="resetBtn">Reset</button>
           </div>
-          <div class="status mono" id="cacheStats"></div>
-          <div class="hint" style="margin-top: 10px">
-            Sharing workflow: one person runs with a TMDB key → exports a cache delta → sends it to
-            others. Others import it and avoid the same API calls.
-          </div>
-        </section>
+          <div class="mono" id="stats"></div>
 
-        <section class="card">
-          <h2>TMDB (optional)</h2>
-          <div class="row" style="margin-bottom: 10px">
-            <label for="tmdbKey">TMDB API key (local only)</label>
-            <input id="tmdbKey" type="password" placeholder="Paste key (stored in this browser only)" />
-            <button id="saveKeyBtn">Save</button>
-            <button class="danger" id="clearKeyBtn">Clear</button>
-          </div>
+          <h2 style="margin-top: 16px">TMDB cache (cross-user via server)</h2>
           <div class="hint">
-            The app always checks portable + repo caches first. The key is only used for cache
-            misses.
+            TMDB responses are cached in the server’s SQLite DB. If someone already fetched a movie,
+            other users hitting the same server will get cache hits automatically.
           </div>
-
-          <div class="row" style="margin-top: 12px">
+          <div class="row" style="margin-top: 10px">
             <label for="demoTmdbId">Demo TMDB ID</label>
-            <input id="demoTmdbId" type="password" value="550" />
-            <button class="primary" id="fetchMovieBtn">Fetch movie details (cache-first)</button>
+            <input id="demoTmdbId" type="text" value="550" />
+            <button id="fetchMovieBtn">Fetch movie</button>
           </div>
           <div class="mono log" id="log"></div>
         </section>
-      </div>
 
-      <p class="hint" style="margin-top: 16px">
-        If you open this via <span class="mono">file://</span>, most browsers block fetching
-        <span class="mono">cache/tmdb.v1.json</span>. Run a tiny static server instead (see
-        <span class="mono">README.md</span>).
-      </p>
+        <section class="card">
+          <h2>Charts</h2>
+          <div class="charts">
+            <div class="chart">
+              <h3>Ratings histogram</h3>
+              <svg id="chartRatings" role="img" aria-label="Ratings histogram"></svg>
+            </div>
+            <div class="chart">
+              <h3>Watches by month</h3>
+              <svg id="chartMonths" role="img" aria-label="Watches by month"></svg>
+            </div>
+            <div class="chart">
+              <h3>Release year distribution</h3>
+              <svg id="chartYears" role="img" aria-label="Release year distribution"></svg>
+            </div>
+          </div>
+          <p class="hint" style="margin-top: 12px">
+            Next: director/genre/runtime charts once we map films to TMDB IDs.
+          </p>
+        </section>
+      </div>
     </div>
 
     <script type="module" src="./src/app.js"></script>
   </body>
 </html>
+

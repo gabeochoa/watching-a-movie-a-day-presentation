@@ -1,58 +1,71 @@
 # Wrapboxd
 
-Client-side Letterboxd analytics with a **portable, cross-user TMDB cache** (no backend).
+Letterboxd analytics with a **server-side, cross-user TMDB cache** backed by **SQLite**, plus a
+vanilla JS + D3 client for charts.
 
-Right now the repo contains a minimal working skeleton focused on the caching workflow. The full
-analytics UI is planned in `REDO_PLAN.md`.
+The server is what makes the cache cross-user: once anyone hits a TMDB endpoint, the response is
+stored in `data/cache.sqlite` and shared for all users of that server.
 
 ## Run locally
 
-Most browsers block module + JSON fetches over `file://`. Run a tiny static server instead:
+### 1) Install dependencies
 
 ```bash
-python3 -m http.server 8000
+npm install
 ```
 
-Then open `http://localhost:8000/`.
+### 2) Set TMDB credentials (server-side)
 
-## Cross-user TMDB caching (what we’re building around)
+Pick one:
 
-We support three cache sources in this order:
+- **Preferred**: `TMDB_BEARER_TOKEN` (TMDB v4 read token)
+- **Alternative**: `TMDB_API_KEY` (v3 key)
 
-1. **Portable cache (imported file)**: cross-user sharing. You can send this file to someone else.
-2. **Repo cache (committed)**: `cache/tmdb.v1.json` shipped with the app.
-3. **Local cache (browser storage)**: convenience per-device.
+Example:
 
-When a TMDB request happens, the app checks caches first. If missing and you have a local TMDB key,
-it fetches from TMDB, stores the response locally, and marks it as “new” so you can export it.
+```bash
+export TMDB_BEARER_TOKEN="...your token..."
+```
 
-### Share a cache with someone
+### 3) Start the server
 
-1. Person A sets a TMDB key in the UI (stored in browser only).
-2. Person A clicks “Fetch movie details (cache-first)” a few times (or later: runs the app normally).
-3. Person A clicks **Export cache updates (delta)** and sends the downloaded JSON to Person B.
-4. Person B clicks **Import** to load the cache file and avoid those API calls.
+```bash
+npm run dev
+```
 
-## TMDB key handling
+Open `http://localhost:3000/`.
 
-- Keys are **not committed**.
-- The demo UI stores the key in `localStorage` on that device only.
-- The client currently uses a bearer token header; it works with TMDB v4 read tokens.
+## What’s implemented right now
+
+- **Server** (`server/`):
+  - Serves static client from `public/`
+  - `/api/tmdb/movie/:id` and `/api/tmdb/movie/:id/credits` cached in SQLite
+  - Adds `X-Wrapboxd-Cache: HIT|MISS` header to show caching behavior
+- **Client** (`public/`):
+  - Upload a Letterboxd export `.zip` and render 3 D3 charts:
+    - ratings histogram
+    - watches by month
+    - release year distribution
+  - Demo TMDB fetch to exercise server cache
 
 ## Repo layout (current)
 
 ```
 /
-  index.html
-  src/
-    app.js
-    ui/dom.js
-    tmdb/
-      cache.js
-      client.js
-      keys.js
-  cache/
-    tmdb.v1.json
+  server/
+    index.js
+    db.js
+    tmdb.js
+  public/
+    index.html
+    src/
+      app.js
+      api/tmdb.js
+      analytics/compute.js
+      charts/d3charts.js
+      letterboxd/parseZip.js
+      ui/dom.js
+  data/                # runtime sqlite db lives here (gitignored)
   REDO_PLAN.md
 ```
 
