@@ -17,10 +17,13 @@ import {
 
 const state = {
   parsed: null,
-  computed: null,
+  computed: null, // current (filtered) computed
+  computedAll: null, // full-range computed
   enriched: null,
+  enrichmentByFilm: null, // Map(filmKey -> { tmdbId, runtime, releaseYear, genres[], directors[] })
   tmdbRequestStats: { hit: 0, miss: 0, unknown: 0 },
   runToken: 0,
+  dateRange: { start: null, end: null }, // YYYY-MM-DD strings
 };
 
 const TMDB_CONNECT_ERROR = "Could not connect to TMDB, check your API Key";
@@ -74,6 +77,62 @@ function setTmdbError(msg) {
 
 function isInvalidApiKeyPayload(payload) {
   return payload && typeof payload === "object" && Number(payload.status_code) === 7;
+}
+
+function toYmd(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function parseYmd(ymd) {
+  if (!ymd) return null;
+  const d = new Date(`${ymd}T00:00:00Z`);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function diaryRowDate(row) {
+  const raw = String(row?.Date ?? row?.date ?? "").trim();
+  if (!raw) return null;
+  const d = new Date(raw);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function getDiaryDateBounds(diaryRows) {
+  let min = null;
+  let max = null;
+  for (const row of diaryRows ?? []) {
+    const d = diaryRowDate(row);
+    if (!d) continue;
+    if (!min || d < min) min = d;
+    if (!max || d > max) max = d;
+  }
+  return { min, max };
+}
+
+function filterDiaryByRange(diaryRows, { start, end }) {
+  const startD = parseYmd(start);
+  const endD = parseYmd(end);
+  if (!startD && !endD) return diaryRows ?? [];
+  return (diaryRows ?? []).filter((row) => {
+    const d = diaryRowDate(row);
+    if (!d) return false;
+    if (startD && d < startD) return false;
+    if (endD && d > endD) return false;
+    return true;
+  });
+}
+
+function getFilmKeysFromDiary(diaryRows) {
+  const keys = new Set();
+  for (const row of diaryRows ?? []) {
+    const title = String(row.Name ?? row.name ?? "").trim();
+    const year = String(row.Year ?? row.year ?? "").trim();
+    if (!title) continue;
+    keys.add(`${title} (${year || "n/a"})`);
+  }
+  return keys;
 }
 
 async function checkServer() {
@@ -219,7 +278,9 @@ function render() {
 function resetAll() {
   state.parsed = null;
   state.computed = null;
+  state.computedAll = null;
   state.enriched = null;
+  state.enrichmentByFilm = null;
   state.tmdbRequestStats = { hit: 0, miss: 0, unknown: 0 };
   state.runToken += 1; // invalidate in-flight work
   setText(el("#log"), "");
@@ -287,6 +348,70 @@ function toReleaseYearFromTmdb(details) {
   return Number.isFinite(y) ? y : null;
 }
 
+function computeEnrichedAggregatesForDiary(diaryRows) {
+  if (!state.enrichmentByFilm) return null;
+
+  const filmKeys = getFilmKeysFromDiary(diaryRows);
+  const filmAvgRatings = computeFilmAvgRatingsByKey(diaryRows);
+
+  const directorCounts = new Map();
+  const genreCounts = new Map();
+  const runtimes = [];
+  const ratingRuntimePoints = [];
+  const ratingReleaseYearPoints = [];
+
+  for (const filmKey of filmKeys) {
+    const info = state.enrichmentByFilm.get(filmKey);
+    if (!info) continue;
+
+    for (const name of info.genres ?? []) {
+      if (!name) continue;
+      genreCounts.set(name, (genreCounts.get(name) || 0) + 1);
+    }
+    for (const name of info.directors ?? []) {
+      if (!name) continue;
+      directorCounts.set(name, (directorCounts.get(name) || 0) + 1);
+    }
+    if (info.runtime) runtimes.push(info.runtime);
+
+    const avgRating = filmAvgRatings.get(filmKey) ?? null;
+    if (avgRating != null && Number.isFinite(avgRating)) {
+      if (Number.isFinite(info.runtime) && info.runtime > 0) {
+        ratingRuntimePoints.push({ runtime: info.runtime, rating: avgRating });
+      }
+      if (Number.isFinite(info.releaseYear)) {
+        ratingReleaseYearPoints.push({ year: info.releaseYear, rating: avgRating });
+      }
+    }
+  }
+
+  const topDirectors = Array.from(directorCounts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+  const topGenres = Array.from(genreCounts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+  const runtimeBins = computeRuntimeBins(runtimes);
+
+  return { topDirectors, topGenres, runtimeBins, ratingRuntimePoints, ratingReleaseYearPoints };
+}
+
+function recomputeForCurrentRange() {
+  if (!state.parsed) return;
+  const filteredDiary = filterDiaryByRange(state.parsed.diary, state.dateRange);
+  state.computed = computeFromLetterboxd({ diary: filteredDiary, films: state.parsed.films });
+
+  // Recompute enriched aggregates for just the visible range (no refetch).
+  const agg = computeEnrichedAggregatesForDiary(filteredDiary);
+  if (agg) {
+    // keep mapped/failed metadata if present
+    const meta = state.enriched ? { mapped: state.enriched.mapped, failed: state.enriched.failed } : {};
+    state.enriched = { ...agg, ...meta };
+  }
+
+  render();
+}
+
 async function promisePool(items, worker, { concurrency = 3 } = {}) {
   const executing = new Set();
   const results = new Array(items.length);
@@ -341,12 +466,7 @@ async function enrichWithTmdb() {
 
   logLine(`Enriching ${films.length} films with TMDB (cached by server)…`);
 
-  const filmAvgRatings = computeFilmAvgRatingsByKey(state.parsed.diary);
-  const directorCounts = new Map();
-  const genreCounts = new Map();
-  const runtimes = [];
-  const ratingRuntimePoints = [];
-  const ratingReleaseYearPoints = [];
+  const perFilm = new Map();
   let mapped = 0;
   let failed = 0;
   const stopRef = { aborted: false };
@@ -408,36 +528,24 @@ async function enrichWithTmdb() {
 
         mapped += 1;
 
-        // Genres
-        for (const g of details.genres ?? []) {
-          const name = String(g.name ?? "").trim();
-          if (!name) continue;
-          genreCounts.set(name, (genreCounts.get(name) || 0) + 1);
-        }
+        const genres = (details.genres ?? [])
+          .map((g) => String(g?.name ?? "").trim())
+          .filter(Boolean);
 
-        // Runtime
-        if (details.runtime) runtimes.push(details.runtime);
+        const dirs = (credits.crew ?? [])
+          .filter((c) => c && c.job === "Director")
+          .map((d) => String(d?.name ?? "").trim())
+          .filter(Boolean);
 
-        // Directors
-        const dirs = (credits.crew ?? []).filter((c) => c && c.job === "Director");
-        for (const d of dirs) {
-          const name = String(d.name ?? "").trim();
-          if (!name) continue;
-          directorCounts.set(name, (directorCounts.get(name) || 0) + 1);
-        }
-
-        // Scatter points (use average rating per filmKey if present)
-        const avgRating = filmAvgRatings.get(film.key) ?? null;
-        if (avgRating != null && Number.isFinite(avgRating)) {
-          const runtime = Number(details.runtime);
-          if (Number.isFinite(runtime) && runtime > 0) {
-            ratingRuntimePoints.push({ runtime, rating: avgRating });
-          }
-          const year = film.year ?? toReleaseYearFromTmdb(details);
-          if (Number.isFinite(year)) {
-            ratingReleaseYearPoints.push({ year, rating: avgRating });
-          }
-        }
+        const runtime = Number(details.runtime);
+        const releaseYear = film.year ?? toReleaseYearFromTmdb(details);
+        perFilm.set(film.key, {
+          tmdbId,
+          runtime: Number.isFinite(runtime) ? runtime : null,
+          releaseYear: Number.isFinite(releaseYear) ? releaseYear : null,
+          genres,
+          directors: dirs,
+        });
 
         return { filmKey: film.key, tmdbId };
       } catch (e) {
@@ -460,23 +568,11 @@ async function enrichWithTmdb() {
     return;
   }
 
-  const topDirectors = Array.from(directorCounts.entries())
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count);
-  const topGenres = Array.from(genreCounts.entries())
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count);
-  const runtimeBins = computeRuntimeBins(runtimes);
-
-  state.enriched = {
-    topDirectors,
-    topGenres,
-    runtimeBins,
-    ratingRuntimePoints,
-    ratingReleaseYearPoints,
-    mapped,
-    failed,
-  };
+  state.enrichmentByFilm = perFilm;
+  // Compute enriched aggregates for the currently visible date range.
+  const filteredDiary = filterDiaryByRange(state.parsed.diary, state.dateRange);
+  const agg = computeEnrichedAggregatesForDiary(filteredDiary);
+  state.enriched = agg ? { ...agg, mapped, failed } : { mapped, failed };
   logLine(`Enrichment complete: mapped=${mapped} failed=${failed}`);
   await refreshCacheStatsUi();
   render();
@@ -495,8 +591,31 @@ async function analyzeZipFile(zipFile, { auto = false } = {}) {
     if (myToken !== state.runToken) return;
 
     logLine(`Found files: ${JSON.stringify(state.parsed.filesFound)}`);
-    state.computed = computeFromLetterboxd(state.parsed);
+    // Default range: full diary bounds (if present)
+    const bounds = getDiaryDateBounds(state.parsed.diary);
+    const start = bounds.min ? toYmd(bounds.min) : null;
+    const end = bounds.max ? toYmd(bounds.max) : null;
+    state.dateRange = { start, end };
+
+    // Initialize the range picker UI
+    const startEl = document.querySelector("#rangeStart");
+    const endEl = document.querySelector("#rangeEnd");
+    if (startEl) {
+      startEl.min = start ?? "";
+      startEl.max = end ?? "";
+      startEl.value = start ?? "";
+    }
+    if (endEl) {
+      endEl.min = start ?? "";
+      endEl.max = end ?? "";
+      endEl.value = end ?? "";
+    }
+
+    state.computedAll = computeFromLetterboxd(state.parsed);
+    // Current view starts as full range
+    state.computed = state.computedAll;
     state.enriched = null;
+    state.enrichmentByFilm = null;
     if (myToken !== state.runToken) return;
 
     render();
@@ -520,6 +639,31 @@ function initUi() {
   on(el("#lbZip"), "change", async () => {
     const zipFile = el("#lbZip").files?.[0];
     await analyzeZipFile(zipFile, { auto: true });
+  });
+
+  on(el("#applyRangeBtn"), "click", () => {
+    state.dateRange = {
+      start: String(el("#rangeStart").value || "") || null,
+      end: String(el("#rangeEnd").value || "") || null,
+    };
+    recomputeForCurrentRange();
+  });
+
+  on(el("#show2025Btn"), "click", () => {
+    el("#rangeStart").value = "2025-01-01";
+    el("#rangeEnd").value = "2025-12-31";
+    state.dateRange = { start: "2025-01-01", end: "2025-12-31" };
+    recomputeForCurrentRange();
+  });
+
+  on(el("#clearRangeBtn"), "click", () => {
+    const bounds = state.parsed ? getDiaryDateBounds(state.parsed.diary) : { min: null, max: null };
+    const start = bounds.min ? toYmd(bounds.min) : "";
+    const end = bounds.max ? toYmd(bounds.max) : "";
+    el("#rangeStart").value = start;
+    el("#rangeEnd").value = end;
+    state.dateRange = { start: start || null, end: end || null };
+    recomputeForCurrentRange();
   });
 
   on(el("#analyzeBtn"), "click", async () => {

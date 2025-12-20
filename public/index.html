@@ -220,6 +220,18 @@
       <section class="tab-panel" id="tabPresentation" role="tabpanel">
         <section class="card">
           <h2>Presentation</h2>
+          <div class="row" style="margin-bottom: 10px">
+            <label for="rangeStart">Start</label>
+            <input id="rangeStart" type="date" />
+            <label for="rangeEnd">End</label>
+            <input id="rangeEnd" type="date" />
+            <button id="applyRangeBtn">Apply</button>
+            <button class="primary" id="show2025Btn">Show 2025</button>
+            <button class="danger" id="clearRangeBtn">Clear</button>
+          </div>
+          <div class="hint" id="rangeHint" style="margin-bottom: 12px">
+            Filter charts by watch date. “Show 2025” sets Jan 1 → Dec 31, 2025.
+          </div>
           <div class="charts">
             <div class="chart">
               <h3>Ratings histogram</h3>

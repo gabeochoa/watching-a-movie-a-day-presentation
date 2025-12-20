@@ -52,10 +52,19 @@ export function computeFromLetterboxd({ diary, films }) {
     if (title) uniqueFilmKeys.add(`${title} (${year || "n/a"})`);
   }
 
+  // Release year distribution should reflect *watched* films in the selected date range.
+  // Prefer diary-derived years (from watched entries). Fall back to films.csv only if diary is missing.
   const releaseYears = [];
-  for (const row of films ?? []) {
-    const y = toInt(row.Year ?? row.year);
-    if (y != null) releaseYears.push(y);
+  if ((diary ?? []).length) {
+    for (const row of diary ?? []) {
+      const y = toInt(row.Year ?? row.year);
+      if (y != null) releaseYears.push(y);
+    }
+  } else {
+    for (const row of films ?? []) {
+      const y = toInt(row.Year ?? row.year);
+      if (y != null) releaseYears.push(y);
+    }
   }
 
   // Aggregate series
