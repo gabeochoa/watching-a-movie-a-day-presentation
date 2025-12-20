@@ -8,7 +8,7 @@
   "scripts": {
     "generate": "node scripts/generate.js",
     "dev": "node scripts/generate.js --output dist",
-    "step:01": "node scripts/steps/01_parse_letterboxd_zip.js --zip raw_data/letterboxd-export.zip --out 01_csvs_processed",
+    "step:01": "node scripts/steps/01_parse_letterboxd_zip.js --zip raw_data/letterboxd-choicehoney.zip --out 01_csvs_processed",
     "step:02": "node scripts/steps/02_enrich_tmdb.js --in 01_csvs_processed/parsed.json --cache-dir 02_tmdb_db_info --out 02_tmdb_db_info --concurrency 3",
     "step:10": "node scripts/steps/10_produce_presentation.js --parsed 01_csvs_processed/parsed.json --enrichment 02_tmdb_db_info/enrichment_by_film.json --enriched 02_tmdb_db_info/enriched_aggregates.json --out 10_produce_presentation/dist-reveal --title \"My Year in Film\"",
     "make:presentation": "npm run step:01 && npm run step:02 && npm run step:10"

@@ -2,17 +2,6 @@ node_modules/
 npm-debug.log*
 .DS_Store
 
-# local runtime data
-data/*.db
-data/*.db-*
-data/*.sqlite
-data/*.sqlite-*
-
-# presentation workflow folders (usually private)
-raw_data/*
-01_csvs_processed/*
-02_tmdb_db_info/*
-
 # keep the folder READMEs tracked
 !raw_data/README.md
 !01_csvs_processed/README.md

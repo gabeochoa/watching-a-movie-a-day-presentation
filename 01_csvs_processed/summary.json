@@ -1,0 +1,16 @@
+{
+  "zip": "letterboxd-choicehoney.zip",
+  "filesFound": {
+    "diary": "diary.csv",
+    "films": null,
+    "ratings": "ratings.csv",
+    "watched": "watched.csv"
+  },
+  "counts": {
+    "diary": 486,
+    "films": 0,
+    "ratings": 472,
+    "watched": 737,
+    "uniqueDiaryFilms": 477
+  }
+}
