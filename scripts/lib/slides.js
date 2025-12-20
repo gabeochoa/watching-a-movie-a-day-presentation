@@ -18,17 +18,8 @@ const POSTER_PLACEHOLDERS = {
   thriller: 'https://picsum.photos/seed/thriller/400/600',
 };
 
-const SECTION_BG_COLORS = [
-  "accent",
-  "blue",
-  "yellow",
-  "violet",
-  "green",
-  "pink",
-  "cream",
-  "cyan",
-  "lime",
-];
+// Per STYLE_GUIDE.md: mostly black/white, one accent moment per slide.
+const SECTION_BG_COLORS = ["black", "black", "black", "accent", "black", "black", "black", "black"];
 let sectionBgIndex = 0;
 
 /**
@@ -379,10 +370,10 @@ function titleSlide(data) {
   const filmCount = data.computedAll?.counts?.uniqueFilms || '???';
   
   return `
-<section class="slide-title bg-noise" data-background-color="violet"
+<section class="slide-title bg-noise" data-background-color="black"
   data-background-image="https://picsum.photos/seed/${seed('wrapboxd-title')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.18">
+  data-background-opacity="0.16">
   <h1>MY ${year} IN FILM</h1>
   <p style="margin-top: 64px;">
     <span class="sticker sticker-yellow">${filmCount} FILMS</span>
@@ -398,10 +389,10 @@ function introSlide(data) {
   const hours = estimateHours(data);
   
   return `
-<section class="slide-statement bg-noise" data-background-color="cream"
+<section class="slide-statement bg-noise" data-background-color="white"
   data-background-image="https://picsum.photos/seed/${seed('wrapboxd-intro')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.10">
+  data-background-opacity="0.08">
   <h2>HERE'S WHAT I WATCHED</h2>
   <p class="text-muted" style="font-size: 48px; margin-top: 32px;">
     ${count} films • ~${hours} hours • a lot of opinions
@@ -453,14 +444,14 @@ function totalWatchesSlide(data) {
   const diff = watches - unique;
   
   return `
-<section class="slide-stat bg-noise" data-background-color="yellow"
+<section class="slide-stat bg-noise" data-background-color="black"
   data-background-image="https://picsum.photos/seed/${seed('total-watches-bg')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.10">
+  data-background-opacity="0.06">
   <div class="stat-number">${watches}</div>
   <div class="stat-label">total watches</div>
   ${diff > 0 ? `<p class="chart-insight" style="margin-top: 48px;">${diff} were rewatches</p>` : ''}
-  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('total-watches-photo')}/640/420" alt="">
+  <img class="corner-photo" src="https://picsum.photos/seed/${seed('total-watches-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -476,10 +467,10 @@ function avgRatingSlide(data) {
   else personality = "I'm a professional hater";
   
   return `
-<section class="slide-stat bg-noise" data-background-color="cyan"
+<section class="slide-stat bg-noise" data-background-color="white"
   data-background-image="https://picsum.photos/seed/${seed('avg-rating-bg')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.10">
+  data-background-opacity="0.08">
   <div class="stat-number">${displayAvg}</div>
   <div class="stat-label">average rating</div>
   <p class="chart-insight" style="margin-top: 48px;">${personality}</p>
@@ -499,10 +490,10 @@ function rewatchesSlide(data) {
   else insight = "always chasing the new";
   
   return `
-<section class="slide-stat bg-noise" data-background-color="pink"
+<section class="slide-stat bg-noise" data-background-color="white"
   data-background-image="https://picsum.photos/seed/${seed('rewatches-bg')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.10">
+  data-background-opacity="0.08">
   <div class="stat-number">${rewatches}</div>
   <div class="stat-label">rewatches</div>
   <p class="chart-insight" style="margin-top: 48px;">${pct}% of all watches • ${insight}</p>
@@ -755,14 +746,14 @@ function busiestMonthSlide(data) {
   const monthName = formatMonth(busiestMonth);
   
   return `
-<section class="slide-stat bg-noise" data-background-color="lime"
+<section class="slide-stat bg-noise" data-background-color="accent"
   data-background-image="https://picsum.photos/seed/${seed('busiest-month-bg')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.10">
+  data-background-opacity="0.12">
   <h3 class="text-muted">BUSIEST MONTH</h3>
   <div class="stat-number accent" style="font-size: 140px; margin-top: 24px;">${monthName}</div>
   <div class="stat-label" style="margin-top: 24px;">${maxCount} films</div>
-  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('busiest-month-photo')}/640/420" alt="">
+  <img class="corner-photo" src="https://picsum.photos/seed/${seed('busiest-month-photo')}/640/420" alt="">
 </section>`;
 }
 
@@ -782,10 +773,10 @@ function quietestMonthSlide(data) {
   const monthName = formatMonth(quietestMonth);
   
   return `
-<section class="slide-stat bg-noise" data-background-color="cream"
+<section class="slide-stat bg-noise" data-background-color="white"
   data-background-image="https://picsum.photos/seed/${seed('quietest-month-bg')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.10">
+  data-background-opacity="0.08">
   <h3 class="text-muted">QUIETEST MONTH</h3>
   <div class="stat-number" style="font-size: 140px; margin-top: 24px;">${monthName}</div>
   <div class="stat-label" style="margin-top: 24px;">${minCount} films (busy with life, probably)</div>
@@ -1394,10 +1385,10 @@ function randomFactsSlide(data) {
   const hours = estimateHours(data);
   
   return `
-<section class="slide-chart bg-noise" data-background-color="violet"
+<section class="slide-chart bg-noise" data-background-color="white"
   data-background-image="https://picsum.photos/seed/${seed('fun-facts-bg')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.12">
+  data-background-opacity="0.08">
   <h2>FUN FACTS</h2>
   <ul style="font-size: 48px; margin-top: 48px;">
     <li style="margin-bottom: 24px;">Watched <span class="text-accent">${count}</span> unique films</li>
@@ -1453,10 +1444,10 @@ function equivalentToSlide(data) {
   ];
   
   return `
-<section class="slide-chart bg-noise" data-background-color="cyan"
+<section class="slide-chart bg-noise" data-background-color="black"
   data-background-image="https://picsum.photos/seed/${seed('equivalent-bg')}/1920/1080"
   data-background-size="cover"
-  data-background-opacity="0.10">
+  data-background-opacity="0.06">
   <h2>EQUIVALENT TO...</h2>
   <ul style="font-size: 42px; margin-top: 48px;">
     ${equivalents.map(e => `<li style="margin-bottom: 20px;">${e}</li>`).join('')}

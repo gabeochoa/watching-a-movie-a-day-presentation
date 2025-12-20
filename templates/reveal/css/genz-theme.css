@@ -25,10 +25,6 @@
   --genz-highlight-green: #30D158;
   --genz-highlight-pink: #FF375F;
   --genz-highlight-blue: #0A84FF;
-  --genz-cream: #FFF3D6;
-  --genz-lime: #B7FF2A;
-  --genz-violet: #B34DFF;
-  --genz-cyan: #2DE2E6;
   
   /* Typography */
   --font-display: 'Anton', Impact, 'Arial Black', sans-serif;
@@ -73,17 +69,6 @@
 .reveal .slides section[data-background-color="black"],
 .reveal .slides section.bg-black {
   background: #000000;
-  /* Not-flat-black: subtle photo + gradients */
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08) 0, rgba(255,255,255,0) 55%),
-    radial-gradient(circle at 80% 10%, rgba(255,255,255,0.06) 0, rgba(255,255,255,0) 55%),
-    radial-gradient(circle at 70% 90%, rgba(255,59,48,0.10) 0, rgba(255,59,48,0) 55%),
-    url("https://picsum.photos/seed/wrapboxd-black/1920/1080");
-  background-size: auto, auto, auto, cover;
-  background-position: center, center, center, center;
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-  background-blend-mode: overlay, overlay, screen, normal;
-  position: relative;
 }
 
 .reveal .slides section[data-background-color="white"],
@@ -98,39 +83,11 @@
   color: #FFFFFF;
 }
 
-/* More color backgrounds (so not every slide is black) */
-.reveal .slides section[data-background-color="yellow"] {
-  background: var(--genz-highlight-yellow);
-  color: #000000;
-}
-.reveal .slides section[data-background-color="green"] {
-  background: var(--genz-highlight-green);
-  color: #000000;
-}
-.reveal .slides section[data-background-color="pink"] {
-  background: var(--genz-highlight-pink);
-  color: #000000;
-}
-.reveal .slides section[data-background-color="blue"] {
-  background: var(--genz-highlight-blue);
-  color: #FFFFFF;
-}
-.reveal .slides section[data-background-color="cream"] {
-  background: var(--genz-cream);
-  color: #000000;
-}
-.reveal .slides section[data-background-color="lime"] {
-  background: var(--genz-lime);
-  color: #000000;
-}
-.reveal .slides section[data-background-color="violet"] {
-  background: var(--genz-violet);
-  color: #FFFFFF;
-}
-.reveal .slides section[data-background-color="cyan"] {
-  background: var(--genz-cyan);
-  color: #000000;
-}
+/* Allow one extra “moment” backgrounds, but keep it limited */
+.reveal .slides section[data-background-color="yellow"] { background: var(--genz-highlight-yellow); color: #000000; }
+.reveal .slides section[data-background-color="green"] { background: var(--genz-highlight-green); color: #000000; }
+.reveal .slides section[data-background-color="pink"] { background: var(--genz-highlight-pink); color: #000000; }
+.reveal .slides section[data-background-color="blue"] { background: var(--genz-highlight-blue); color: #FFFFFF; }
 
 /* ========================================
    TYPOGRAPHY
@@ -202,13 +159,7 @@
 .reveal .slides section[data-background-color="green"] p,
 .reveal .slides section[data-background-color="green"] h4,
 .reveal .slides section[data-background-color="pink"] p,
-.reveal .slides section[data-background-color="pink"] h4,
-.reveal .slides section[data-background-color="cream"] p,
-.reveal .slides section[data-background-color="cream"] h4,
-.reveal .slides section[data-background-color="lime"] p,
-.reveal .slides section[data-background-color="lime"] h4,
-.reveal .slides section[data-background-color="cyan"] p,
-.reveal .slides section[data-background-color="cyan"] h4 {
+.reveal .slides section[data-background-color="pink"] h4 {
   color: rgba(0, 0, 0, 0.72);
 }
 
@@ -223,23 +174,12 @@
 .reveal .slides section[data-background-color="green"] h3,
 .reveal .slides section[data-background-color="pink"] h1,
 .reveal .slides section[data-background-color="pink"] h2,
-.reveal .slides section[data-background-color="pink"] h3,
-.reveal .slides section[data-background-color="cream"] h1,
-.reveal .slides section[data-background-color="cream"] h2,
-.reveal .slides section[data-background-color="cream"] h3,
-.reveal .slides section[data-background-color="lime"] h1,
-.reveal .slides section[data-background-color="lime"] h2,
-.reveal .slides section[data-background-color="lime"] h3,
-.reveal .slides section[data-background-color="cyan"] h1,
-.reveal .slides section[data-background-color="cyan"] h2,
-.reveal .slides section[data-background-color="cyan"] h3 {
+.reveal .slides section[data-background-color="pink"] h3 {
   color: #000000;
 }
 
 .reveal .slides section[data-background-color="blue"] p,
 .reveal .slides section[data-background-color="blue"] h4,
-.reveal .slides section[data-background-color="violet"] p,
-.reveal .slides section[data-background-color="violet"] h4,
 .reveal .slides section[data-background-color="accent"] p,
 .reveal .slides section[data-background-color="accent"] h4 {
   color: rgba(255, 255, 255, 0.78);
