@@ -7,7 +7,7 @@
   },
   "scripts": {
     "generate": "node scripts/generate.js",
-    "dev": "node scripts/generate.js --output dist-reveal"
+    "dev": "node scripts/generate.js --output dist"
   },
   "dependencies": {
     "better-sqlite3": "^12.4.1",

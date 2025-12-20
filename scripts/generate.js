@@ -23,6 +23,12 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
     demandOption: false
   })
+  .option('json', {
+    alias: 'j',
+    describe: 'Path to a Wrapboxd JSON export (wrapboxd-complete-export-*.json)',
+    type: 'string',
+    demandOption: false
+  })
   .option('extras', {
     alias: 'x',
     describe: 'Optional path to a JSON file with extra inputs (presentation context, manual answers, etc.)',
@@ -65,6 +71,7 @@ const argv = yargs(hideBin(process.argv))
 
 async function main() {
   let zipPath = argv.zip;
+  let jsonPath = argv.json;
   const outputDir = argv.output;
   const dataDir = argv['data-dir'];
   const noTmdb = Boolean(argv['no-tmdb']);
@@ -77,35 +84,57 @@ async function main() {
   console.log(`📤 Output directory: ${outputDir}`);
 
   try {
-    // Convenience default: if neither --zip nor --example is provided,
-    // try to auto-detect a single .zip in the current working directory.
-    if (!useExample && !zipPath) {
+    // Convenience default: if neither --zip nor --json nor --example is provided,
+    // try to auto-detect a Wrapboxd JSON export first, then a single .zip.
+    if (!useExample && !zipPath && !jsonPath) {
       const cwd = process.cwd();
       const entries = await fs.readdir(cwd);
-      const zips = entries.filter((f) => String(f).toLowerCase().endsWith(".zip"));
-      if (zips.length === 1) {
-        zipPath = path.join(cwd, zips[0]);
+      const jsonCandidates = entries
+        .filter((f) => String(f).toLowerCase().endsWith(".json"))
+        .filter((f) => String(f).toLowerCase().includes("wrapboxd-complete-export"));
+      if (jsonCandidates.length >= 1) {
+        // Prefer most recently modified
+        const withMtime = await Promise.all(jsonCandidates.map(async (f) => {
+          const p = path.join(cwd, f);
+          const stat = await fs.stat(p);
+          return { f, p, mtimeMs: stat.mtimeMs };
+        }));
+        withMtime.sort((a, b) => b.mtimeMs - a.mtimeMs);
+        jsonPath = withMtime[0].p;
       } else {
-        useExample = true;
+        const zips = entries.filter((f) => String(f).toLowerCase().endsWith(".zip"));
+        if (zips.length === 1) {
+          zipPath = path.join(cwd, zips[0]);
+        } else {
+          useExample = true;
+        }
       }
     }
 
     if (useExample) {
       console.log(`🧪 Using built-in example data`);
-      if (!argv.example && !argv.zip) {
-        console.log(`ℹ️  Tip: pass --zip path/to/export.zip to generate your real deck`);
+      if (!argv.example && !argv.zip && !argv.json) {
+        console.log(`ℹ️  Tip: pass --zip path/to/export.zip (or --json wrapboxd-complete-export.json) to generate your real deck`);
       }
     } else {
-      if (!zipPath) throw new Error("Missing --zip (or pass --example).");
-      console.log(`📁 Processing ZIP: ${zipPath}`);
-      if (!await fs.pathExists(zipPath)) throw new Error(`ZIP file not found: ${zipPath}`);
+      if (jsonPath) {
+        jsonPath = path.resolve(process.cwd(), String(jsonPath));
+        console.log(`📄 Processing JSON export: ${jsonPath}`);
+        if (!await fs.pathExists(jsonPath)) throw new Error(`JSON export file not found: ${jsonPath}`);
+      } else {
+        if (!zipPath) throw new Error("Missing --zip/--json (or pass --example).");
+        console.log(`📁 Processing ZIP: ${zipPath}`);
+        if (!await fs.pathExists(zipPath)) throw new Error(`ZIP file not found: ${zipPath}`);
+      }
     }
 
     // Create output directory
     await fs.ensureDir(outputDir);
 
-    // Parse Letterboxd ZIP (Node)
-    const parsed = useExample ? buildExampleParsed() : await processZipFile(zipPath);
+    // Parse inputs (Node)
+    const parsed = useExample
+      ? buildExampleParsed()
+      : (jsonPath ? await processWrapboxdJsonExport(jsonPath) : await processZipFile(zipPath));
 
     // Compute core analytics (Letterboxd-only)
     const computedAll = computeFromLetterboxd({ diary: parsed.diary, films: parsed.films });
@@ -160,7 +189,7 @@ async function main() {
     const payload = {
       meta: {
         generatedAt: new Date().toISOString(),
-        sourceZip: useExample ? "example" : path.basename(zipPath),
+        sourceZip: useExample ? "example" : path.basename(jsonPath || zipPath),
         tmdbEnabled,
       },
       extras,
@@ -258,6 +287,46 @@ async function processZipFile(zipPath) {
     films,
     ratings,
     watched,
+  };
+}
+
+async function processWrapboxdJsonExport(jsonPath) {
+  const raw = await fs.readJson(jsonPath);
+  const timeline = raw?.analysis?.charts?.timeline || raw?.analysis?.timeline || [];
+  if (!Array.isArray(timeline) || timeline.length === 0) {
+    throw new Error("Invalid Wrapboxd JSON export: missing analysis.charts.timeline array");
+  }
+
+  const diary = [];
+  for (const month of timeline) {
+    const films = month?.films || [];
+    for (const f of films) {
+      const watched = f?.watchedDate || f?.diaryDate || null;
+      const watchedDate = watched ? String(watched).slice(0, 10) : null;
+      if (!watchedDate) continue;
+      diary.push({
+        Date: watchedDate,
+        "Watched Date": watchedDate,
+        Name: String(f?.title ?? "").trim(),
+        Year: f?.releaseYear != null ? String(f.releaseYear) : "",
+        Rating: f?.rating != null ? String(f.rating) : "",
+        Rewatch: f?.rewatch ? "Yes" : "",
+        Tags: String(f?.tags ?? "").trim(),
+      });
+    }
+  }
+
+  if (!diary.length) {
+    throw new Error("Invalid Wrapboxd JSON export: timeline had no watchable film entries");
+  }
+
+  return {
+    zipFileNames: [path.basename(jsonPath)],
+    filesFound: { diary: path.basename(jsonPath), films: null, ratings: null, watched: null },
+    diary,
+    films: [],
+    ratings: [],
+    watched: [],
   };
 }
 
