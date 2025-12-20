@@ -659,9 +659,15 @@ async function analyzeZipFile(zipFile, { auto = false } = {}) {
 }
 
 function initUi() {
-  // Use event delegation so the tab clicks always work.
+  // Tabs: use both direct handlers and delegation.
+  // Some browsers can report Text nodes as event targets; handle that safely.
+  on(el("#tabBtnPresentation"), "click", () => showTab("presentation"));
+  on(el("#tabBtnData"), "click", () => showTab("data"));
   document.addEventListener("click", (e) => {
-    const btn = e.target?.closest?.("[role='tab']");
+    const rawTarget = e.target;
+    const target =
+      rawTarget instanceof Element ? rawTarget : rawTarget?.parentElement ?? null;
+    const btn = target?.closest?.("[role='tab']");
     if (!btn) return;
     if (btn.id === "tabBtnPresentation") showTab("presentation");
     if (btn.id === "tabBtnData") showTab("data");
