@@ -32,6 +32,10 @@ export function openDb({ dataDir } = {}) {
     `,
   );
 
+  const countStmt = db.prepare("SELECT COUNT(1) AS n FROM tmdb_cache");
+  const newestStmt = db.prepare("SELECT MAX(fetched_at) AS newest FROM tmdb_cache");
+  const oldestStmt = db.prepare("SELECT MIN(fetched_at) AS oldest FROM tmdb_cache");
+
   return {
     db,
     get(cacheKey) {
@@ -51,6 +55,13 @@ export function openDb({ dataDir } = {}) {
         fetched_at: fetchedAt,
         payload_json: JSON.stringify(payload),
       });
+    },
+    stats() {
+      return {
+        entries: countStmt.get().n,
+        oldestFetchedAt: oldestStmt.get().oldest ?? null,
+        newestFetchedAt: newestStmt.get().newest ?? null,
+      };
     },
   };
 }

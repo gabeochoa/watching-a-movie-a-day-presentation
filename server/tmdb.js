@@ -22,8 +22,25 @@ function getTmdbApiKey() {
   return process.env.TMDB_API_KEY?.trim() || null;
 }
 
+function getCacheTtlDays() {
+  const raw = process.env.TMDB_CACHE_TTL_DAYS?.trim();
+  if (!raw) return 0; // default: never expire unless configured
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n < 0) return 0;
+  return n;
+}
+
+function isExpired(fetchedAt, ttlDays) {
+  if (!ttlDays) return false;
+  const ts = Date.parse(fetchedAt);
+  if (Number.isNaN(ts)) return true;
+  const ageMs = Date.now() - ts;
+  return ageMs > ttlDays * 24 * 60 * 60 * 1000;
+}
+
 export function createTmdbService({ db, fetchImpl = fetch } = {}) {
   if (!db) throw new Error("db is required");
+  const ttlDays = getCacheTtlDays();
 
   async function fetchFromTmdb(pathname, query) {
     const base = "https://api.themoviedb.org/3";
@@ -44,7 +61,7 @@ export function createTmdbService({ db, fetchImpl = fetch } = {}) {
   async function getCachedOrFetch(pathname, query) {
     const cacheKey = tmdbKeyFor(pathname, query);
     const cached = db.get(cacheKey);
-    if (cached) {
+    if (cached && !isExpired(cached.fetchedAt, ttlDays)) {
       return { cacheKey, cacheHit: true, ...cached };
     }
 

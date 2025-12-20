@@ -39,14 +39,27 @@ Open `http://localhost:3000/`.
 
 - **Server** (`server/`):
   - Serves static client from `public/`
-  - `/api/tmdb/movie/:id` and `/api/tmdb/movie/:id/credits` cached in SQLite
+  - Cached TMDB endpoints (SQLite):
+    - `/api/tmdb/movie/:id`
+    - `/api/tmdb/movie/:id/credits`
+    - `/api/tmdb/search/movie?query=...&year=...`
+    - `/api/tmdb/find/imdb/:imdbId`
   - Adds `X-Wrapboxd-Cache: HIT|MISS` header to show caching behavior
+  - `/api/cache/stats` shows SQLite cache size
 - **Client** (`public/`):
-  - Upload a Letterboxd export `.zip` and render 3 D3 charts:
+  - Upload a Letterboxd export `.zip` and render D3 charts:
     - ratings histogram
     - watches by month
     - release year distribution
-  - Demo TMDB fetch to exercise server cache
+    - average rating by month
+  - “Enrich with TMDB” to populate additional charts (via cached server calls):
+    - top directors
+    - genre distribution
+    - runtime distribution
+  - Export buttons:
+    - analysis JSON
+    - config JSON (placeholder for now)
+    - cache stats JSON
 
 ## Repo layout (current)
 

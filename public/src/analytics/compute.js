@@ -15,6 +15,11 @@ function parseDate(dateStr) {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
+function truthyFlag(x) {
+  const s = String(x ?? "").trim().toLowerCase();
+  return s === "yes" || s === "true" || s === "1" || s === "rewatch";
+}
+
 export function computeFromLetterboxd({ diary, films }) {
   // Minimal normalized model for charts:
   // - watches: [{ date, yearMonth }]
@@ -23,6 +28,8 @@ export function computeFromLetterboxd({ diary, films }) {
 
   const watches = [];
   const ratings = [];
+  let rewatches = 0;
+  let ratingSum = 0;
 
   for (const row of diary ?? []) {
     const d = parseDate(row.Date || row.date);
@@ -31,7 +38,13 @@ export function computeFromLetterboxd({ diary, films }) {
     watches.push({ date: d, yearMonth: ym });
 
     const r = toFloat(row.Rating ?? row.rating);
-    if (r != null) ratings.push(r);
+    if (r != null) {
+      ratings.push(r);
+      ratingSum += r;
+    }
+
+    const isRewatch = truthyFlag(row.Rewatch ?? row.rewatch);
+    if (isRewatch) rewatches += 1;
   }
 
   const releaseYears = [];
@@ -43,6 +56,18 @@ export function computeFromLetterboxd({ diary, films }) {
   // Aggregate series
   const watchesByMonth = new Map();
   for (const w of watches) watchesByMonth.set(w.yearMonth, (watchesByMonth.get(w.yearMonth) || 0) + 1);
+
+  const ratingSumByMonth = new Map();
+  const ratingCountByMonth = new Map();
+  for (const row of diary ?? []) {
+    const d = parseDate(row.Date || row.date);
+    if (!d) continue;
+    const r = toFloat(row.Rating ?? row.rating);
+    if (r == null) continue;
+    const ym = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    ratingSumByMonth.set(ym, (ratingSumByMonth.get(ym) || 0) + r);
+    ratingCountByMonth.set(ym, (ratingCountByMonth.get(ym) || 0) + 1);
+  }
 
   const ratingsBins = new Map();
   for (const r of ratings) {
@@ -59,11 +84,19 @@ export function computeFromLetterboxd({ diary, films }) {
       films: (films ?? []).length,
       watches: watches.length,
       ratings: ratings.length,
+      rewatches,
+      avgRating: ratings.length ? ratingSum / ratings.length : null,
     },
     series: {
       watchesByMonth: Array.from(watchesByMonth.entries())
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([yearMonth, count]) => ({ yearMonth, count })),
+      avgRatingByMonth: Array.from(ratingSumByMonth.entries())
+        .map(([yearMonth, sum]) => {
+          const n = ratingCountByMonth.get(yearMonth) || 0;
+          return { yearMonth, avgRating: n ? sum / n : 0 };
+        })
+        .sort((a, b) => a.yearMonth.localeCompare(b.yearMonth)),
       ratingsHistogram: Array.from(ratingsBins.entries())
         .sort(([a], [b]) => Number(a) - Number(b))
         .map(([rating, count]) => ({ rating: Number(rating), count })),

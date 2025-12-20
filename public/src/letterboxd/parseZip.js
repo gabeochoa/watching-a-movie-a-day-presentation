@@ -20,8 +20,18 @@ export async function parseLetterboxdZip(file) {
   const JSZip = window.JSZip;
   if (!JSZip) throw new Error("JSZip not loaded.");
 
+  // Basic safety checks (not perfect, but better than nothing).
+  // Users can still load huge exports; keep these conservative and adjustable later.
+  const MAX_ZIP_BYTES = 50 * 1024 * 1024; // 50MB
+  if (typeof file.size === "number" && file.size > MAX_ZIP_BYTES) {
+    throw new Error(`ZIP too large (${file.size} bytes). Limit is ${MAX_ZIP_BYTES} bytes.`);
+  }
+
   const buf = await file.arrayBuffer();
   const zip = await JSZip.loadAsync(buf);
+
+  const zipFileNames = Object.keys(zip.files || {});
+  if (zipFileNames.length > 200) throw new Error("ZIP contains too many files.");
 
   // Letterboxd exports often include these; we start with diary + films.
   // The exact filenames can vary; we’ll probe common names.
@@ -51,6 +61,7 @@ export async function parseLetterboxdZip(file) {
   const watched = watchedFile ? parseCsv(watchedFile.content) : [];
 
   return {
+    zipFileNames,
     filesFound: {
       diary: diaryFile?.name ?? null,
       films: filmsFile?.name ?? null,

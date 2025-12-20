@@ -21,6 +21,10 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
 
+app.get("/api/cache/stats", (_req, res) => {
+  res.json(db.stats());
+});
+
 // Minimal TMDB proxy endpoints (cached in SQLite).
 // We keep these narrow to avoid accidentally becoming a generic open proxy.
 app.get("/api/tmdb/movie/:id", async (req, res) => {
@@ -38,6 +42,38 @@ app.get("/api/tmdb/movie/:id/credits", async (req, res) => {
   try {
     const id = String(req.params.id);
     const { cacheHit, status, payload } = await tmdb.getCachedOrFetch(`/movie/${id}/credits`, {});
+    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : "MISS");
+    res.status(status).json(payload);
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+});
+
+// Search by title (for mapping Letterboxd -> TMDB).
+app.get("/api/tmdb/search/movie", async (req, res) => {
+  try {
+    const query = String(req.query.query || "").trim();
+    const year = String(req.query.year || "").trim();
+    if (!query) return res.status(400).json({ error: "Missing query" });
+
+    const q = { query };
+    if (year) q.year = year;
+    const { cacheHit, status, payload } = await tmdb.getCachedOrFetch(`/search/movie`, q);
+    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : "MISS");
+    res.status(status).json(payload);
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+});
+
+// Lookup by IMDb id (if present in export); uses TMDB /find endpoint.
+app.get("/api/tmdb/find/imdb/:imdbId", async (req, res) => {
+  try {
+    const imdbId = String(req.params.imdbId || "").trim();
+    if (!imdbId) return res.status(400).json({ error: "Missing imdb id" });
+    const { cacheHit, status, payload } = await tmdb.getCachedOrFetch(`/find/${imdbId}`, {
+      external_source: "imdb_id",
+    });
     res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : "MISS");
     res.status(status).json(payload);
   } catch (e) {

@@ -200,7 +200,13 @@
           </div>
           <div class="row" style="margin-bottom: 10px">
             <button class="primary" id="analyzeBtn">Analyze</button>
+            <button id="enrichBtn">Enrich with TMDB</button>
             <button class="danger" id="resetBtn">Reset</button>
+          </div>
+          <div class="row" style="margin-bottom: 10px">
+            <button id="exportAnalysisBtn">Export analysis (JSON)</button>
+            <button id="exportConfigBtn">Export config (JSON)</button>
+            <button id="exportCacheStatsBtn">Export cache stats (JSON)</button>
           </div>
           <div class="mono" id="stats"></div>
 
@@ -214,6 +220,7 @@
             <input id="demoTmdbId" type="text" value="550" />
             <button id="fetchMovieBtn">Fetch movie</button>
           </div>
+          <div class="mono" id="cacheStats"></div>
           <div class="mono log" id="log"></div>
         </section>
 
@@ -232,9 +239,25 @@
               <h3>Release year distribution</h3>
               <svg id="chartYears" role="img" aria-label="Release year distribution"></svg>
             </div>
+            <div class="chart">
+              <h3>Average rating by month</h3>
+              <svg id="chartAvgRating" role="img" aria-label="Average rating by month"></svg>
+            </div>
+            <div class="chart">
+              <h3>Top directors (TMDB)</h3>
+              <svg id="chartDirectors" role="img" aria-label="Top directors"></svg>
+            </div>
+            <div class="chart">
+              <h3>Genres (TMDB)</h3>
+              <svg id="chartGenres" role="img" aria-label="Genres distribution"></svg>
+            </div>
+            <div class="chart">
+              <h3>Runtime distribution (TMDB)</h3>
+              <svg id="chartRuntime" role="img" aria-label="Runtime distribution"></svg>
+            </div>
           </div>
           <p class="hint" style="margin-top: 12px">
-            Next: director/genre/runtime charts once we map films to TMDB IDs.
+            Tip: click “Enrich with TMDB” after analyzing to populate the TMDB charts.
           </p>
         </section>
       </div>
