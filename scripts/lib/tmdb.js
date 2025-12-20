@@ -3,19 +3,14 @@ function nowIso() {
 }
 
 function tmdbKeyFor(pathname, query) {
-  // Keep keys stable and explicit. We only allow a small set of endpoints.
-  // Example: tmdb:v3:/movie/550
   const qs = new URLSearchParams(query);
   qs.sort();
   const q = qs.toString();
   return `tmdb:v3:${pathname}${q ? `?${q}` : ""}`;
 }
 
-function getTmdbAuthHeaders({ bearerToken } = {}) {
-  // Prefer bearer token (TMDB v4 read token). Allow v3 api key too.
-  const bearer = bearerToken?.trim() || process.env.TMDB_BEARER_TOKEN?.trim();
-  if (bearer) return { Authorization: `Bearer ${bearer}` };
-  return null;
+function getTmdbBearerToken({ bearerToken } = {}) {
+  return bearerToken?.trim() || process.env.TMDB_BEARER_TOKEN?.trim() || null;
 }
 
 function getTmdbApiKey({ apiKey } = {}) {
@@ -39,8 +34,6 @@ function isExpired(fetchedAt, ttlDays) {
 }
 
 function isInvalidApiKeyPayload(payload) {
-  // TMDB commonly returns:
-  // { status_code: 7, status_message: "Invalid API key: You must be granted a valid key.", ... }
   return (
     payload &&
     typeof payload === "object" &&
@@ -55,30 +48,22 @@ export function createTmdbService({ db, fetchImpl = fetch, bearerToken, apiKey }
   async function fetchFromTmdb(pathname, query) {
     const base = "https://api.themoviedb.org/3";
     const url = new URL(`${base}${pathname}`);
-
-    const resolvedApiKey = getTmdbApiKey({ apiKey });
-    console.log(`TMDB Request to ${pathname}:`);
-    console.log(`- Resolved API Key: ${resolvedApiKey ? 'present' : 'missing'}`);
-    console.log(`- API Key length: ${resolvedApiKey ? resolvedApiKey.length : 0}`);
-
     for (const [k, v] of Object.entries(query ?? {})) url.searchParams.set(k, v);
 
-    // TMDB v3 API requires api_key in query parameters for all endpoints
-    if (resolvedApiKey) {
-      url.searchParams.set("api_key", resolvedApiKey);
-      console.log(`- Final URL: ${url.toString().replace(resolvedApiKey, '***API_KEY***')}`);
-    } else {
-      console.log(`- Final URL: ${url.toString()}`);
+    const bearer = getTmdbBearerToken({ bearerToken });
+    const key = getTmdbApiKey({ apiKey });
+
+    const headers = {};
+    if (bearer) {
+      headers.Authorization = `Bearer ${bearer}`;
+    } else if (key) {
+      url.searchParams.set("api_key", key);
     }
 
-    const res = await fetchImpl(url);
-    console.log(`- Response status: ${res.status}`);
-
+    const res = await fetchImpl(url, { headers });
     const contentType = res.headers.get("content-type") || "";
     const isJson = contentType.includes("application/json");
     const payload = isJson ? await res.json() : await res.text();
-
-    console.log(`- Response payload:`, payload);
     return { status: res.status, ok: res.ok, payload };
   }
 
@@ -90,8 +75,6 @@ export function createTmdbService({ db, fetchImpl = fetch, bearerToken, apiKey }
     }
 
     const { status, payload } = await fetchFromTmdb(pathname, query);
-    // If TMDB says the API key/token is invalid, do NOT cache the error payload.
-    // This avoids poisoning the shared cache for all users.
     if (isInvalidApiKeyPayload(payload)) {
       return { cacheKey, cacheHit: false, noCache: true, status, fetchedAt: nowIso(), payload };
     }

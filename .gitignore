@@ -19,3 +19,6 @@ example/
 # local secrets file (if used)
 secrets.js
 app/secrets.js
+
+# generated static site output (keep dist/ committed for review)
+test-output/

@@ -1,277 +1,380 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wrapboxd - Your Movie Year in Review</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wrapboxd</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #f5f5f5;
+    :root {
+      color-scheme: dark;
+      --bg: #0b0e14;
+      --panel: #111726;
+      --text: #e6e9ef;
+      --muted: #a0a6b3;
+      --border: #26304a;
+      --accent: #6ea8ff;
+      --danger: #ff6b6b;
+      --ok: #4cd28a;
     }
-    .container {
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+        Noto Sans, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap {
       max-width: 1200px;
       margin: 0 auto;
-      background: white;
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 24px;
     }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 30px;
+
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
     }
-    .stats-grid {
+
+    .badges {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0.2px;
+    }
+
+    header .sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: none;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin: 10px 0 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      background: #0e1422;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      padding: 10px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      position: relative;
+      top: 1px;
+      /* overlap the bottom border for the selected tab */
+      z-index: 1;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      color: var(--text);
+      border-color: #3c4d76;
+      background: var(--panel);
+      border-bottom-color: var(--panel);
+    }
+
+    .tab-panel[hidden] {
+      display: none;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input[type="file"],
+    input[type="text"],
+    input[type="password"],
+    select {
+      background: #0e1422;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    button {
+      background: #142341;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: #1b3a73;
+      border-color: #2b56a5;
+    }
+
+    button.danger {
+      background: #2a0f14;
+      border-color: #6a2631;
+      color: #ffd6d6;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      background: #0e1422;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+
+    .dot.ok {
+      background: var(--ok);
+    }
+
+    .dot.bad {
+      background: var(--danger);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .charts {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
-    .stat-card {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
+
+    .chart {
+      background: #0e1422;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
     }
-    .stat-number {
-      font-size: 2em;
-      font-weight: bold;
-      color: #3498db;
+
+    .chart h3 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
     }
-    .stat-label {
-      color: #7f8c8d;
-      margin-top: 5px;
+
+    svg {
+      width: 100%;
+      height: 260px;
+      display: block;
     }
-    .chart-container {
-      margin: 40px 0;
-      padding: 20px;
-      background: #f8f9fa;
-      border-radius: 8px;
-    }
-    .chart-title {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-      color: #2c3e50;
-    }
-    .chart-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-      gap: 30px;
-    }
-    .chart-wrapper {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    .log {
+      margin-top: 10px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      max-height: 220px;
+      overflow: auto;
+      white-space: pre-wrap;
     }
   </style>
+  <script defer src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
+
 <body>
-  <div class="container">
-    <h1>🎬 Your Movie Year in Review</h1>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">486</div>
-        <div class="stat-label">Total Films</div>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Wrapboxd</h1>
+        <div class="sub">Static report (generated offline, vanilla JS + D3)</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">479</div>
-        <div class="stat-label">Rated Films</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">3.4</div>
-        <div class="stat-label">Average Rating</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">48</div>
-        <div class="stat-label">Rewatches</div>
-      </div>
-    </div>
+      <div class="badges"></div>
+    </header>
 
-    <div class="chart-grid" id="charts">
-      
-    <div class="chart-wrapper">
-      <h3>Rating Distribution</h3>
-      <canvas id="ratingChart" width="400" height="300"></canvas>
-    </div>
+    <nav class="tabs" role="tablist" aria-label="Wrapboxd tabs">
+      <button class="tab-btn" id="tabBtnPresentation" type="button" role="tab" aria-controls="tabPresentation"
+        aria-selected="false">
+        Presentation
+      </button>
+      <button class="tab-btn" id="tabBtnData" type="button" role="tab" aria-controls="tabData" aria-selected="true">
+        Data
+      </button>
+    </nav>
 
-    <div class="chart-wrapper">
-      <h3>Decade Distribution</h3>
-      <canvas id="decadeChart" width="400" height="300"></canvas>
-    </div>
+    <section class="tab-panel" id="tabPresentation" role="tabpanel" hidden>
+      <section class="card">
+        <h2>Presentation</h2>
+        <div class="row" style="margin-bottom: 10px">
+          <label for="rangeStart">Start</label>
+          <input id="rangeStart" type="date" />
+          <label for="rangeEnd">End</label>
+          <input id="rangeEnd" type="date" />
+          <button id="applyRangeBtn">Apply</button>
+          <button class="primary" id="show2025Btn">Show 2025</button>
+          <button class="danger" id="clearRangeBtn">Clear</button>
+        </div>
+        <div class="hint" id="rangeHint" style="margin-bottom: 12px">
+          Filter charts by watch date. “Show 2025” sets Jan 1 → Dec 31, 2025.
+        </div>
+        <div class="charts">
+          <div class="chart">
+            <h3>Ratings histogram</h3>
+            <svg id="chartRatings" role="img" aria-label="Ratings histogram"></svg>
+          </div>
+          <div class="chart">
+            <h3>Watches by month</h3>
+            <svg id="chartMonths" role="img" aria-label="Watches by month"></svg>
+          </div>
+          <div class="chart">
+            <h3>Release year distribution</h3>
+            <svg id="chartYears" role="img" aria-label="Release year distribution"></svg>
+          </div>
+          <div class="chart">
+            <h3>Average rating by month</h3>
+            <svg id="chartAvgRating" role="img" aria-label="Average rating by month"></svg>
+          </div>
+          <div class="chart">
+            <h3>Cumulative watches</h3>
+            <svg id="chartCumulative" role="img" aria-label="Cumulative watches"></svg>
+          </div>
+          <div class="chart">
+            <h3>Rewatches by month</h3>
+            <svg id="chartRewatches" role="img" aria-label="Rewatches by month"></svg>
+          </div>
+          <div class="chart">
+            <h3>Watches by weekday</h3>
+            <svg id="chartWeekdays" role="img" aria-label="Watches by weekday"></svg>
+          </div>
+          <div class="chart">
+            <h3>Average rating by release year</h3>
+            <svg id="chartRatingByYear" role="img" aria-label="Average rating by release year"></svg>
+          </div>
+          <div class="chart">
+            <h3>Top months (watches)</h3>
+            <svg id="chartTopMonths" role="img" aria-label="Top months by watches"></svg>
+          </div>
+          <div class="chart">
+            <h3>Top years (watches)</h3>
+            <svg id="chartTopYears" role="img" aria-label="Top years by watches"></svg>
+          </div>
+          <div class="chart">
+            <h3>Rating vs runtime (TMDB)</h3>
+            <svg id="chartRatingRuntime" role="img" aria-label="Rating vs runtime scatter"></svg>
+          </div>
+          <div class="chart">
+            <h3>Rating vs release year</h3>
+            <svg id="chartRatingReleaseYear" role="img" aria-label="Rating vs release year scatter"></svg>
+          </div>
+          <div class="chart">
+            <h3>Top directors (TMDB)</h3>
+            <svg id="chartDirectors" role="img" aria-label="Top directors"></svg>
+          </div>
+          <div class="chart">
+            <h3>Genres (TMDB)</h3>
+            <svg id="chartGenres" role="img" aria-label="Genres distribution"></svg>
+          </div>
+          <div class="chart">
+            <h3>Runtime distribution (TMDB)</h3>
+            <svg id="chartRuntime" role="img" aria-label="Runtime distribution"></svg>
+          </div>
+        </div>
+        <p class="hint" style="margin-top: 12px">
+          Charts update automatically after you select a Letterboxd export ZIP on the Data tab.
+        </p>
+      </section>
+    </section>
 
-    <div class="chart-wrapper">
-      <h3>Monthly Viewing Activity</h3>
-      <canvas id="monthlyChart" width="400" height="300"></canvas>
-    </div>
+    <section class="tab-panel" id="tabData" role="tabpanel">
+      <section class="card">
+        <h2>Data</h2>
+        <div class="hint" style="margin-bottom: 10px">
+          This is a generated static report. It includes the Letterboxd data and (optionally) TMDB-enriched aggregates
+          baked in at generation time.
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+          <button class="danger" id="resetBtn">Reset</button>
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+          <button id="exportAnalysisBtn">Export analysis (JSON)</button>
+          <button id="exportConfigBtn">Export config (JSON)</button>
+          <button id="exportCacheStatsBtn">Export cache stats (JSON)</button>
+          <button id="exportAllBtn">Export all (ZIP)</button>
+        </div>
+        <div class="mono" id="stats"></div>
 
-    <div class="chart-wrapper">
-      <h3>Top Genres</h3>
-      <canvas id="genreChart" width="400" height="300"></canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <h3>Release Year Timeline</h3>
-      <canvas id="yearChart" width="400" height="300"></canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <h3>Rewatch Patterns</h3>
-      <canvas id="rewatchChart" width="400" height="300"></canvas>
-    </div>
-  
-    </div>
+        <h2 style="margin-top: 16px">TMDB cache (used during generation)</h2>
+        <div class="hint">
+          TMDB responses are cached locally during generation to avoid spamming the API across multiple runs.
+          This report does not make any live TMDB requests in the browser.
+        </div>
+        <div class="hint" id="tmdbError" style="margin-top: 8px; color: var(--danger)"></div>
+        <div class="mono" id="cacheStats"></div>
+        <div class="mono log" id="log"></div>
+      </section>
+    </section>
   </div>
 
-  <script src="data.js"></script>
-  <script>
-    
-    document.addEventListener('DOMContentLoaded', function() {
-      // Rating Distribution Chart
-      const ratingCtx = document.getElementById('ratingChart').getContext('2d');
-      new Chart(ratingCtx, {
-        type: 'bar',
-        data: {
-          labels: ["1 ⭐","2 ⭐","3 ⭐","4 ⭐","5 ⭐"],
-          datasets: [{
-            label: 'Films',
-            data: [10,60,198,163,48],
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-
-      // Decade Distribution Chart
-      const decadeCtx = document.getElementById('decadeChart').getContext('2d');
-      new Chart(decadeCtx, {
-        type: 'pie',
-        data: {
-          labels: ["1920s","1950s","1960s","1970s","1980s","1990s","2000s","2010s","2020s"],
-          datasets: [{
-            data: [5,3,7,8,20,55,124,91,173],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 205, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)',
-              'rgba(255, 159, 64, 0.6)',
-              'rgba(199, 199, 199, 0.6)',
-              'rgba(83, 102, 255, 0.6)',
-              'rgba(255, 99, 255, 0.6)',
-              'rgba(99, 255, 132, 0.6)'
-            ]
-          }]
-        },
-        options: {
-          responsive: true
-        }
-      });
-
-      // Monthly Viewing Chart
-      const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
-      new Chart(monthlyCtx, {
-        type: 'line',
-        data: {
-          labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
-          datasets: [{
-            label: 'Films Watched',
-            data: [15,24,31,25,28,44,58,55,33,49,76,48],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 2,
-            fill: true
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-
-      // Top Genres Chart
-      const genreCtx = document.getElementById('genreChart').getContext('2d');
-      new Chart(genreCtx, {
-        type: 'bar',
-        data: {
-          labels: ["Uncategorized"],
-          datasets: [{
-            label: 'Films',
-            data: [486],
-            backgroundColor: 'rgba(255, 159, 64, 0.6)',
-            borderColor: 'rgba(255, 159, 64, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-
-      // Release Year Timeline Chart
-      const yearCtx = document.getElementById('yearChart').getContext('2d');
-      new Chart(yearCtx, {
-        type: 'bar',
-        data: {
-          labels: [2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],
-          datasets: [{
-            label: 'Films',
-            data: [6,12,7,7,9,9,9,9,16,7,17,20,30,61,38],
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-
-      // Rewatch Patterns Chart
-      const rewatchCtx = document.getElementById('rewatchChart').getContext('2d');
-      new Chart(rewatchCtx, {
-        type: 'doughnut',
-        data: {
-          labels: ["2 ⭐","3 ⭐","4 ⭐","5 ⭐"],
-          datasets: [{
-            data: [1,8,15,23],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 205, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)'
-            ]
-          }]
-        },
-        options: {
-          responsive: true
-        }
-      });
-    });
-  
-  </script>
+  <script src="./data.js"></script>
+  <script type="module" src="./src/app.js"></script>
 </body>
+
 </html>
