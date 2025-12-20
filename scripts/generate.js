@@ -64,31 +64,48 @@ const argv = yargs(hideBin(process.argv))
   .argv;
 
 async function main() {
-  const zipPath = argv.zip;
+  let zipPath = argv.zip;
   const outputDir = argv.output;
   const dataDir = argv['data-dir'];
   const noTmdb = Boolean(argv['no-tmdb']);
   const concurrency = Number(argv.concurrency) || 3;
   const title = argv.title || 'Wrapboxd';
   const extrasPathRaw = argv.extras;
+  let useExample = Boolean(argv.example);
 
   console.log(`🎬 Wrapboxd Static Site Generator (Reveal.js)`);
   console.log(`📤 Output directory: ${outputDir}`);
 
   try {
-    if (!argv.example) {
+    // Convenience default: if neither --zip nor --example is provided,
+    // try to auto-detect a single .zip in the current working directory.
+    if (!useExample && !zipPath) {
+      const cwd = process.cwd();
+      const entries = await fs.readdir(cwd);
+      const zips = entries.filter((f) => String(f).toLowerCase().endsWith(".zip"));
+      if (zips.length === 1) {
+        zipPath = path.join(cwd, zips[0]);
+      } else {
+        useExample = true;
+      }
+    }
+
+    if (useExample) {
+      console.log(`🧪 Using built-in example data`);
+      if (!argv.example && !argv.zip) {
+        console.log(`ℹ️  Tip: pass --zip path/to/export.zip to generate your real deck`);
+      }
+    } else {
       if (!zipPath) throw new Error("Missing --zip (or pass --example).");
       console.log(`📁 Processing ZIP: ${zipPath}`);
       if (!await fs.pathExists(zipPath)) throw new Error(`ZIP file not found: ${zipPath}`);
-    } else {
-      console.log(`🧪 Using built-in example data`);
     }
 
     // Create output directory
     await fs.ensureDir(outputDir);
 
     // Parse Letterboxd ZIP (Node)
-    const parsed = argv.example ? buildExampleParsed() : await processZipFile(zipPath);
+    const parsed = useExample ? buildExampleParsed() : await processZipFile(zipPath);
 
     // Compute core analytics (Letterboxd-only)
     const computedAll = computeFromLetterboxd({ diary: parsed.diary, films: parsed.films });
@@ -106,8 +123,8 @@ async function main() {
     }
 
     // Optional: TMDB enrichment (cached in SQLite)
-    const secrets = argv.example ? {} : await loadSecrets({ rootDir: path.join(__dirname, "..") });
-    const tmdbEnabled = !argv.example
+    const secrets = useExample ? {} : await loadSecrets({ rootDir: path.join(__dirname, "..") });
+    const tmdbEnabled = !useExample
       && !noTmdb
       && Boolean(
         (secrets?.TMDB_BEARER_TOKEN || "").trim()
@@ -143,7 +160,7 @@ async function main() {
     const payload = {
       meta: {
         generatedAt: new Date().toISOString(),
-        sourceZip: argv.example ? "example" : path.basename(zipPath),
+        sourceZip: useExample ? "example" : path.basename(zipPath),
         tmdbEnabled,
       },
       extras,
