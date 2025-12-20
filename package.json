@@ -1,25 +1,16 @@
 {
-    "name": "wrapboxd",
-    "version": "1.0.0",
-    "description": "Letterboxd movie analytics web application with TMDB integration",
-    "main": "server.js",
-    "scripts": {
-        "start": "node server.js",
-        "dev": "node server.js",
-        "watch": "node server.js"
-    },
-    "dependencies": {
-        "express": "^4.18.2",
-        "cors": "^2.8.5",
-        "multer": "^1.4.5-lts.1",
-        "chokidar": "^3.5.3"
-    },
-    "keywords": [
-        "letterboxd",
-        "movies",
-        "analytics",
-        "charts"
-    ],
-    "author": "",
-    "license": "MIT"
+  "name": "wrapboxd",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node server/index.js",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "express": "^4.21.2"
+  }
 }
