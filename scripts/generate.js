@@ -11,7 +11,7 @@ import { openDb } from "./lib/db.js";
 import { createTmdbService } from "./lib/tmdb.js";
 import { loadSecrets } from "./lib/secrets.js";
 import { computeFromLetterboxd } from "../public/src/analytics/compute.js";
-import { generateSlides } from "./lib/slides.js";
+import { generateSlides, generateAIPrompts } from "./lib/slides.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -144,6 +144,9 @@ async function main() {
 
     // Generate reveal.js presentation
     await generateRevealSite(payload, outputDir, { title });
+    
+    // Generate AI prompts file
+    await generatePromptsFile(payload, outputDir);
 
     console.log(`✅ Presentation generated successfully!`);
     console.log(`🌐 Open ${path.join(outputDir, 'index.html')} in your browser`);
@@ -290,6 +293,15 @@ async function generateRevealSite(payload, outputDir, { title = 'Wrapboxd' } = {
 
 function countSlides(html) {
   return (html.match(/<section/g) || []).length;
+}
+
+async function generatePromptsFile(payload, outputDir) {
+  console.log(`🤖 Generating AI prompts...`);
+  
+  const prompts = generateAIPrompts(payload);
+  await fs.writeFile(path.join(outputDir, 'prompts.md'), prompts);
+  
+  console.log(`  📝 Generated prompts.md`);
 }
 
 function escapeHtml(str) {

@@ -648,6 +648,203 @@
   }
 
   /**
+   * Donut Chart - for percentages
+   */
+  function renderDonut(container, data, { valueKey = 'value', labelKey = 'label' } = {}) {
+    if (!data || !data.length) return renderEmptyState(container, 'No data');
+    
+    const rect = container.getBoundingClientRect();
+    const width = rect.width || 800;
+    const height = rect.height || 600;
+    const radius = Math.min(width, height) / 2 - 60;
+    
+    const svg = d3.select(container)
+      .append('svg')
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+    
+    const g = svg.append('g')
+      .attr('transform', `translate(${width/2},${height/2})`);
+    
+    const colorScale = d3.scaleOrdinal()
+      .domain(data.map(d => d[labelKey]))
+      .range([COLORS.primary, COLORS.secondary, COLORS.tertiary, COLORS.muted, '#555555']);
+    
+    const pie = d3.pie()
+      .value(d => d[valueKey])
+      .sort(null);
+    
+    const arc = d3.arc()
+      .innerRadius(radius * 0.6)
+      .outerRadius(radius);
+    
+    g.selectAll('path')
+      .data(pie(data))
+      .join('path')
+      .attr('d', arc)
+      .attr('fill', d => colorScale(d.data[labelKey]))
+      .attr('stroke', COLORS.text)
+      .attr('stroke-width', 2);
+    
+    // Center label (total)
+    const total = data.reduce((sum, d) => sum + d[valueKey], 0);
+    g.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', '-0.2em')
+      .style('font-family', FONT.display)
+      .style('font-size', '72px')
+      .style('fill', COLORS.text)
+      .text(total);
+    
+    g.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', '1.5em')
+      .style('font-family', FONT.body)
+      .style('font-size', '24px')
+      .style('fill', COLORS.textMuted)
+      .text('total');
+  }
+
+  /**
+   * Scatter Plot - for correlations
+   */
+  function renderScatter(container, data, { xKey = 'x', yKey = 'y', xLabel = '', yLabel = '' } = {}) {
+    if (!data || !data.length) return renderEmptyState(container, 'No data');
+    
+    const rect = container.getBoundingClientRect();
+    const width = rect.width || 1600;
+    const height = rect.height || 600;
+    const margin = { top: 40, right: 40, bottom: 80, left: 80 };
+    
+    const svg = d3.select(container)
+      .append('svg')
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+    
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    
+    const g = svg.append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+    
+    const xExtent = d3.extent(data, d => d[xKey]);
+    const yExtent = d3.extent(data, d => d[yKey]);
+    
+    const x = d3.scaleLinear()
+      .domain([xExtent[0] - (xExtent[1] - xExtent[0]) * 0.1, xExtent[1] + (xExtent[1] - xExtent[0]) * 0.1])
+      .range([0, innerWidth]);
+    
+    const y = d3.scaleLinear()
+      .domain([yExtent[0] - 0.5, yExtent[1] + 0.5])
+      .range([innerHeight, 0]);
+    
+    // Grid
+    g.append('g')
+      .attr('class', 'chart-grid')
+      .call(d3.axisLeft(y).ticks(5).tickSize(-innerWidth).tickFormat(''))
+      .call(g => g.selectAll('line').attr('stroke', COLORS.grid));
+    
+    // Dots
+    g.selectAll('.dot')
+      .data(data)
+      .join('circle')
+      .attr('class', 'chart-dot')
+      .attr('cx', d => x(d[xKey]))
+      .attr('cy', d => y(d[yKey]))
+      .attr('r', 8)
+      .attr('fill', COLORS.primary)
+      .attr('opacity', 0.7);
+    
+    // X axis
+    g.append('g')
+      .attr('class', 'chart-axis')
+      .attr('transform', `translate(0,${innerHeight})`)
+      .call(d3.axisBottom(x).ticks(5))
+      .call(g => g.select('.domain').attr('stroke', COLORS.axis));
+    
+    // Y axis
+    g.append('g')
+      .attr('class', 'chart-axis')
+      .call(d3.axisLeft(y).ticks(5))
+      .call(g => g.select('.domain').attr('stroke', COLORS.axis));
+    
+    // Labels
+    if (xLabel) {
+      svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', height - 16)
+        .attr('text-anchor', 'middle')
+        .style('fill', COLORS.textMuted)
+        .style('font-size', '20px')
+        .text(xLabel);
+    }
+  }
+
+  /**
+   * Heatmap - for calendar or correlation matrices
+   */
+  function renderHeatmap(container, data, { xKey = 'x', yKey = 'y', valueKey = 'value' } = {}) {
+    if (!data || !data.length) return renderEmptyState(container, 'No data');
+    
+    const rect = container.getBoundingClientRect();
+    const width = rect.width || 1600;
+    const height = rect.height || 600;
+    const margin = { top: 40, right: 40, bottom: 80, left: 120 };
+    
+    const svg = d3.select(container)
+      .append('svg')
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+    
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    
+    const g = svg.append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+    
+    const xDomain = [...new Set(data.map(d => d[xKey]))];
+    const yDomain = [...new Set(data.map(d => d[yKey]))];
+    
+    const x = d3.scaleBand()
+      .domain(xDomain)
+      .range([0, innerWidth])
+      .padding(0.05);
+    
+    const y = d3.scaleBand()
+      .domain(yDomain)
+      .range([0, innerHeight])
+      .padding(0.05);
+    
+    const maxValue = d3.max(data, d => d[valueKey]);
+    const colorScale = d3.scaleSequential()
+      .domain([0, maxValue])
+      .interpolator(d3.interpolateReds);
+    
+    g.selectAll('rect')
+      .data(data)
+      .join('rect')
+      .attr('x', d => x(d[xKey]))
+      .attr('y', d => y(d[yKey]))
+      .attr('width', x.bandwidth())
+      .attr('height', y.bandwidth())
+      .attr('fill', d => d[valueKey] > 0 ? colorScale(d[valueKey]) : COLORS.muted)
+      .attr('rx', 4);
+    
+    // X axis
+    g.append('g')
+      .attr('class', 'chart-axis')
+      .attr('transform', `translate(0,${innerHeight})`)
+      .call(d3.axisBottom(x).tickSize(0))
+      .call(g => g.select('.domain').remove());
+    
+    // Y axis
+    g.append('g')
+      .attr('class', 'chart-axis')
+      .call(d3.axisLeft(y).tickSize(0))
+      .call(g => g.select('.domain').remove());
+  }
+
+  /**
    * Empty state placeholder
    */
   function renderEmptyState(container, message) {
