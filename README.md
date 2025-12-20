@@ -23,6 +23,21 @@ npm run generate -- --zip path/to/your-letterboxd-export.zip
 npm run generate -- --zip my-data.zip --output my-site
 ```
 
+### 2b. (Optional) Enable TMDB enrichment + caching
+
+TMDB enrichment runs **during generation** (never in the browser) and is cached locally so repeated generator runs don’t spam the API.
+
+```bash
+cp secrets.example.js secrets.js
+# edit secrets.js and set either TMDB_BEARER_TOKEN or TMDB_API_KEY
+```
+
+Cache details:
+
+- **SQLite cache**: `data/cache.sqlite` (gitignored)
+- **Cache keys**: stable per TMDB endpoint + sorted query params
+- **TTL**: optional via `TMDB_CACHE_TTL_DAYS` (default: never expire)
+
 ### 3. View your analytics
 
 Open `dist/index.html` in any web browser - works completely offline!
@@ -59,8 +74,8 @@ Open `dist/index.html` in any web browser - works completely offline!
 
 - **Input**: Letterboxd export ZIP (diary.csv, reviews.csv, etc.)
 - **Processing**: Node.js script parses CSV and generates charts
-- **Output**: Single HTML file with embedded Chart.js visualizations
-- **Dependencies**: Chart.js (CDN), no build tools required
+- **Output**: Static site (HTML + JS + embedded data in `data.js`)
+- **Dependencies**: D3 (CDN), no build tools required
 
 ## Features
 
@@ -89,9 +104,6 @@ Open `dist/index.html` in any web browser - works completely offline!
 ## Development
 
 ```bash
-# Test with sample data
-npm run generate -- --zip example/letterboxd-choicehoney-2025-12-20-17-50-utc.zip
-
 # Custom output directory
 npm run generate -- --zip my-data.zip --output ./my-analytics
 
@@ -104,65 +116,54 @@ npm run generate -- --help
 ```
 wrapboxd/
 ├── scripts/generate.js    # Main generator script
-├── example/              # Sample Letterboxd data
 ├── dist/                 # Generated site (created)
 ├── package.json          # Dependencies and scripts
 └── README.md            # This file
 ```
 
-## What’s implemented right now
+## What’s included in the generated report
 
-- **Server** (`server/`):
-  - Serves static client from `public/`
-  - Cached TMDB endpoints (SQLite):
-    - `/api/tmdb/movie/:id`
-    - `/api/tmdb/movie/:id/credits`
-    - `/api/tmdb/search/movie?query=...&year=...`
-    - `/api/tmdb/find/imdb/:imdbId`
-  - Adds `X-Wrapboxd-Cache: HIT|MISS` header to show caching behavior
-  - `/api/cache/stats` shows SQLite cache size
-- **Client** (`public/`):
-  - Upload a Letterboxd export `.zip` and render D3 charts:
-    - ratings histogram
-    - watches by month
-    - release year distribution
-    - average rating by month
-    - cumulative watches
-    - rewatches by month
-    - watches by weekday
-    - average rating by release year
-    - top months / top years (by watches)
-  - “Enrich with TMDB” to populate additional charts (via cached server calls):
-    - top directors
-    - genre distribution
-    - runtime distribution
-    - rating vs runtime (scatter)
-    - rating vs release year (scatter)
-  - Export buttons:
-    - analysis JSON
-    - config JSON (placeholder for now)
-    - cache stats JSON
-    - export all (ZIP bundle)
+- **Core Letterboxd charts**:
+  - ratings histogram
+  - watches by month
+  - release year distribution
+  - average rating by month
+  - cumulative watches
+  - rewatches by month
+  - watches by weekday
+  - average rating by release year
+  - top months / top years (by watches)
+- **TMDB-enriched charts (optional)**:
+  - top directors
+  - genre distribution
+  - runtime distribution
+  - rating vs runtime (scatter)
+  - rating vs release year (scatter)
+- **Exports**:
+  - analysis JSON
+  - config JSON (placeholder)
+  - cache stats JSON (generation-time)
+  - “export all” ZIP bundle
 
 ## Repo layout (current)
 
 ```
 /
-  server/
-    index.js
-    db.js
-    tmdb.js
   public/
     index.html
     src/
       app.js
-      api/tmdb.js
       analytics/compute.js
       charts/d3charts.js
       letterboxd/parseZip.js
       ui/dom.js
-  data/                # runtime sqlite db lives here (gitignored)
-  REDO_PLAN.md
+  scripts/
+    generate.js
+    lib/
+      db.js            # sqlite cache helpers
+      tmdb.js          # cached TMDB client
+      secrets.js       # secrets loader
+  data/                # sqlite TMDB cache lives here (gitignored)
 ```
 
 ## TMDB attribution

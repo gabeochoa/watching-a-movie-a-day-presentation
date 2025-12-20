@@ -1,30 +1,20 @@
 import { el, on, setText, downloadJson } from "./ui/dom.js";
 import { parseLetterboxdZip } from "./letterboxd/parseZip.js";
+import { computeFromLetterboxd } from "./analytics/compute.js";
 import {
   renderBarChart,
   renderHorizontalBarChart,
   renderLineChart,
   renderScatterPlot,
 } from "./charts/d3charts.js";
-import {
-  fetchCacheStats,
-  fetchTmdbCredits,
-  fetchTmdbMovie,
-  findTmdbByImdbId,
-  pingTmdb,
-  searchTmdbMovie,
-} from "./api/tmdb.js";
 
 async function computeData(diary, films) {
-  const res = await fetch("/api/compute", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ diary, films }),
-  });
-  const payload = await res.json();
-  return { status: res.status, ok: res.ok, payload };
+  try {
+    const payload = computeFromLetterboxd({ diary, films });
+    return { status: 200, ok: true, payload };
+  } catch (e) {
+    return { status: 500, ok: false, payload: { error: String(e) } };
+  }
 }
 
 const state = {
@@ -33,26 +23,12 @@ const state = {
   computedAll: null, // full-range computed
   enriched: null,
   enrichmentByFilm: null, // Map(filmKey -> { tmdbId, runtime, releaseYear, genres[], directors[] })
-  tmdbRequestStats: { hit: 0, miss: 0, unknown: 0 },
+  tmdbRequestStats: { hit: 0, miss: 0, unknown: 0 }, // generation-time only (static mode)
+  staticMeta: null, // generation metadata (if present)
+  staticCacheStats: null, // generation-time cache stats (if present)
   runToken: 0,
   dateRange: { start: null, end: null }, // YYYY-MM-DD strings
 };
-
-const TMDB_CONNECT_ERROR = "Could not connect to TMDB, check your API Key";
-
-function setServerPill(ok, text) {
-  const dot = el("#serverDot");
-  dot.classList.remove("ok", "bad");
-  dot.classList.add(ok ? "ok" : "bad");
-  setText(el("#serverText"), text);
-}
-
-function setTmdbPill(ok, text) {
-  const dot = el("#tmdbDot");
-  dot.classList.remove("ok", "bad");
-  dot.classList.add(ok ? "ok" : "bad");
-  setText(el("#tmdbText"), text);
-}
 
 function logLine(msg) {
   const node = el("#log");
@@ -75,13 +51,6 @@ function showTab(which) {
   }
 }
 
-function bumpCacheCounter(cacheHeader) {
-  const v = String(cacheHeader || "").toUpperCase();
-  if (v === "HIT") state.tmdbRequestStats.hit += 1;
-  else if (v === "MISS" || v === "BYPASS") state.tmdbRequestStats.miss += 1;
-  else state.tmdbRequestStats.unknown += 1;
-}
-
 function clearTmdbError() {
   const node = document.querySelector("#tmdbError");
   if (node) setText(node, "");
@@ -92,10 +61,6 @@ function setTmdbError(msg) {
   if (node) setText(node, msg);
   logLine(msg);
   showTab("data");
-}
-
-function isInvalidApiKeyPayload(payload) {
-  return payload && typeof payload === "object" && Number(payload.status_code) === 7;
 }
 
 function toYmd(date) {
@@ -154,51 +119,27 @@ function getFilmKeysFromDiary(diaryRows) {
   return keys;
 }
 
-async function checkServer() {
-  try {
-    const res = await fetch("/api/health");
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    setServerPill(true, "Server: OK");
-  } catch (e) {
-    setServerPill(false, "Server: not reachable");
-    logLine(`Server health check failed: ${String(e)}`);
-  }
-}
-
-async function checkTmdb() {
-  try {
-    const res = await pingTmdb();
-    bumpCacheCounter(res.cache);
-    if (isInvalidApiKeyPayload(res.payload)) {
-      setTmdbPill(false, "TMDB: bad key");
-      return;
-    }
-    if (!res.ok) {
-      setTmdbPill(false, "TMDB: not ready");
-      return;
-    }
-    setTmdbPill(true, "TMDB: OK");
-  } catch {
-    setTmdbPill(false, "TMDB: not reachable");
-  }
-}
-
 async function refreshCacheStatsUi() {
-  try {
-    const { ok, payload } = await fetchCacheStats();
-    if (!ok) return;
+  const payload = state.staticCacheStats;
+  if (!payload) {
     setText(
       el("#cacheStats"),
       [
-        `sqlite cache entries: ${payload.entries}`,
-        `oldest fetched: ${payload.oldestFetchedAt ?? "n/a"}`,
-        `newest fetched: ${payload.newestFetchedAt ?? "n/a"}`,
-        `client tmdb calls: HIT=${state.tmdbRequestStats.hit} MISS=${state.tmdbRequestStats.miss} UNKNOWN=${state.tmdbRequestStats.unknown}`,
+        "cache stats: n/a",
+        "note: this is a static report; TMDB requests happen during generation only.",
       ].join("\n"),
     );
-  } catch {
-    // ignore
+    return;
   }
+  setText(
+    el("#cacheStats"),
+    [
+      `sqlite cache entries: ${payload.entries}`,
+      `oldest fetched: ${payload.oldestFetchedAt ?? "n/a"}`,
+      `newest fetched: ${payload.newestFetchedAt ?? "n/a"}`,
+      `generation tmdb calls: HIT=${state.tmdbRequestStats.hit} MISS=${state.tmdbRequestStats.miss} UNKNOWN=${state.tmdbRequestStats.unknown}`,
+    ].join("\n"),
+  );
 }
 
 function render() {
@@ -493,140 +434,13 @@ function computeRuntimeBins(runtimes) {
   return bins;
 }
 
-async function enrichWithTmdb() {
-  if (!state.parsed || !state.computed) {
-    logLine("Analyze a Letterboxd ZIP first.");
-    return;
-  }
-  clearTmdbError();
-
-  const films = normalizeDiaryFilms(state.parsed);
-  if (!films.length) {
-    logLine("No diary films found to enrich.");
-    return;
-  }
-
-  logLine(`Enriching ${films.length} films with TMDB (cached by server)…`);
-
-  const perFilm = new Map();
-  let mapped = 0;
-  let failed = 0;
-  const stopRef = { aborted: false };
-
-  await promisePool(
-    films,
-    async (film) => {
-      if (stopRef.aborted) return null;
-      try {
-        let tmdbId = null;
-        if (film.imdbId) {
-          const r = await findTmdbByImdbId(film.imdbId);
-          bumpCacheCounter(r.cache);
-          if (isInvalidApiKeyPayload(r.payload)) {
-            stopRef.aborted = true;
-            setTmdbError(TMDB_CONNECT_ERROR);
-            return null;
-          }
-          const id = r.payload?.movie_results?.[0]?.id ?? null;
-          tmdbId = id ? String(id) : null;
-        }
-
-        if (!tmdbId) {
-          const r = await searchTmdbMovie({ query: film.title, year: film.year ?? undefined });
-          bumpCacheCounter(r.cache);
-          if (isInvalidApiKeyPayload(r.payload)) {
-            stopRef.aborted = true;
-            setTmdbError(TMDB_CONNECT_ERROR);
-            return null;
-          }
-          const id = r.payload?.results?.[0]?.id ?? null;
-          tmdbId = id ? String(id) : null;
-        }
-
-        if (!tmdbId) {
-          failed += 1;
-          return null;
-        }
-
-        const detailsRes = await fetchTmdbMovie(tmdbId);
-        bumpCacheCounter(detailsRes.cache);
-        if (isInvalidApiKeyPayload(detailsRes.payload)) {
-          stopRef.aborted = true;
-          setTmdbError(TMDB_CONNECT_ERROR);
-          return null;
-        }
-        if (!detailsRes.ok) throw new Error(`details status ${detailsRes.status}`);
-        const details = detailsRes.payload;
-
-        const creditsRes = await fetchTmdbCredits(tmdbId);
-        bumpCacheCounter(creditsRes.cache);
-        if (isInvalidApiKeyPayload(creditsRes.payload)) {
-          stopRef.aborted = true;
-          setTmdbError(TMDB_CONNECT_ERROR);
-          return null;
-        }
-        if (!creditsRes.ok) throw new Error(`credits status ${creditsRes.status}`);
-        const credits = creditsRes.payload;
-
-        mapped += 1;
-
-        const genres = (details.genres ?? [])
-          .map((g) => String(g?.name ?? "").trim())
-          .filter(Boolean);
-
-        const dirs = (credits.crew ?? [])
-          .filter((c) => c && c.job === "Director")
-          .map((d) => String(d?.name ?? "").trim())
-          .filter(Boolean);
-
-        const runtime = Number(details.runtime);
-        const releaseYear = film.year ?? toReleaseYearFromTmdb(details);
-        perFilm.set(film.key, {
-          tmdbId,
-          runtime: Number.isFinite(runtime) ? runtime : null,
-          releaseYear: Number.isFinite(releaseYear) ? releaseYear : null,
-          genres,
-          directors: dirs,
-        });
-
-        return { filmKey: film.key, tmdbId };
-      } catch (e) {
-        failed += 1;
-        logLine(`Enrich failed for "${film.title}" (${film.year ?? "n/a"}): ${String(e)}`);
-        return null;
-      } finally {
-        if ((mapped + failed) % 10 === 0) {
-          logLine(`Progress: mapped=${mapped} failed=${failed}`);
-          await refreshCacheStatsUi();
-        }
-      }
-    },
-    { concurrency: 3 },
-  );
-
-  if (stopRef.aborted) {
-    await refreshCacheStatsUi();
-    // Do not overwrite charts with partial TMDB output.
-    return;
-  }
-
-  state.enrichmentByFilm = perFilm;
-  // Compute enriched aggregates for the currently visible date range.
-  const filteredDiary = filterDiaryByRange(state.parsed.diary, state.dateRange);
-  const agg = computeEnrichedAggregatesForDiary(filteredDiary);
-  state.enriched = agg ? { ...agg, mapped, failed } : { mapped, failed };
-  logLine(`Enrichment complete: mapped=${mapped} failed=${failed}`);
-  await refreshCacheStatsUi();
-  render();
-}
-
 async function analyzeZipFile(zipFile, { auto = false } = {}) {
   if (!zipFile) return;
   const myToken = (state.runToken += 1);
 
   try {
     clearTmdbError();
-    if (auto) logLine(`ZIP selected: ${zipFile.name} — auto analyzing…`);
+    if (auto) logLine(`ZIP selected: ${zipFile.name} — analyzing locally…`);
     else logLine(`Parsing zip: ${zipFile.name}`);
 
     state.parsed = await parseLetterboxdZip(zipFile);
@@ -668,11 +482,6 @@ async function analyzeZipFile(zipFile, { auto = false } = {}) {
     render();
     logLine("Rendered charts.");
     await refreshCacheStatsUi();
-
-    // Auto-enrich immediately after analysis. If TMDB isn't configured on the server,
-    // we keep the app usable and just log the failure.
-    logLine("Auto enriching with TMDB…");
-    await enrichWithTmdb();
   } catch (e) {
     if (auto) logLine(`Auto analyze failed: ${String(e)}`);
     else logLine(`Analyze failed: ${String(e)}`);
@@ -692,10 +501,15 @@ function initUi() {
     }
   });
 
-  on(el("#lbZip"), "change", async () => {
-    const zipFile = el("#lbZip").files?.[0];
-    await analyzeZipFile(zipFile, { auto: true });
-  });
+  // In static mode we do not require uploading a ZIP, but we keep the parser available
+  // for convenience if the template is reused elsewhere.
+  const lbZip = document.querySelector("#lbZip");
+  if (lbZip) {
+    on(el("#lbZip"), "change", async () => {
+      const zipFile = el("#lbZip").files?.[0];
+      await analyzeZipFile(zipFile, { auto: true });
+    });
+  }
 
   on(el("#applyRangeBtn"), "click", async () => {
     state.dateRange = {
@@ -744,8 +558,7 @@ function initUi() {
   });
 
   on(el("#exportCacheStatsBtn"), "click", async () => {
-    const res = await fetchCacheStats();
-    downloadJson("wrapboxd-cache-stats.json", res.payload);
+    downloadJson("wrapboxd-cache-stats.json", state.staticCacheStats ?? { note: "n/a (static report)" });
     logLine("Exported cache stats JSON.");
   });
 
@@ -755,12 +568,13 @@ function initUi() {
       if (!JSZip) throw new Error("JSZip not loaded.");
       const zip = new JSZip();
 
-      const cacheStats = await fetchCacheStats();
+      const cacheStats = { payload: state.staticCacheStats ?? { note: "n/a (static report)" } };
       const analysis = state.computed
         ? {
             computed: state.computed,
             enriched: state.enriched,
             tmdbRequestStats: state.tmdbRequestStats,
+            meta: state.staticMeta,
           }
         : { error: "No analysis yet (run Analyze first)." };
       const config = { version: 1 };
@@ -784,39 +598,68 @@ function initUi() {
       logLine(`Export all failed: ${String(e)}`);
     }
   });
+}
 
-  on(el("#fetchMovieBtn"), "click", async () => {
-    const id = String(el("#demoTmdbId").value || "").trim();
-    if (!id) return logLine("Enter a TMDB ID first.");
-    try {
-      const { ok, status, cache, payload } = await fetchTmdbMovie(id);
-      bumpCacheCounter(cache);
-      await refreshCacheStatsUi();
-      if (isInvalidApiKeyPayload(payload)) {
-        setTmdbError(TMDB_CONNECT_ERROR);
-        return;
-      }
-      if (!ok) {
-        logLine(`TMDB error status=${status} cache=${cache} payload=${JSON.stringify(payload)}`);
-        return;
-      }
-      logLine(`TMDB movie status=${status} cache=${cache} title=${payload.title ?? "n/a"}`);
-    } catch (e) {
-      logLine(`TMDB request failed: ${String(e)}`);
+function tryLoadStaticPayload() {
+  const payload = window.WRAPBOXD_STATIC_DATA;
+  if (!payload || typeof payload !== "object") return false;
+
+  try {
+    state.staticMeta = payload.meta ?? null;
+    state.staticCacheStats = payload.tmdbCacheStats ?? null;
+    state.tmdbRequestStats = payload.tmdbRequestStats ?? { hit: 0, miss: 0, unknown: 0 };
+
+    state.parsed = payload.parsed ?? null;
+    state.computedAll = payload.computedAll ?? null;
+    state.computed = payload.computedAll ?? null;
+
+    const entries = payload.enrichmentByFilm ?? [];
+    if (Array.isArray(entries) && entries.length) {
+      state.enrichmentByFilm = new Map(entries);
+    } else {
+      state.enrichmentByFilm = null;
     }
-  });
+    state.enriched = payload.enrichedAll ?? null;
+
+    if (state.parsed?.diary) {
+      const bounds = getDiaryDateBounds(state.parsed.diary);
+      const start = bounds.min ? toYmd(bounds.min) : null;
+      const end = bounds.max ? toYmd(bounds.max) : null;
+      state.dateRange = { start, end };
+
+      const startEl = document.querySelector("#rangeStart");
+      const endEl = document.querySelector("#rangeEnd");
+      if (startEl) {
+        startEl.min = start ?? "";
+        startEl.max = end ?? "";
+        startEl.value = start ?? "";
+      }
+      if (endEl) {
+        endEl.min = start ?? "";
+        endEl.max = end ?? "";
+        endEl.value = end ?? "";
+      }
+    }
+
+    logLine("Loaded embedded static report data.");
+    return true;
+  } catch (e) {
+    logLine(`Failed to load embedded static report data: ${String(e)}`);
+    return false;
+  }
 }
 
 async function main() {
   initUi();
   showTab("data");
   render();
-  await checkServer();
-  await checkTmdb();
+  const loaded = tryLoadStaticPayload();
+  render();
+  if (loaded) showTab("presentation");
   await refreshCacheStatsUi();
 
   window.addEventListener("resize", () => {
-    if (!el("#tabData").hidden && state.computed) render();
+    if (!el("#tabPresentation").hidden && state.computed) render();
   });
 }
 

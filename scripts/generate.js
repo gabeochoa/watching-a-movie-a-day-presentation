@@ -7,6 +7,10 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import JSZip from 'jszip';
 import Papa from 'papaparse';
+import { openDb } from "./lib/db.js";
+import { createTmdbService } from "./lib/tmdb.js";
+import { loadSecrets } from "./lib/secrets.js";
+import { computeFromLetterboxd } from "../public/src/analytics/compute.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,12 +28,30 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
     default: 'dist'
   })
+  .option('data-dir', {
+    describe: 'Directory for local SQLite TMDB cache (data/cache.sqlite)',
+    type: 'string',
+    default: 'data'
+  })
+  .option('no-tmdb', {
+    describe: 'Disable TMDB enrichment (Letterboxd-only report)',
+    type: 'boolean',
+    default: false
+  })
+  .option('concurrency', {
+    describe: 'Max concurrent TMDB requests during enrichment',
+    type: 'number',
+    default: 3
+  })
   .help()
   .argv;
 
 async function main() {
   const zipPath = argv.zip;
   const outputDir = argv.output;
+  const dataDir = argv['data-dir'];
+  const noTmdb = Boolean(argv['no-tmdb']);
+  const concurrency = Number(argv.concurrency) || 3;
 
   console.log(`🎬 Wrapboxd Static Site Generator`);
   console.log(`📁 Processing ZIP: ${zipPath}`);
@@ -44,11 +66,61 @@ async function main() {
     // Create output directory
     await fs.ensureDir(outputDir);
 
-    // Process ZIP file
-    const data = await processZipFile(zipPath);
+    // Parse Letterboxd ZIP (Node)
+    const parsed = await processZipFile(zipPath);
+
+    // Compute core analytics (Letterboxd-only)
+    const computedAll = computeFromLetterboxd({ diary: parsed.diary, films: parsed.films });
+
+    // Optional: TMDB enrichment (cached in SQLite)
+    const secrets = await loadSecrets({ rootDir: path.join(__dirname, "..") });
+    const tmdbEnabled = !noTmdb && Boolean((secrets?.TMDB_BEARER_TOKEN || "").trim() || (secrets?.TMDB_API_KEY || "").trim() || (process.env.TMDB_BEARER_TOKEN || "").trim() || (process.env.TMDB_API_KEY || "").trim());
+
+    const tmdbRequestStats = { hit: 0, miss: 0, unknown: 0 };
+    const db = openDb({ dataDir });
+    const tmdb = createTmdbService({
+      db,
+      bearerToken: secrets?.TMDB_BEARER_TOKEN,
+      apiKey: secrets?.TMDB_API_KEY,
+    });
+
+    let enrichmentByFilm = [];
+    let enrichedAll = null;
+
+    if (tmdbEnabled) {
+      const films = normalizeDiaryFilms(parsed);
+      console.log(`🧠 TMDB enrichment enabled (films: ${films.length}, concurrency: ${concurrency})`);
+      const result = await enrichFilmsWithTmdb({ films, tmdb, tmdbRequestStats, concurrency });
+      enrichmentByFilm = Array.from(result.perFilm.entries());
+      enrichedAll = computeEnrichedAggregatesForDiary(parsed.diary, new Map(enrichmentByFilm), { mapped: result.mapped, failed: result.failed });
+      console.log(`✅ TMDB enrichment complete: mapped=${result.mapped} failed=${result.failed}`);
+    } else {
+      console.log(`ℹ️  TMDB enrichment disabled (no key/token or --no-tmdb).`);
+    }
+
+    const payload = {
+      meta: {
+        generatedAt: new Date().toISOString(),
+        sourceZip: path.basename(zipPath),
+        tmdbEnabled,
+      },
+      parsed: {
+        zipFileNames: parsed.zipFileNames,
+        filesFound: parsed.filesFound,
+        diary: parsed.diary,
+        films: parsed.films,
+        ratings: parsed.ratings,
+        watched: parsed.watched,
+      },
+      computedAll,
+      enrichmentByFilm,
+      enrichedAll,
+      tmdbCacheStats: db.stats(),
+      tmdbRequestStats,
+    };
 
     // Generate static site
-    await generateSite(data, outputDir);
+    await generateSite(payload, outputDir);
 
     console.log(`✅ Site generated successfully!`);
     console.log(`🌐 Open ${path.join(outputDir, 'index.html')} in your browser`);
@@ -65,563 +137,309 @@ async function processZipFile(zipPath) {
   const zipData = await fs.readFile(zipPath);
   const zip = await JSZip.loadAsync(zipData);
 
-  const csvFiles = {};
-  const allowedFiles = [
-    'diary.csv',
-    'reviews.csv',
-    'watched.csv',
-    'ratings.csv',
-    'profile.csv',
-    'watchlist.csv'
-  ];
+  const zipFileNames = Object.keys(zip.files || {});
+  const candidates = {
+    diary: ["diary.csv", "diary-entries.csv"],
+    films: ["films.csv"],
+    ratings: ["ratings.csv"],
+    watched: ["watched.csv"],
+  };
 
-  // Extract allowed CSV files
-  for (const filename of allowedFiles) {
-    if (zip.files[filename]) {
-      console.log(`  📄 Found: ${filename}`);
-      const content = await zip.files[filename].async('text');
-      csvFiles[filename] = Papa.parse(content, {
-        header: true,
-        skipEmptyLines: true
-      }).data;
+  async function readZipText(name) {
+    const file = zip.files[name];
+    if (!file) return null;
+    return file.async("text");
+  }
+
+  async function firstMatch(names) {
+    for (const n of names) {
+      // eslint-disable-next-line no-await-in-loop
+      const content = await readZipText(n);
+      if (content != null) return { name: n, content };
     }
+    return null;
   }
 
-  if (!csvFiles['diary.csv']) {
-    throw new Error('diary.csv not found in ZIP file. This is required for analysis.');
+  function parseCsv(content) {
+    const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
+    return parsed.data ?? [];
   }
 
-  console.log(`📊 Processing data...`);
+  const diaryFile = await firstMatch(candidates.diary);
+  if (!diaryFile) throw new Error("diary.csv not found in ZIP file (required).");
 
-  // Process the data
-  const processedData = processData(csvFiles);
+  const filmsFile = await firstMatch(candidates.films);
+  const ratingsFile = await firstMatch(candidates.ratings);
+  const watchedFile = await firstMatch(candidates.watched);
 
-  return processedData;
-}
-
-function processData(csvFiles) {
-  const diary = csvFiles['diary.csv'] || [];
-  const reviews = csvFiles['reviews.csv'] || [];
-  const ratings = csvFiles['ratings.csv'] || [];
-  const profile = csvFiles['profile.csv'] || [];
+  const diary = parseCsv(diaryFile.content);
+  const films = filmsFile ? parseCsv(filmsFile.content) : [];
+  const ratings = ratingsFile ? parseCsv(ratingsFile.content) : [];
+  const watched = watchedFile ? parseCsv(watchedFile.content) : [];
 
   console.log(`  📈 Diary entries: ${diary.length}`);
-  console.log(`  📝 Reviews: ${reviews.length}`);
-  console.log(`  ⭐ Ratings: ${ratings.length}`);
-
-  // Basic data validation and processing
-  const films = processFilms(diary, reviews);
-  const stats = calculateStats(films);
-  const charts = generateChartData(films);
+  console.log(`  🎞️ Films rows: ${films.length}`);
+  console.log(`  ⭐ Ratings rows: ${ratings.length}`);
+  console.log(`  👀 Watched rows: ${watched.length}`);
 
   return {
+    zipFileNames,
+    filesFound: {
+      diary: diaryFile.name,
+      films: filmsFile?.name ?? null,
+      ratings: ratingsFile?.name ?? null,
+      watched: watchedFile?.name ?? null,
+    },
+    diary,
     films,
-    stats,
-    charts,
-    raw: csvFiles
+    ratings,
+    watched,
   };
 }
 
-function processFilms(diary, reviews) {
-  // Merge diary and reviews data
-  const films = [];
-
-  // Process diary entries
-  diary.forEach(entry => {
-    const film = {
-      title: entry.Name,
-      year: parseInt(entry.Year),
-      letterboxdUri: entry['Letterboxd URI'],
-      rating: entry.Rating ? parseInt(entry.Rating) : null,
-      rewatch: entry.Rewatch === 'Yes',
-      tags: entry.Tags ? entry.Tags.split(',').map(tag => tag.trim()) : [],
-      watchedDate: entry['Watched Date'] ? new Date(entry['Watched Date']) : null,
-      diaryDate: new Date(entry.Date)
-    };
-
-    films.push(film);
-  });
-
-  // Merge review text if available
-  reviews.forEach(review => {
-    const existingFilm = films.find(f =>
-      f.title === review.Name &&
-      f.year === parseInt(review.Year)
-    );
-
-    if (existingFilm && review.Review) {
-      existingFilm.review = review.Review;
-    }
-  });
-
-  return films;
-}
-
-function calculateStats(films) {
-  const ratedFilms = films.filter(f => f.rating !== null);
-
-  return {
-    totalFilms: films.length,
-    ratedFilms: ratedFilms.length,
-    averageRating: ratedFilms.length > 0
-      ? ratedFilms.reduce((sum, f) => sum + f.rating, 0) / ratedFilms.length
-      : 0,
-    rewatches: films.filter(f => f.rewatch).length,
-    uniqueTags: [...new Set(films.flatMap(f => f.tags))].filter(tag => tag.length > 0)
-  };
-}
-
-function generateChartData(films) {
-  return {
-    ratingDistribution: generateRatingDistribution(films),
-    releaseYearDistribution: generateReleaseYearDistribution(films),
-    decadeDistribution: generateDecadeDistribution(films),
-    monthlyViewing: generateMonthlyViewing(films),
-    topGenres: generateTopGenres(films),
-    directorAnalysis: generateDirectorAnalysis(films),
-    rewatchPatterns: generateRewatchPatterns(films)
-  };
-}
-
-function generateRatingDistribution(films) {
-  const ratedFilms = films.filter(f => f.rating !== null);
-  const distribution = {};
-
-  // Initialize all ratings 1-5
-  for (let i = 1; i <= 5; i++) {
-    distribution[i] = 0;
-  }
-
-  ratedFilms.forEach(film => {
-    distribution[film.rating] = (distribution[film.rating] || 0) + 1;
-  });
-
-  return Object.entries(distribution).map(([rating, count]) => ({
-    rating: parseInt(rating),
-    count,
-    percentage: (count / ratedFilms.length * 100).toFixed(1)
-  }));
-}
-
-function generateReleaseYearDistribution(films) {
-  const yearCounts = {};
-
-  films.forEach(film => {
-    if (film.year) {
-      yearCounts[film.year] = (yearCounts[film.year] || 0) + 1;
-    }
-  });
-
-  return Object.entries(yearCounts)
-    .map(([year, count]) => ({ year: parseInt(year), count }))
-    .sort((a, b) => a.year - b.year);
-}
-
-function generateDecadeDistribution(films) {
-  const decadeCounts = {};
-
-  films.forEach(film => {
-    if (film.year) {
-      const decade = Math.floor(film.year / 10) * 10;
-      decadeCounts[decade] = (decadeCounts[decade] || 0) + 1;
-    }
-  });
-
-  return Object.entries(decadeCounts)
-    .map(([decade, count]) => ({
-      decade: parseInt(decade),
-      label: `${decade}s`,
-      count
-    }))
-    .sort((a, b) => a.decade - b.decade);
-}
-
-function generateMonthlyViewing(films) {
-  const monthly = {};
-
-  // Initialize months
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-  monthNames.forEach(month => {
-    monthly[month] = 0;
-  });
-
-  films.forEach(film => {
-    if (film.watchedDate) {
-      const month = monthNames[film.watchedDate.getMonth()];
-      monthly[month]++;
-    }
-  });
-
-  return Object.entries(monthly).map(([month, count]) => ({ month, count }));
-}
-
-function generateTopGenres(films) {
-  // For now, extract genres from tags (this could be enhanced with TMDB data later)
-  const genreCounts = {};
-
-  // Common genre keywords to look for
-  const genreKeywords = [
-    'drama', 'comedy', 'action', 'thriller', 'horror', 'romance',
-    'sci-fi', 'science fiction', 'fantasy', 'documentary', 'animation',
-    'adventure', 'crime', 'mystery', 'western', 'musical', 'biography',
-    'war', 'history', 'family', 'sport'
-  ];
-
-  films.forEach(film => {
-    film.tags.forEach(tag => {
-      const lowerTag = tag.toLowerCase();
-      // Check if tag contains genre keywords or is a known genre
-      const matchedGenre = genreKeywords.find(genre =>
-        lowerTag.includes(genre) || genre.includes(lowerTag)
-      );
-      if (matchedGenre) {
-        // Normalize genre names
-        const normalizedGenre = matchedGenre.charAt(0).toUpperCase() + matchedGenre.slice(1);
-        genreCounts[normalizedGenre] = (genreCounts[normalizedGenre] || 0) + 1;
-      }
-    });
-  });
-
-  // If no genres found from tags, create a fallback with basic categorization
-  if (Object.keys(genreCounts).length === 0) {
-    genreCounts['Uncategorized'] = films.length;
-  }
-
-  return Object.entries(genreCounts)
-    .map(([genre, count]) => ({ genre, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 10);
-}
-
-function generateDirectorAnalysis(films) {
-  // This would need TMDB data for actual directors
-  // For now, return a placeholder
-  return [];
-}
-
-function generateRewatchPatterns(films) {
-  const rewatches = films.filter(f => f.rewatch);
-  const byRating = {};
-
-  rewatches.forEach(film => {
-    if (film.rating) {
-      byRating[film.rating] = (byRating[film.rating] || 0) + 1;
-    }
-  });
-
-  return Object.entries(byRating)
-    .map(([rating, count]) => ({ rating: parseInt(rating), count }))
-    .sort((a, b) => a.rating - b.rating);
-}
-
-async function generateSite(data, outputDir) {
+async function generateSite(payload, outputDir) {
   console.log(`🎨 Generating static site...`);
 
-  // Copy template files
-  const templateDir = path.join(__dirname, '..', 'public');
+  const templateDir = path.join(__dirname, "..", "public");
   if (await fs.pathExists(templateDir)) {
     await fs.copy(templateDir, outputDir);
+  } else {
+    throw new Error(`Missing template directory: ${templateDir}`);
   }
 
-  // Generate main HTML file
-  const htmlContent = generateHTML(data);
-  await fs.writeFile(path.join(outputDir, 'index.html'), htmlContent);
-
-  // Generate data file for charts
-  const dataContent = `window.wrapboxdData = ${JSON.stringify(data, null, 2)};`;
-  await fs.writeFile(path.join(outputDir, 'data.js'), dataContent);
+  const dataContent = `// Generated by Wrapboxd Static Site Generator\n// eslint-disable-next-line no-unused-vars\nwindow.WRAPBOXD_STATIC_DATA = ${JSON.stringify(payload)};\n`;
+  await fs.writeFile(path.join(outputDir, "data.js"), dataContent);
 }
 
-function generateHTML(data) {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wrapboxd - Your Movie Year in Review</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #f5f5f5;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 30px;
-    }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-    .stat-card {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-    }
-    .stat-number {
-      font-size: 2em;
-      font-weight: bold;
-      color: #3498db;
-    }
-    .stat-label {
-      color: #7f8c8d;
-      margin-top: 5px;
-    }
-    .chart-container {
-      margin: 40px 0;
-      padding: 20px;
-      background: #f8f9fa;
-      border-radius: 8px;
-    }
-    .chart-title {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-      color: #2c3e50;
-    }
-    .chart-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-      gap: 30px;
-    }
-    .chart-wrapper {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🎬 Your Movie Year in Review</h1>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">${data.stats.totalFilms}</div>
-        <div class="stat-label">Total Films</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">${data.stats.ratedFilms}</div>
-        <div class="stat-label">Rated Films</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">${data.stats.averageRating.toFixed(1)}</div>
-        <div class="stat-label">Average Rating</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">${data.stats.rewatches}</div>
-        <div class="stat-label">Rewatches</div>
-      </div>
-    </div>
-
-    <div class="chart-grid" id="charts">
-      ${generateChartHTML(data.charts)}
-    </div>
-  </div>
-
-  <script src="data.js"></script>
-  <script>
-    ${generateChartScripts(data.charts)}
-  </script>
-</body>
-</html>`;
-}
-
-function generateChartHTML(charts) {
-  return `
-    <div class="chart-wrapper">
-      <h3>Rating Distribution</h3>
-      <canvas id="ratingChart" width="400" height="300"></canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <h3>Decade Distribution</h3>
-      <canvas id="decadeChart" width="400" height="300"></canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <h3>Monthly Viewing Activity</h3>
-      <canvas id="monthlyChart" width="400" height="300"></canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <h3>Top Genres</h3>
-      <canvas id="genreChart" width="400" height="300"></canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <h3>Release Year Timeline</h3>
-      <canvas id="yearChart" width="400" height="300"></canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <h3>Rewatch Patterns</h3>
-      <canvas id="rewatchChart" width="400" height="300"></canvas>
-    </div>
-  `;
-}
-
-function generateChartScripts(charts) {
-  const recentYears = charts.releaseYearDistribution.slice(-15); // Last 15 years
-
-  return `
-    document.addEventListener('DOMContentLoaded', function() {
-      // Rating Distribution Chart
-      const ratingCtx = document.getElementById('ratingChart').getContext('2d');
-      new Chart(ratingCtx, {
-        type: 'bar',
-        data: {
-          labels: ${JSON.stringify(charts.ratingDistribution.map(d => d.rating + ' ⭐'))},
-          datasets: [{
-            label: 'Films',
-            data: ${JSON.stringify(charts.ratingDistribution.map(d => d.count))},
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-
-      // Decade Distribution Chart
-      const decadeCtx = document.getElementById('decadeChart').getContext('2d');
-      new Chart(decadeCtx, {
-        type: 'pie',
-        data: {
-          labels: ${JSON.stringify(charts.decadeDistribution.map(d => d.label))},
-          datasets: [{
-            data: ${JSON.stringify(charts.decadeDistribution.map(d => d.count))},
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 205, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)',
-              'rgba(255, 159, 64, 0.6)',
-              'rgba(199, 199, 199, 0.6)',
-              'rgba(83, 102, 255, 0.6)',
-              'rgba(255, 99, 255, 0.6)',
-              'rgba(99, 255, 132, 0.6)'
-            ]
-          }]
-        },
-        options: {
-          responsive: true
-        }
-      });
-
-      // Monthly Viewing Chart
-      const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
-      new Chart(monthlyCtx, {
-        type: 'line',
-        data: {
-          labels: ${JSON.stringify(charts.monthlyViewing.map(d => d.month))},
-          datasets: [{
-            label: 'Films Watched',
-            data: ${JSON.stringify(charts.monthlyViewing.map(d => d.count))},
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 2,
-            fill: true
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-
-      // Top Genres Chart
-      const genreCtx = document.getElementById('genreChart').getContext('2d');
-      new Chart(genreCtx, {
-        type: 'bar',
-        data: {
-          labels: ${JSON.stringify(charts.topGenres.map(d => d.genre))},
-          datasets: [{
-            label: 'Films',
-            data: ${JSON.stringify(charts.topGenres.map(d => d.count))},
-            backgroundColor: 'rgba(255, 159, 64, 0.6)',
-            borderColor: 'rgba(255, 159, 64, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-
-      // Release Year Timeline Chart
-      const yearCtx = document.getElementById('yearChart').getContext('2d');
-      new Chart(yearCtx, {
-        type: 'bar',
-        data: {
-          labels: ${JSON.stringify(recentYears.map(d => d.year))},
-          datasets: [{
-            label: 'Films',
-            data: ${JSON.stringify(recentYears.map(d => d.count))},
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-
-      // Rewatch Patterns Chart
-      const rewatchCtx = document.getElementById('rewatchChart').getContext('2d');
-      new Chart(rewatchCtx, {
-        type: 'doughnut',
-        data: {
-          labels: ${JSON.stringify(charts.rewatchPatterns.map(d => d.rating + ' ⭐'))},
-          datasets: [{
-            data: ${JSON.stringify(charts.rewatchPatterns.map(d => d.count))},
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 205, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)'
-            ]
-          }]
-        },
-        options: {
-          responsive: true
-        }
-      });
+function normalizeDiaryFilms(parsed) {
+  const films = new Map(); // key -> { key, title, year, imdbId? }
+  const imdbByTitleYear = new Map();
+  for (const row of parsed.films ?? []) {
+    const title = String(row.Name ?? row.name ?? "").trim();
+    const year = String(row.Year ?? row.year ?? "").trim();
+    const imdbId = String(row["IMDb ID"] ?? row.ImdbID ?? row.imdb_id ?? "").trim();
+    if (title && year && imdbId) imdbByTitleYear.set(`${title} (${year})`, imdbId);
+  }
+  for (const row of parsed.diary ?? []) {
+    const title = String(row.Name ?? row.name ?? "").trim();
+    const year = String(row.Year ?? row.year ?? "").trim();
+    if (!title) continue;
+    const key = `${title} (${year || "n/a"})`;
+    if (films.has(key)) continue;
+    films.set(key, {
+      key,
+      title,
+      year: year ? Number(year) : null,
+      imdbId: year ? imdbByTitleYear.get(`${title} (${year})`) ?? null : null,
     });
-  `;
+  }
+  return Array.from(films.values());
+}
+
+async function promisePool(items, worker, { concurrency = 3 } = {}) {
+  const executing = new Set();
+  const results = new Array(items.length);
+  for (let i = 0; i < items.length; i += 1) {
+    const p = (async () => worker(items[i], i))();
+    executing.add(p);
+    p.then((r) => {
+      results[i] = r;
+    }).finally(() => {
+      executing.delete(p);
+    });
+    if (executing.size >= concurrency) {
+      // eslint-disable-next-line no-await-in-loop
+      await Promise.race(executing);
+    }
+  }
+  await Promise.all(executing);
+  return results;
+}
+
+function bumpCacheCounter(tmdbRequestStats, cacheHit, noCache) {
+  if (cacheHit) tmdbRequestStats.hit += 1;
+  else if (noCache) tmdbRequestStats.unknown += 1;
+  else tmdbRequestStats.miss += 1;
+}
+
+function toReleaseYearFromTmdb(details) {
+  const d = String(details?.release_date ?? "").trim();
+  const y = Number.parseInt(d.slice(0, 4), 10);
+  return Number.isFinite(y) ? y : null;
+}
+
+async function enrichFilmsWithTmdb({ films, tmdb, tmdbRequestStats, concurrency }) {
+  const perFilm = new Map();
+  let mapped = 0;
+  let failed = 0;
+
+  await promisePool(
+    films,
+    async (film) => {
+      try {
+        let tmdbId = null;
+
+        if (film.imdbId) {
+          const r = await tmdb.getCachedOrFetch(`/find/${film.imdbId}`, { external_source: "imdb_id" });
+          bumpCacheCounter(tmdbRequestStats, r.cacheHit, r.noCache);
+          const id = r.payload?.movie_results?.[0]?.id ?? null;
+          tmdbId = id ? String(id) : null;
+        }
+
+        if (!tmdbId) {
+          const q = { query: film.title };
+          if (film.year) q.year = String(film.year);
+          const r = await tmdb.getCachedOrFetch(`/search/movie`, q);
+          bumpCacheCounter(tmdbRequestStats, r.cacheHit, r.noCache);
+          const id = r.payload?.results?.[0]?.id ?? null;
+          tmdbId = id ? String(id) : null;
+        }
+
+        if (!tmdbId) {
+          failed += 1;
+          return null;
+        }
+
+        const detailsRes = await tmdb.getCachedOrFetch(`/movie/${tmdbId}`, {});
+        bumpCacheCounter(tmdbRequestStats, detailsRes.cacheHit, detailsRes.noCache);
+        if (detailsRes.status !== 200) throw new Error(`details status ${detailsRes.status}`);
+        const details = detailsRes.payload;
+
+        const creditsRes = await tmdb.getCachedOrFetch(`/movie/${tmdbId}/credits`, {});
+        bumpCacheCounter(tmdbRequestStats, creditsRes.cacheHit, creditsRes.noCache);
+        if (creditsRes.status !== 200) throw new Error(`credits status ${creditsRes.status}`);
+        const credits = creditsRes.payload;
+
+        mapped += 1;
+
+        const genres = (details.genres ?? [])
+          .map((g) => String(g?.name ?? "").trim())
+          .filter(Boolean);
+
+        const dirs = (credits.crew ?? [])
+          .filter((c) => c && c.job === "Director")
+          .map((d) => String(d?.name ?? "").trim())
+          .filter(Boolean);
+
+        const runtime = Number(details.runtime);
+        const releaseYear = film.year ?? toReleaseYearFromTmdb(details);
+        perFilm.set(film.key, {
+          tmdbId,
+          runtime: Number.isFinite(runtime) ? runtime : null,
+          releaseYear: Number.isFinite(releaseYear) ? releaseYear : null,
+          genres,
+          directors: dirs,
+        });
+
+        if ((mapped + failed) % 25 === 0) {
+          console.log(`  …progress mapped=${mapped} failed=${failed}`);
+        }
+        return { filmKey: film.key, tmdbId };
+      } catch (e) {
+        failed += 1;
+        if ((mapped + failed) % 25 === 0) {
+          console.log(`  …progress mapped=${mapped} failed=${failed}`);
+        }
+        return null;
+      }
+    },
+    { concurrency },
+  );
+
+  return { perFilm, mapped, failed };
+}
+
+function computeFilmAvgRatingsByKey(diaryRows) {
+  const sum = new Map();
+  const count = new Map();
+  for (const row of diaryRows ?? []) {
+    const title = String(row.Name ?? row.name ?? "").trim();
+    const year = String(row.Year ?? row.year ?? "").trim();
+    if (!title) continue;
+    const key = `${title} (${year || "n/a"})`;
+    const r = Number.parseFloat(String(row.Rating ?? row.rating));
+    if (!Number.isFinite(r)) continue;
+    sum.set(key, (sum.get(key) || 0) + r);
+    count.set(key, (count.get(key) || 0) + 1);
+  }
+  const out = new Map();
+  for (const [k, s] of sum.entries()) {
+    const n = count.get(k) || 0;
+    if (n) out.set(k, s / n);
+  }
+  return out;
+}
+
+function computeRuntimeBins(runtimes) {
+  const bins = [
+    { bin: "0-59", min: 0, max: 59, count: 0 },
+    { bin: "60-89", min: 60, max: 89, count: 0 },
+    { bin: "90-119", min: 90, max: 119, count: 0 },
+    { bin: "120-149", min: 120, max: 149, count: 0 },
+    { bin: "150-179", min: 150, max: 179, count: 0 },
+    { bin: "180+", min: 180, max: Infinity, count: 0 },
+  ];
+  for (const r of runtimes) {
+    const n = Number(r);
+    if (!Number.isFinite(n) || n <= 0) continue;
+    const b = bins.find((x) => n >= x.min && n <= x.max);
+    if (b) b.count += 1;
+  }
+  return bins;
+}
+
+function computeEnrichedAggregatesForDiary(diaryRows, enrichmentByFilm, { mapped = 0, failed = 0 } = {}) {
+  if (!enrichmentByFilm || !(enrichmentByFilm instanceof Map)) return null;
+
+  const filmKeys = new Set();
+  for (const row of diaryRows ?? []) {
+    const title = String(row.Name ?? row.name ?? "").trim();
+    const year = String(row.Year ?? row.year ?? "").trim();
+    if (!title) continue;
+    filmKeys.add(`${title} (${year || "n/a"})`);
+  }
+
+  const filmAvgRatings = computeFilmAvgRatingsByKey(diaryRows);
+  const directorCounts = new Map();
+  const genreCounts = new Map();
+  const runtimes = [];
+  const ratingRuntimePoints = [];
+  const ratingReleaseYearPoints = [];
+
+  for (const filmKey of filmKeys) {
+    const info = enrichmentByFilm.get(filmKey);
+    if (!info) continue;
+
+    for (const name of info.genres ?? []) {
+      if (!name) continue;
+      genreCounts.set(name, (genreCounts.get(name) || 0) + 1);
+    }
+    for (const name of info.directors ?? []) {
+      if (!name) continue;
+      directorCounts.set(name, (directorCounts.get(name) || 0) + 1);
+    }
+    if (info.runtime) runtimes.push(info.runtime);
+
+    const avgRating = filmAvgRatings.get(filmKey) ?? null;
+    if (avgRating != null && Number.isFinite(avgRating)) {
+      if (Number.isFinite(info.runtime) && info.runtime > 0) {
+        ratingRuntimePoints.push({ runtime: info.runtime, rating: avgRating });
+      }
+      if (Number.isFinite(info.releaseYear)) {
+        ratingReleaseYearPoints.push({ year: info.releaseYear, rating: avgRating });
+      }
+    }
+  }
+
+  const topDirectors = Array.from(directorCounts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+  const topGenres = Array.from(genreCounts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+  const runtimeBins = computeRuntimeBins(runtimes);
+
+  return { topDirectors, topGenres, runtimeBins, ratingRuntimePoints, ratingReleaseYearPoints, mapped, failed };
 }
 
 // Run the generator

@@ -245,18 +245,9 @@
     <header>
       <div>
         <h1>Wrapboxd</h1>
-        <div class="sub">Server + client (SQLite TMDB cache, vanilla JS + D3)</div>
+        <div class="sub">Static report (generated offline, vanilla JS + D3)</div>
       </div>
-      <div class="badges">
-        <div class="pill" id="serverPill" title="Server health">
-          <span class="dot" id="serverDot"></span>
-          <span id="serverText">Server: checking…</span>
-        </div>
-        <div class="pill" id="tmdbPill" title="TMDB connectivity">
-          <span class="dot" id="tmdbDot"></span>
-          <span id="tmdbText">TMDB: checking…</span>
-        </div>
-      </div>
+      <div class="badges"></div>
     </header>
 
     <nav class="tabs" role="tablist" aria-label="Wrapboxd tabs">
@@ -355,12 +346,9 @@
     <section class="tab-panel" id="tabData" role="tabpanel">
       <section class="card">
         <h2>Data</h2>
-        <div class="row" style="margin-bottom: 10px">
-          <label for="lbZip">Letterboxd export ZIP</label>
-          <input id="lbZip" type="file" accept=".zip,application/zip" />
-        </div>
         <div class="hint" style="margin-bottom: 10px">
-          Selecting a ZIP will automatically analyze and enrich (no buttons required).
+          This is a generated static report. It includes the Letterboxd data and (optionally) TMDB-enriched aggregates
+          baked in at generation time.
         </div>
         <div class="row" style="margin-bottom: 10px">
           <button class="danger" id="resetBtn">Reset</button>
@@ -373,23 +361,19 @@
         </div>
         <div class="mono" id="stats"></div>
 
-        <h2 style="margin-top: 16px">TMDB cache (cross-user via server)</h2>
+        <h2 style="margin-top: 16px">TMDB cache (used during generation)</h2>
         <div class="hint">
-          TMDB responses are cached in the server’s SQLite DB. If someone already fetched a movie,
-          other users hitting the same server will get cache hits automatically.
+          TMDB responses are cached locally during generation to avoid spamming the API across multiple runs.
+          This report does not make any live TMDB requests in the browser.
         </div>
         <div class="hint" id="tmdbError" style="margin-top: 8px; color: var(--danger)"></div>
-        <div class="row" style="margin-top: 10px">
-          <label for="demoTmdbId">Demo TMDB ID</label>
-          <input id="demoTmdbId" type="text" value="550" />
-          <button id="fetchMovieBtn">Fetch movie</button>
-        </div>
         <div class="mono" id="cacheStats"></div>
         <div class="mono log" id="log"></div>
       </section>
     </section>
   </div>
 
+  <script src="./data.js"></script>
   <script type="module" src="./src/app.js"></script>
 </body>
 

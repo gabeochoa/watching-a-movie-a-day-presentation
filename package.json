@@ -6,13 +6,10 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "node server/index.js",
-    "start": "node server/index.js",
     "generate": "node scripts/generate.js"
   },
   "dependencies": {
     "better-sqlite3": "^12.4.1",
-    "express": "^4.21.2",
     "fs-extra": "^11.3.3",
     "jszip": "^3.10.1",
     "papaparse": "^5.5.3",
