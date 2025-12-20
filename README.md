@@ -12,7 +12,7 @@ The workflow is folder-based and documented in `process_files.md`.
 ```bash
 npm install
 
-# put your export zip at: raw_data/letterboxd-export.zip
+# put your Letterboxd export zip at: raw_data/letterboxd-export.zip
 cp secrets.example.js secrets.js   # optional, for TMDB
 
 npm run make:presentation

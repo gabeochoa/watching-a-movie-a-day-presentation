@@ -35,6 +35,8 @@ Put your Letterboxd export zip here:
 
 - `raw_data/letterboxd-export.zip`
 
+This workflow intentionally does **not** support any other input format.
+
 ---
 
 ## Step 01 — parse the zip → JSON artifacts
