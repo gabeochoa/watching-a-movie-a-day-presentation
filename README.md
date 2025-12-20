@@ -72,7 +72,7 @@ Open `dist/index.html` in any web browser - works completely offline!
 
 🎨 **Beautiful Design:**
 - Responsive layout
-- Modern charts with Chart.js
+- Modern charts with D3
 - Clean, shareable interface
 
 ## How It Works

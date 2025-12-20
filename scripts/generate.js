@@ -88,16 +88,25 @@ async function main() {
     const computedAll = computeFromLetterboxd({ diary: parsed.diary, films: parsed.films });
 
     // Optional: TMDB enrichment (cached in SQLite)
-    const secrets = await loadSecrets({ rootDir: path.join(__dirname, "..") });
-    const tmdbEnabled = !noTmdb && Boolean((secrets?.TMDB_BEARER_TOKEN || "").trim() || (secrets?.TMDB_API_KEY || "").trim() || (process.env.TMDB_BEARER_TOKEN || "").trim() || (process.env.TMDB_API_KEY || "").trim());
+    const secrets = argv.example ? {} : await loadSecrets({ rootDir: path.join(__dirname, "..") });
+    const tmdbEnabled = !argv.example
+      && !noTmdb
+      && Boolean(
+        (secrets?.TMDB_BEARER_TOKEN || "").trim()
+          || (secrets?.TMDB_API_KEY || "").trim()
+          || (process.env.TMDB_BEARER_TOKEN || "").trim()
+          || (process.env.TMDB_API_KEY || "").trim(),
+      );
 
     const tmdbRequestStats = { hit: 0, miss: 0, unknown: 0 };
-    const db = openDb({ dataDir });
-    const tmdb = createTmdbService({
-      db,
-      bearerToken: secrets?.TMDB_BEARER_TOKEN,
-      apiKey: secrets?.TMDB_API_KEY,
-    });
+    const db = tmdbEnabled ? openDb({ dataDir }) : null;
+    const tmdb = tmdbEnabled
+      ? createTmdbService({
+          db,
+          bearerToken: secrets?.TMDB_BEARER_TOKEN,
+          apiKey: secrets?.TMDB_API_KEY,
+        })
+      : null;
 
     let enrichmentByFilm = [];
     let enrichedAll = null;
@@ -130,7 +139,7 @@ async function main() {
       computedAll,
       enrichmentByFilm,
       enrichedAll,
-      tmdbCacheStats: db.stats(),
+      tmdbCacheStats: db ? db.stats() : null,
       tmdbRequestStats,
     };
 
