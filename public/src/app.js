@@ -20,6 +20,7 @@ const state = {
   computed: null,
   enriched: null,
   tmdbRequestStats: { hit: 0, miss: 0, unknown: 0 },
+  runToken: 0,
 };
 
 function setServerPill(ok, text) {
@@ -188,8 +189,11 @@ function resetAll() {
   state.computed = null;
   state.enriched = null;
   state.tmdbRequestStats = { hit: 0, miss: 0, unknown: 0 };
+  state.runToken += 1; // invalidate in-flight work
   setText(el("#log"), "");
   setText(el("#cacheStats"), "");
+  const inp = document.querySelector("#lbZip");
+  if (inp) inp.value = "";
   render();
 }
 
@@ -416,25 +420,49 @@ async function enrichWithTmdb() {
   render();
 }
 
+async function analyzeZipFile(zipFile, { auto = false } = {}) {
+  if (!zipFile) return;
+  const myToken = (state.runToken += 1);
+
+  try {
+    if (auto) logLine(`ZIP selected: ${zipFile.name} — auto analyzing…`);
+    else logLine(`Parsing zip: ${zipFile.name}`);
+
+    state.parsed = await parseLetterboxdZip(zipFile);
+    if (myToken !== state.runToken) return;
+
+    logLine(`Found files: ${JSON.stringify(state.parsed.filesFound)}`);
+    state.computed = computeFromLetterboxd(state.parsed);
+    state.enriched = null;
+    if (myToken !== state.runToken) return;
+
+    render();
+    logLine("Rendered charts.");
+    await refreshCacheStatsUi();
+
+    // Auto-enrich immediately after analysis. If TMDB isn't configured on the server,
+    // we keep the app usable and just log the failure.
+    logLine("Auto enriching with TMDB…");
+    await enrichWithTmdb();
+  } catch (e) {
+    if (auto) logLine(`Auto analyze failed: ${String(e)}`);
+    else logLine(`Analyze failed: ${String(e)}`);
+  }
+}
+
 function initUi() {
+  on(el("#lbZip"), "change", async () => {
+    const zipFile = el("#lbZip").files?.[0];
+    await analyzeZipFile(zipFile, { auto: true });
+  });
+
   on(el("#analyzeBtn"), "click", async () => {
     const zipFile = el("#lbZip").files?.[0];
     if (!zipFile) {
       logLine("Pick a Letterboxd export .zip first.");
       return;
     }
-    try {
-      logLine(`Parsing zip: ${zipFile.name}`);
-      state.parsed = await parseLetterboxdZip(zipFile);
-      logLine(`Found files: ${JSON.stringify(state.parsed.filesFound)}`);
-      state.computed = computeFromLetterboxd(state.parsed);
-      state.enriched = null;
-      render();
-      logLine("Rendered charts.");
-      await refreshCacheStatsUi();
-    } catch (e) {
-      logLine(`Analyze failed: ${String(e)}`);
-    }
+    await analyzeZipFile(zipFile, { auto: false });
   });
 
   on(el("#enrichBtn"), "click", enrichWithTmdb);
