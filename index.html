@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wrapboxd</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0e14;
+        --panel: #111726;
+        --text: #e6e9ef;
+        --muted: #a0a6b3;
+        --border: #26304a;
+        --accent: #6ea8ff;
+        --danger: #ff6b6b;
+        --ok: #4cd28a;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+          Noto Sans, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 20px;
+        letter-spacing: 0.2px;
+      }
+      header .sub {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+      }
+      .card h2 {
+        margin: 0 0 8px;
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      input[type="file"],
+      input[type="password"],
+      select {
+        background: #0e1422;
+        border: 1px solid var(--border);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+      button {
+        background: #142341;
+        border: 1px solid var(--border);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      button:hover {
+        border-color: #3c4d76;
+      }
+      button.primary {
+        background: #1b3a73;
+        border-color: #2b56a5;
+      }
+      button.danger {
+        background: #2a0f14;
+        border-color: #6a2631;
+        color: #ffd6d6;
+      }
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+          "Courier New", monospace;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .status {
+        display: grid;
+        gap: 6px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 4px 10px;
+        border: 1px solid var(--border);
+        background: #0e1422;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--muted);
+      }
+      .dot.ok {
+        background: var(--ok);
+      }
+      .dot.bad {
+        background: var(--danger);
+      }
+      .log {
+        margin-top: 10px;
+        border-top: 1px solid var(--border);
+        padding-top: 10px;
+        max-height: 220px;
+        overflow: auto;
+        white-space: pre-wrap;
+      }
+      .hint {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      a {
+        color: var(--accent);
+      }
+    </style>
+    <!-- Optional: used only if you import a .zip portable cache -->
+    <script defer src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div>
+          <h1>Wrapboxd</h1>
+          <div class="sub">Client-side Letterboxd analytics + portable cross-user TMDB cache</div>
+        </div>
+        <div class="pill" id="repoCachePill" title="Whether repo cache loaded successfully">
+          <span class="dot" id="repoCacheDot"></span>
+          <span id="repoCacheText">Repo cache: loading…</span>
+        </div>
+      </header>
+
+      <div class="grid">
+        <section class="card">
+          <h2>Cross-user cache (portable)</h2>
+          <div class="row" style="margin-bottom: 10px">
+            <label for="cacheFile">Import cache file</label>
+            <input id="cacheFile" type="file" accept=".json,.zip,application/json,application/zip" />
+            <label for="mergeMode">Merge mode</label>
+            <select id="mergeMode">
+              <option value="prefer-existing" selected>Prefer existing (safe)</option>
+              <option value="prefer-incoming">Prefer incoming (overwrite)</option>
+            </select>
+            <button class="primary" id="importCacheBtn">Import</button>
+          </div>
+          <div class="row" style="margin-bottom: 10px">
+            <button id="exportDeltaBtn">Export cache updates (delta)</button>
+            <button id="exportFullBtn">Export merged cache (full)</button>
+            <button class="danger" id="resetSessionBtn">Reset session cache</button>
+          </div>
+          <div class="status mono" id="cacheStats"></div>
+          <div class="hint" style="margin-top: 10px">
+            Sharing workflow: one person runs with a TMDB key → exports a cache delta → sends it to
+            others. Others import it and avoid the same API calls.
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>TMDB (optional)</h2>
+          <div class="row" style="margin-bottom: 10px">
+            <label for="tmdbKey">TMDB API key (local only)</label>
+            <input id="tmdbKey" type="password" placeholder="Paste key (stored in this browser only)" />
+            <button id="saveKeyBtn">Save</button>
+            <button class="danger" id="clearKeyBtn">Clear</button>
+          </div>
+          <div class="hint">
+            The app always checks portable + repo caches first. The key is only used for cache
+            misses.
+          </div>
+
+          <div class="row" style="margin-top: 12px">
+            <label for="demoTmdbId">Demo TMDB ID</label>
+            <input id="demoTmdbId" type="password" value="550" />
+            <button class="primary" id="fetchMovieBtn">Fetch movie details (cache-first)</button>
+          </div>
+          <div class="mono log" id="log"></div>
+        </section>
+      </div>
+
+      <p class="hint" style="margin-top: 16px">
+        If you open this via <span class="mono">file://</span>, most browsers block fetching
+        <span class="mono">cache/tmdb.v1.json</span>. Run a tiny static server instead (see
+        <span class="mono">README.md</span>).
+      </p>
+    </div>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
