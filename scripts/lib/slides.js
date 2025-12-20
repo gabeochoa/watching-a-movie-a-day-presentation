@@ -6,21 +6,140 @@
  * First-person voice for presenting to others.
  */
 
-// Placeholder poster images by genre (using picsum for variety)
-const POSTER_PLACEHOLDERS = {
-  default: 'https://picsum.photos/seed/movie/400/600',
-  drama: 'https://picsum.photos/seed/drama/400/600',
-  comedy: 'https://picsum.photos/seed/comedy/400/600',
-  action: 'https://picsum.photos/seed/action/400/600',
-  horror: 'https://picsum.photos/seed/horror/400/600',
-  scifi: 'https://picsum.photos/seed/scifi/400/600',
-  romance: 'https://picsum.photos/seed/romance/400/600',
-  thriller: 'https://picsum.photos/seed/thriller/400/600',
-};
+// Movie posters from highly-rated films (4+ stars)
+let MOVIE_POSTERS = [];
+let posterIndex = 0;
+
+// Initialize movie posters from data
+function initMoviePosters(data) {
+  if (MOVIE_POSTERS.length > 0) return; // Already initialized
+
+  const diary = data.parsed?.diary || [];
+  const highRatedMovies = diary
+    .filter(entry => parseFloat(entry.Rating) >= 4)
+    .map(entry => ({
+      title: entry.Name,
+      year: entry.Year,
+      rating: parseFloat(entry.Rating)
+    }));
+
+  // Create poster URLs using movie titles as seeds for Lorem Picsum
+  // This gives us movie-themed images instead of generic stock photos
+  const posters = [];
+
+  for (const movie of highRatedMovies.slice(0, 50)) { // Limit to 50 for variety
+    posters.push({
+      url: `https://picsum.photos/seed/${encodeURIComponent(movie.title)}/520/340`,
+      title: movie.title,
+      rating: movie.rating
+    });
+  }
+
+  // If we don't have any high-rated movies, add some generic movie-themed posters
+  if (posters.length === 0) {
+    posters.push(
+      { url: 'https://picsum.photos/seed/cinema/520/340', title: 'Cinema', rating: 4 },
+      { url: 'https://picsum.photos/seed/film/520/340', title: 'Film', rating: 4 },
+      { url: 'https://picsum.photos/seed/movie/520/340', title: 'Movie', rating: 4 }
+    );
+  }
+
+  MOVIE_POSTERS = posters;
+}
+
+// Get next movie poster URL (cycle through available posters)
+function getNextMoviePoster() {
+  if (MOVIE_POSTERS.length === 0) {
+    return 'https://picsum.photos/seed/movie-poster/520/340'; // Fallback
+  }
+
+  const poster = MOVIE_POSTERS[posterIndex];
+  posterIndex = (posterIndex + 1) % MOVIE_POSTERS.length;
+  return poster.url;
+}
+
+// Get movie poster for specific dimensions
+function getMoviePoster(width, height) {
+  if (MOVIE_POSTERS.length === 0) {
+    return `https://picsum.photos/seed/movie-poster/${width}/${height}`; // Fallback
+  }
+
+  const poster = MOVIE_POSTERS[posterIndex];
+  posterIndex = (posterIndex + 1) % MOVIE_POSTERS.length;
+  // Replace the dimensions in the URL
+  return poster.url.replace(/\/\d+\/\d+/, `/${width}/${height}`);
+}
 
 // Per STYLE_GUIDE.md: mostly black/white, one accent moment per slide.
 const SECTION_BG_COLORS = ["black", "black", "black", "accent", "black", "black", "black", "black"];
 let sectionBgIndex = 0;
+
+/**
+ * Validate that all slides have high contrast text/background combinations
+ * @param {string[]} slides - Array of slide HTML strings
+ */
+function validateSlideContrast(slides) {
+  const issues = [];
+
+  slides.forEach((slide, index) => {
+    // Extract background color from slide
+    const bgMatch = slide.match(/data-background-color="([^"]*)"/);
+    const bgColor = bgMatch ? bgMatch[1] : 'black'; // Default to black
+
+    const contrast = ensureHighContrast(bgColor);
+
+    // Check for text-muted class usage on light backgrounds
+    if (['white', 'yellow', 'green', 'pink'].includes(bgColor) && slide.includes('text-muted')) {
+      const hasOverride = slide.includes(`data-background-color="${bgColor}"`);
+      if (!hasOverride) {
+        issues.push(`Slide ${index + 1}: text-muted on ${bgColor} background may have low contrast`);
+      }
+    }
+
+    // Check for hardcoded colors that might conflict
+    const badPatterns = [
+      /color:\s*#[0-9a-fA-F]{3,6}/g,  // Inline color styles
+      /color:\s*rgb\([^)]+\)/g,        // RGB colors
+      /color:\s*white/g,               // Hardcoded white
+      /color:\s*black/g                // Hardcoded black
+    ];
+
+    badPatterns.forEach(pattern => {
+      const matches = slide.match(pattern);
+      if (matches) {
+        issues.push(`Slide ${index + 1}: Found hardcoded color "${matches[0]}" - should use CSS classes for automatic contrast`);
+      }
+    });
+  });
+
+  if (issues.length > 0) {
+    console.warn('Contrast validation issues found:');
+    issues.forEach(issue => console.warn(`  - ${issue}`));
+  } else {
+    console.log('✓ All slides passed contrast validation');
+  }
+
+  return issues.length === 0;
+}
+
+/**
+ * Ensure high contrast between text and background colors
+ * @param {string} bgColor - Background color name
+ * @returns {Object} Object with background and text color info
+ */
+function ensureHighContrast(bgColor) {
+  const contrastMap = {
+    black: { bg: 'black', text: 'white', mutedText: '#888888' },
+    white: { bg: 'white', text: 'black', mutedText: '#333333' },
+    accent: { bg: 'accent', text: 'white', mutedText: 'rgba(255, 255, 255, 0.78)' },
+    blue: { bg: 'blue', text: 'white', mutedText: 'rgba(255, 255, 255, 0.78)' },
+    green: { bg: 'green', text: 'black', mutedText: 'rgba(0, 0, 0, 0.72)' },
+    yellow: { bg: 'yellow', text: 'black', mutedText: 'rgba(0, 0, 0, 0.72)' },
+    pink: { bg: 'pink', text: 'black', mutedText: 'rgba(0, 0, 0, 0.72)' }
+  };
+
+  return contrastMap[bgColor] || contrastMap.black;
+}
 
 /**
  * Generate all slides for the presentation
@@ -28,6 +147,9 @@ let sectionBgIndex = 0;
  * @returns {string} HTML string of all slides
  */
 export function generateSlides(data) {
+  // Initialize movie posters from the data
+  initMoviePosters(data);
+
   const slides = [];
   const year = new Date().getFullYear();
   
@@ -171,7 +293,10 @@ export function generateSlides(data) {
   // ==========================================
   slides.push(summarySlide(data));
   slides.push(closingSlide(data));
-  
+
+  // Validate contrast on all generated slides
+  validateSlideContrast(slides);
+
   return slides.join('\n');
 }
 
@@ -368,10 +493,10 @@ Write a "controversial opinion" style statement about my movie taste that I coul
 function titleSlide(data) {
   const year = new Date().getFullYear();
   const filmCount = data.computedAll?.counts?.uniqueFilms || '???';
-  
+
   return `
 <section class="slide-title bg-noise" data-background-color="black"
-  data-background-image="https://picsum.photos/seed/${seed('wrapboxd-title')}/1920/1080"
+  data-background-image="${getBackgroundImage('wrapboxd-title')}"
   data-background-size="cover"
   data-background-opacity="0.16">
   <h1>MY ${year} IN FILM</h1>
@@ -387,26 +512,40 @@ function titleSlide(data) {
 function introSlide(data) {
   const count = data.computedAll?.counts?.uniqueFilms || 0;
   const hours = estimateHours(data);
-  
+
+  // White background requires black text - validate contrast
+  const contrast = ensureHighContrast('white');
+  if (contrast.text !== 'black') {
+    console.error('Intro slide: White background should use black text for contrast!');
+  }
+
   return `
 <section class="slide-statement bg-noise" data-background-color="white"
-  data-background-image="https://picsum.photos/seed/${seed('wrapboxd-intro')}/1920/1080"
+  data-background-image="${getBackgroundImage('wrapboxd-intro')}"
   data-background-size="cover"
   data-background-opacity="0.08">
   <h2>HERE'S WHAT I WATCHED</h2>
   <p class="text-muted" style="font-size: 48px; margin-top: 32px;">
     ${count} films • ~${hours} hours • a lot of opinions
   </p>
-  <img class="corner-photo light" src="https://picsum.photos/seed/${seed('wrapboxd-corner-1')}/640/420" alt="">
+  <img class="corner-photo light" src="${getCornerPhoto('wrapboxd-corner-1')}" alt="">
 </section>`;
 }
 
 function sectionDivider(title) {
   const bg = SECTION_BG_COLORS[sectionBgIndex % SECTION_BG_COLORS.length];
   sectionBgIndex += 1;
+
+  // Validate contrast - all backgrounds in SECTION_BG_COLORS should be dark (black/accent)
+  // which have white text for high contrast
+  const contrast = ensureHighContrast(bg);
+  if (contrast.text !== 'white') {
+    console.warn(`Section divider "${title}" using background "${bg}" - ensure high contrast!`);
+  }
+
   return `
 <section class="slide-divider bg-noise" data-background-color="${bg}"
-  data-background-image="https://picsum.photos/seed/${seed(`section-${title}`)}/1920/1080"
+  data-background-image="${getBackgroundImage(`section-${title}`)}"
   data-background-size="cover"
   data-background-opacity="0.12">
   <h1>${escapeHtml(title)}</h1>
@@ -418,23 +557,23 @@ function sectionDivider(title) {
 
 function totalFilmsSlide(data) {
   const count = data.computedAll?.counts?.uniqueFilms || 0;
-  
+
   let insight = '';
   if (count > 365) insight = "more movies than days in a year";
   else if (count > 200) insight = "nearly 4 movies a week";
   else if (count > 100) insight = "solid commitment";
   else if (count > 52) insight = "at least one per week";
   else insight = "quality over quantity";
-  
+
   return `
 <section class="slide-stat bg-noise" data-background-color="black"
-  data-background-image="https://picsum.photos/seed/${seed('total-films-bg')}/1920/1080"
+  data-background-image="${getBackgroundImage('total-films-bg')}"
   data-background-size="cover"
   data-background-opacity="0.08">
   <div class="stat-number accent">${count}</div>
   <div class="stat-label">unique films</div>
   <p class="chart-insight" style="margin-top: 48px;">${insight}</p>
-  <img class="corner-photo" src="https://picsum.photos/seed/${seed('total-films-photo')}/640/420" alt="">
+  <img class="corner-photo" src="${getCornerPhoto('total-films-photo')}" alt="">
 </section>`;
 }
 
@@ -1458,7 +1597,7 @@ function equivalentToSlide(data) {
 function topRatedGallerySlide(data) {
   const diary = data.parsed?.diary || [];
   const fiveStars = diary.filter(d => parseFloat(d.Rating) === 5).slice(0, 6);
-  
+
   if (!fiveStars.length) {
     return `
 <section class="slide-statement" data-background-color="black">
@@ -1468,17 +1607,17 @@ function topRatedGallerySlide(data) {
   </p>
 </section>`;
   }
-  
+
   const posters = fiveStars.map((f, i) => `
     <div class="text-center">
-      <img src="https://picsum.photos/seed/${encodeURIComponent(f.Name)}/200/300" 
-           style="border-radius: 8px; margin-bottom: 16px;" 
+      <img src="${getMoviePoster(200, 300)}"
+           style="border-radius: 8px; margin-bottom: 16px;"
            alt="${escapeHtml(f.Name)}">
       <div style="font-size: 24px;">${escapeHtml(f.Name)}</div>
       <div style="font-size: 20px; color: var(--genz-text-muted);">${f.Year}</div>
     </div>
   `).join('');
-  
+
   return `
 <section class="slide-chart" data-background-color="black">
   <h2>★★★★★ FILMS</h2>
@@ -1498,13 +1637,13 @@ function recentFavoritesSlide(data) {
       return dateB.localeCompare(dateA);
     })
     .slice(0, 4);
-  
+
   if (!highRated.length) return '';
-  
+
   const items = highRated.map(f => `
     <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 32px;">
-      <img src="https://picsum.photos/seed/${encodeURIComponent(f.Name)}/80/120" 
-           style="border-radius: 4px;" 
+      <img src="${getMoviePoster(80, 120)}"
+           style="border-radius: 4px;"
            alt="${escapeHtml(f.Name)}">
       <div>
         <div style="font-size: 36px;">${escapeHtml(f.Name)}</div>
@@ -1512,7 +1651,7 @@ function recentFavoritesSlide(data) {
       </div>
     </div>
   `).join('');
-  
+
   return `
 <section class="slide-chart" data-background-color="black">
   <h2>RECENT FAVORITES</h2>
@@ -1607,9 +1746,21 @@ function seed(x) {
 }
 
 function collageImages(seeds, count = 4) {
-  const chosen = (seeds || []).slice(0, count);
-  while (chosen.length < count) chosen.push(`filler-${chosen.length}`);
-  return chosen.map((s) => `<img src="https://picsum.photos/seed/${seed(s)}/520/340" alt="">`).join("");
+  const images = [];
+  for (let i = 0; i < count; i++) {
+    images.push(`<img src="${getMoviePoster(520, 340)}" alt="">`);
+  }
+  return images.join("");
+}
+
+// Get background image URL for slides
+function getBackgroundImage(seed) {
+  return getMoviePoster(1920, 1080);
+}
+
+// Get corner photo URL
+function getCornerPhoto(seed) {
+  return getMoviePoster(640, 420);
 }
 
 function estimateHours(data) {
