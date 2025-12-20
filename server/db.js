@@ -1,8 +1,11 @@
 import Database from "better-sqlite3";
+import fs from "node:fs";
 import path from "node:path";
 
 export function openDb({ dataDir } = {}) {
-  const dbPath = path.join(dataDir ?? "data", "cache.sqlite");
+  const dir = dataDir ?? "data";
+  fs.mkdirSync(dir, { recursive: true });
+  const dbPath = path.join(dir, "cache.sqlite");
   const db = new Database(dbPath);
 
   db.pragma("journal_mode = WAL");
