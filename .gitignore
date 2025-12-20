@@ -1,4 +1,4 @@
 .DS_Store
 example/*
-app/js/secrets.js
+secrets.js
 node_modules/
