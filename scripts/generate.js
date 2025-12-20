@@ -23,6 +23,12 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
     demandOption: false
   })
+  .option('extras', {
+    alias: 'x',
+    describe: 'Optional path to a JSON file with extra inputs (presentation context, manual answers, etc.)',
+    type: 'string',
+    demandOption: false
+  })
   .option('example', {
     describe: 'Generate a small example report (no ZIP required)',
     type: 'boolean',
@@ -64,6 +70,7 @@ async function main() {
   const noTmdb = Boolean(argv['no-tmdb']);
   const concurrency = Number(argv.concurrency) || 3;
   const title = argv.title || 'Wrapboxd';
+  const extrasPathRaw = argv.extras;
 
   console.log(`🎬 Wrapboxd Static Site Generator (Reveal.js)`);
   console.log(`📤 Output directory: ${outputDir}`);
@@ -85,6 +92,18 @@ async function main() {
 
     // Compute core analytics (Letterboxd-only)
     const computedAll = computeFromLetterboxd({ diary: parsed.diary, films: parsed.films });
+
+    // Optional extras JSON (manual inputs / presentation context)
+    let extras = null;
+    if (extrasPathRaw) {
+      const extrasPath = path.resolve(process.cwd(), String(extrasPathRaw));
+      if (!await fs.pathExists(extrasPath)) throw new Error(`Extras JSON file not found: ${extrasPath}`);
+      try {
+        extras = await fs.readJson(extrasPath);
+      } catch (e) {
+        throw new Error(`Failed to parse extras JSON (${extrasPath}): ${e.message}`);
+      }
+    }
 
     // Optional: TMDB enrichment (cached in SQLite)
     const secrets = argv.example ? {} : await loadSecrets({ rootDir: path.join(__dirname, "..") });
@@ -127,6 +146,7 @@ async function main() {
         sourceZip: argv.example ? "example" : path.basename(zipPath),
         tmdbEnabled,
       },
+      extras,
       parsed: {
         zipFileNames: parsed.zipFileNames,
         filesFound: parsed.filesFound,
