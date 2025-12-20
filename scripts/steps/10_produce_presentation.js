@@ -5,7 +5,7 @@ import fs from "fs-extra";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { computeFromLetterboxd } from "../../public/src/analytics/compute.js";
+import { computeFromLetterboxd } from "../lib/compute.js";
 import { generateRevealSite, generatePromptsFile } from "../lib/presentation.js";
 
 const argv = yargs(hideBin(process.argv))

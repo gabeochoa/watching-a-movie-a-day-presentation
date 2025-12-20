@@ -8,7 +8,7 @@ import { hideBin } from 'yargs/helpers';
 import { openDb } from "./lib/db.js";
 import { createTmdbService } from "./lib/tmdb.js";
 import { loadSecrets } from "./lib/secrets.js";
-import { computeFromLetterboxd } from "../public/src/analytics/compute.js";
+import { computeFromLetterboxd } from "./lib/compute.js";
 import { parseLetterboxdZipFromPath } from "./lib/letterboxd_zip_node.js";
 import { generateRevealSite, generatePromptsFile } from "./lib/presentation.js";
 import {

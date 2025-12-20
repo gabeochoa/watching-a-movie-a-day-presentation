@@ -50,7 +50,7 @@ async function main() {
   console.log(`🧠 Enriching with TMDB (films: ${films.length}, concurrency: ${concurrency})`);
 
   const result = await enrichFilmsWithTmdb({ films, tmdb, tmdbRequestStats, concurrency });
-  const enrichmentEntries = Array.from(result.perFilm.entries());
+  const enrichmentEntries = Array.from(result.perFilm.entries()).sort(([a], [b]) => a.localeCompare(b));
   const aggregates = computeEnrichedAggregatesForDiary(parsed.diary, result.perFilm, { mapped: result.mapped, failed: result.failed });
 
   await fs.writeJson(path.join(outDir, "enrichment_by_film.json"), enrichmentEntries, { spaces: 2 });
