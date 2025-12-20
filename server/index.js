@@ -95,6 +95,17 @@ app.get("/api/tmdb/find/imdb/:imdbId", async (req, res) => {
   }
 });
 
+// Lightweight “is TMDB configured” check for UI badge.
+app.get("/api/tmdb/ping", async (_req, res) => {
+  try {
+    const { cacheHit, noCache, status, payload } = await tmdb.getCachedOrFetch(`/configuration`, {});
+    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : noCache ? "BYPASS" : "MISS");
+    res.status(status).json(payload);
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+});
+
 // Static client
 app.use(express.static(PUBLIC_DIR, { etag: true, immutable: false, maxAge: "1h" }));
 

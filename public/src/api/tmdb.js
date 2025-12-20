@@ -35,3 +35,10 @@ export async function fetchCacheStats() {
   return { status: res.status, ok: res.ok, payload };
 }
 
+export async function pingTmdb() {
+  const res = await fetch("/api/tmdb/ping");
+  const cache = res.headers.get("X-Wrapboxd-Cache") || "UNKNOWN";
+  const payload = await res.json();
+  return { status: res.status, ok: res.ok, cache, payload };
+}
+

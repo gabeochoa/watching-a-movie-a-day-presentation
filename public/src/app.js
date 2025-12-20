@@ -12,6 +12,7 @@ import {
   fetchTmdbCredits,
   fetchTmdbMovie,
   findTmdbByImdbId,
+  pingTmdb,
   searchTmdbMovie,
 } from "./api/tmdb.js";
 
@@ -33,6 +34,13 @@ function setServerPill(ok, text) {
   dot.classList.remove("ok", "bad");
   dot.classList.add(ok ? "ok" : "bad");
   setText(el("#serverText"), text);
+}
+
+function setTmdbPill(ok, text) {
+  const dot = el("#tmdbDot");
+  dot.classList.remove("ok", "bad");
+  dot.classList.add(ok ? "ok" : "bad");
+  setText(el("#tmdbText"), text);
 }
 
 function logLine(msg) {
@@ -143,6 +151,24 @@ async function checkServer() {
   } catch (e) {
     setServerPill(false, "Server: not reachable");
     logLine(`Server health check failed: ${String(e)}`);
+  }
+}
+
+async function checkTmdb() {
+  try {
+    const res = await pingTmdb();
+    bumpCacheCounter(res.cache);
+    if (isInvalidApiKeyPayload(res.payload)) {
+      setTmdbPill(false, "TMDB: bad key");
+      return;
+    }
+    if (!res.ok) {
+      setTmdbPill(false, "TMDB: not ready");
+      return;
+    }
+    setTmdbPill(true, "TMDB: OK");
+  } catch {
+    setTmdbPill(false, "TMDB: not reachable");
   }
 }
 
@@ -633,8 +659,13 @@ async function analyzeZipFile(zipFile, { auto = false } = {}) {
 }
 
 function initUi() {
-  on(el("#tabBtnPresentation"), "click", () => showTab("presentation"));
-  on(el("#tabBtnData"), "click", () => showTab("data"));
+  // Use event delegation so the tab clicks always work.
+  document.addEventListener("click", (e) => {
+    const btn = e.target?.closest?.("[role='tab']");
+    if (!btn) return;
+    if (btn.id === "tabBtnPresentation") showTab("presentation");
+    if (btn.id === "tabBtnData") showTab("data");
+  });
 
   on(el("#lbZip"), "change", async () => {
     const zipFile = el("#lbZip").files?.[0];
@@ -766,6 +797,7 @@ async function main() {
   showTab("presentation");
   render();
   await checkServer();
+  await checkTmdb();
   await refreshCacheStatsUi();
 
   window.addEventListener("resize", () => {

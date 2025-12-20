@@ -35,6 +35,13 @@
         gap: 16px;
         margin-bottom: 16px;
       }
+      .badges {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
       header h1 {
         margin: 0;
         font-size: 20px;
@@ -49,22 +56,29 @@
       }
       .tabs {
         display: flex;
-        gap: 10px;
-        margin: 12px 0 16px;
+        gap: 6px;
+        margin: 10px 0 0;
+        border-bottom: 1px solid var(--border);
       }
       .tab-btn {
         background: #0e1422;
         border: 1px solid var(--border);
         color: var(--muted);
-        border-radius: 999px;
-        padding: 8px 12px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 10px 14px;
         font-size: 13px;
         cursor: pointer;
+        position: relative;
+        top: 1px; /* overlap the bottom border for the selected tab */
       }
       .tab-btn[aria-selected="true"] {
         color: var(--text);
         border-color: #3c4d76;
-        background: #142341;
+        background: var(--panel);
+        border-bottom-color: var(--panel);
       }
       .tab-panel[hidden] {
         display: none;
@@ -162,11 +176,6 @@
         grid-template-columns: 1fr;
         gap: 16px;
       }
-      @media (min-width: 980px) {
-        .charts {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
       .chart {
         background: #0e1422;
         border: 1px solid var(--border);
@@ -204,17 +213,39 @@
           <h1>Wrapboxd</h1>
           <div class="sub">Server + client (SQLite TMDB cache, vanilla JS + D3)</div>
         </div>
-        <div class="pill" id="serverPill" title="Server health">
-          <span class="dot" id="serverDot"></span>
-          <span id="serverText">Server: checking…</span>
+        <div class="badges">
+          <div class="pill" id="serverPill" title="Server health">
+            <span class="dot" id="serverDot"></span>
+            <span id="serverText">Server: checking…</span>
+          </div>
+          <div class="pill" id="tmdbPill" title="TMDB connectivity">
+            <span class="dot" id="tmdbDot"></span>
+            <span id="tmdbText">TMDB: checking…</span>
+          </div>
         </div>
       </header>
 
       <nav class="tabs" role="tablist" aria-label="Wrapboxd tabs">
-        <button class="tab-btn" id="tabBtnPresentation" role="tab" aria-selected="true">
+        <button
+          class="tab-btn"
+          id="tabBtnPresentation"
+          type="button"
+          role="tab"
+          aria-controls="tabPresentation"
+          aria-selected="true"
+        >
           Presentation
         </button>
-        <button class="tab-btn" id="tabBtnData" role="tab" aria-selected="false">Data</button>
+        <button
+          class="tab-btn"
+          id="tabBtnData"
+          type="button"
+          role="tab"
+          aria-controls="tabData"
+          aria-selected="false"
+        >
+          Data
+        </button>
       </nav>
 
       <section class="tab-panel" id="tabPresentation" role="tabpanel">
