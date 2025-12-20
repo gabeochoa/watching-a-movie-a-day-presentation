@@ -30,8 +30,8 @@ app.get("/api/cache/stats", (_req, res) => {
 app.get("/api/tmdb/movie/:id", async (req, res) => {
   try {
     const id = String(req.params.id);
-    const { cacheHit, status, payload } = await tmdb.getCachedOrFetch(`/movie/${id}`, {});
-    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : "MISS");
+    const { cacheHit, noCache, status, payload } = await tmdb.getCachedOrFetch(`/movie/${id}`, {});
+    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : noCache ? "BYPASS" : "MISS");
     res.status(status).json(payload);
   } catch (e) {
     res.status(500).json({ error: String(e) });
@@ -41,8 +41,8 @@ app.get("/api/tmdb/movie/:id", async (req, res) => {
 app.get("/api/tmdb/movie/:id/credits", async (req, res) => {
   try {
     const id = String(req.params.id);
-    const { cacheHit, status, payload } = await tmdb.getCachedOrFetch(`/movie/${id}/credits`, {});
-    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : "MISS");
+    const { cacheHit, noCache, status, payload } = await tmdb.getCachedOrFetch(`/movie/${id}/credits`, {});
+    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : noCache ? "BYPASS" : "MISS");
     res.status(status).json(payload);
   } catch (e) {
     res.status(500).json({ error: String(e) });
@@ -58,8 +58,8 @@ app.get("/api/tmdb/search/movie", async (req, res) => {
 
     const q = { query };
     if (year) q.year = year;
-    const { cacheHit, status, payload } = await tmdb.getCachedOrFetch(`/search/movie`, q);
-    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : "MISS");
+    const { cacheHit, noCache, status, payload } = await tmdb.getCachedOrFetch(`/search/movie`, q);
+    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : noCache ? "BYPASS" : "MISS");
     res.status(status).json(payload);
   } catch (e) {
     res.status(500).json({ error: String(e) });
@@ -71,10 +71,10 @@ app.get("/api/tmdb/find/imdb/:imdbId", async (req, res) => {
   try {
     const imdbId = String(req.params.imdbId || "").trim();
     if (!imdbId) return res.status(400).json({ error: "Missing imdb id" });
-    const { cacheHit, status, payload } = await tmdb.getCachedOrFetch(`/find/${imdbId}`, {
+    const { cacheHit, noCache, status, payload } = await tmdb.getCachedOrFetch(`/find/${imdbId}`, {
       external_source: "imdb_id",
     });
-    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : "MISS");
+    res.setHeader("X-Wrapboxd-Cache", cacheHit ? "HIT" : noCache ? "BYPASS" : "MISS");
     res.status(status).json(payload);
   } catch (e) {
     res.status(500).json({ error: String(e) });

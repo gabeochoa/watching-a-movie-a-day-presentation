@@ -23,6 +23,8 @@ const state = {
   runToken: 0,
 };
 
+const TMDB_CONNECT_ERROR = "Could not connect to TMDB, check your API Key";
+
 function setServerPill(ok, text) {
   const dot = el("#serverDot");
   dot.classList.remove("ok", "bad");
@@ -54,8 +56,24 @@ function showTab(which) {
 function bumpCacheCounter(cacheHeader) {
   const v = String(cacheHeader || "").toUpperCase();
   if (v === "HIT") state.tmdbRequestStats.hit += 1;
-  else if (v === "MISS") state.tmdbRequestStats.miss += 1;
+  else if (v === "MISS" || v === "BYPASS") state.tmdbRequestStats.miss += 1;
   else state.tmdbRequestStats.unknown += 1;
+}
+
+function clearTmdbError() {
+  const node = document.querySelector("#tmdbError");
+  if (node) setText(node, "");
+}
+
+function setTmdbError(msg) {
+  const node = document.querySelector("#tmdbError");
+  if (node) setText(node, msg);
+  logLine(msg);
+  showTab("data");
+}
+
+function isInvalidApiKeyPayload(payload) {
+  return payload && typeof payload === "object" && Number(payload.status_code) === 7;
 }
 
 async function checkServer() {
@@ -206,6 +224,7 @@ function resetAll() {
   state.runToken += 1; // invalidate in-flight work
   setText(el("#log"), "");
   setText(el("#cacheStats"), "");
+  clearTmdbError();
   const inp = document.querySelector("#lbZip");
   if (inp) inp.value = "";
   render();
@@ -312,6 +331,7 @@ async function enrichWithTmdb() {
     logLine("Analyze a Letterboxd ZIP first.");
     return;
   }
+  clearTmdbError();
 
   const films = normalizeDiaryFilms(state.parsed);
   if (!films.length) {
@@ -329,15 +349,22 @@ async function enrichWithTmdb() {
   const ratingReleaseYearPoints = [];
   let mapped = 0;
   let failed = 0;
+  const stopRef = { aborted: false };
 
   await promisePool(
     films,
     async (film) => {
+      if (stopRef.aborted) return null;
       try {
         let tmdbId = null;
         if (film.imdbId) {
           const r = await findTmdbByImdbId(film.imdbId);
           bumpCacheCounter(r.cache);
+          if (isInvalidApiKeyPayload(r.payload)) {
+            stopRef.aborted = true;
+            setTmdbError(TMDB_CONNECT_ERROR);
+            return null;
+          }
           const id = r.payload?.movie_results?.[0]?.id ?? null;
           tmdbId = id ? String(id) : null;
         }
@@ -345,6 +372,11 @@ async function enrichWithTmdb() {
         if (!tmdbId) {
           const r = await searchTmdbMovie({ query: film.title, year: film.year ?? undefined });
           bumpCacheCounter(r.cache);
+          if (isInvalidApiKeyPayload(r.payload)) {
+            stopRef.aborted = true;
+            setTmdbError(TMDB_CONNECT_ERROR);
+            return null;
+          }
           const id = r.payload?.results?.[0]?.id ?? null;
           tmdbId = id ? String(id) : null;
         }
@@ -356,11 +388,21 @@ async function enrichWithTmdb() {
 
         const detailsRes = await fetchTmdbMovie(tmdbId);
         bumpCacheCounter(detailsRes.cache);
+        if (isInvalidApiKeyPayload(detailsRes.payload)) {
+          stopRef.aborted = true;
+          setTmdbError(TMDB_CONNECT_ERROR);
+          return null;
+        }
         if (!detailsRes.ok) throw new Error(`details status ${detailsRes.status}`);
         const details = detailsRes.payload;
 
         const creditsRes = await fetchTmdbCredits(tmdbId);
         bumpCacheCounter(creditsRes.cache);
+        if (isInvalidApiKeyPayload(creditsRes.payload)) {
+          stopRef.aborted = true;
+          setTmdbError(TMDB_CONNECT_ERROR);
+          return null;
+        }
         if (!creditsRes.ok) throw new Error(`credits status ${creditsRes.status}`);
         const credits = creditsRes.payload;
 
@@ -412,6 +454,12 @@ async function enrichWithTmdb() {
     { concurrency: 3 },
   );
 
+  if (stopRef.aborted) {
+    await refreshCacheStatsUi();
+    // Do not overwrite charts with partial TMDB output.
+    return;
+  }
+
   const topDirectors = Array.from(directorCounts.entries())
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count);
@@ -439,6 +487,7 @@ async function analyzeZipFile(zipFile, { auto = false } = {}) {
   const myToken = (state.runToken += 1);
 
   try {
+    clearTmdbError();
     if (auto) logLine(`ZIP selected: ${zipFile.name} — auto analyzing…`);
     else logLine(`Parsing zip: ${zipFile.name}`);
 
@@ -553,6 +602,10 @@ function initUi() {
       const { ok, status, cache, payload } = await fetchTmdbMovie(id);
       bumpCacheCounter(cache);
       await refreshCacheStatsUi();
+      if (isInvalidApiKeyPayload(payload)) {
+        setTmdbError(TMDB_CONNECT_ERROR);
+        return;
+      }
       if (!ok) {
         logLine(`TMDB error status=${status} cache=${cache} payload=${JSON.stringify(payload)}`);
         return;

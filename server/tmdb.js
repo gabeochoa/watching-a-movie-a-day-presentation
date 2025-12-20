@@ -38,6 +38,16 @@ function isExpired(fetchedAt, ttlDays) {
   return ageMs > ttlDays * 24 * 60 * 60 * 1000;
 }
 
+function isInvalidApiKeyPayload(payload) {
+  // TMDB commonly returns:
+  // { status_code: 7, status_message: "Invalid API key: You must be granted a valid key.", ... }
+  return (
+    payload &&
+    typeof payload === "object" &&
+    Number(payload.status_code) === 7
+  );
+}
+
 export function createTmdbService({ db, fetchImpl = fetch } = {}) {
   if (!db) throw new Error("db is required");
   const ttlDays = getCacheTtlDays();
@@ -66,6 +76,12 @@ export function createTmdbService({ db, fetchImpl = fetch } = {}) {
     }
 
     const { status, payload } = await fetchFromTmdb(pathname, query);
+    // If TMDB says the API key/token is invalid, do NOT cache the error payload.
+    // This avoids poisoning the shared cache for all users.
+    if (isInvalidApiKeyPayload(payload)) {
+      return { cacheKey, cacheHit: false, noCache: true, status, fetchedAt: nowIso(), payload };
+    }
+
     db.set(cacheKey, { status, fetchedAt: nowIso(), payload });
     return { cacheKey, cacheHit: false, status, fetchedAt: nowIso(), payload };
   }
