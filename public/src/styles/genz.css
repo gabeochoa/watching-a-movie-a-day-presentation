@@ -1,0 +1,630 @@
+/**
+ * Wrapboxd "Gen Z Deck" Styles
+ * 
+ * Based on analysis of the reference presentation deck.
+ * Apply these styles to transform the data dashboard into an editorial experience.
+ */
+
+/* ========================================
+   FONTS
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ========================================
+   CSS CUSTOM PROPERTIES
+   ======================================== */
+
+:root {
+  /* Core palette */
+  --genz-bg: #000000;
+  --genz-bg-elevated: #0A0A0A;
+  --genz-surface: #111111;
+  --genz-text: #FFFFFF;
+  --genz-text-muted: #888888;
+  --genz-text-subtle: #555555;
+  
+  /* Accent colors */
+  --genz-accent: #FF3B30;
+  --genz-accent-hover: #FF453A;
+  --genz-highlight-yellow: #FFD60A;
+  --genz-highlight-green: #30D158;
+  --genz-highlight-pink: #FF375F;
+  --genz-highlight-blue: #0A84FF;
+  
+  /* Typography */
+  --font-display: 'Anton', Impact, 'Arial Black', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 48px;
+  --space-2xl: 96px;
+  
+  /* Borders & Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 40px rgba(255, 59, 48, 0.2);
+}
+
+/* ========================================
+   BASE RESET FOR GENZ MODE
+   ======================================== */
+
+.genz-mode {
+  background: var(--genz-bg);
+  color: var(--genz-text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+
+/* Hero headlines - the star of the show */
+.genz-hero {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 12vw, 120px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0;
+  padding: var(--space-xl) 0;
+}
+
+.genz-hero--center {
+  text-align: center;
+}
+
+/* Section headlines */
+.genz-headline {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 6vw, 72px);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-lg);
+}
+
+/* Subheadlines / context */
+.genz-subhead {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 500;
+  color: var(--genz-text-muted);
+  margin: 0 0 var(--space-md);
+}
+
+/* Body text */
+.genz-body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--genz-text-muted);
+}
+
+/* Annotations / callouts */
+.genz-annotation {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--genz-highlight-yellow);
+}
+
+/* Data labels */
+.genz-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--genz-text-subtle);
+}
+
+/* ========================================
+   BIG NUMBERS (Hero Stats)
+   ======================================== */
+
+.genz-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl) var(--space-lg);
+  text-align: center;
+}
+
+.genz-stat__number {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 20vw, 200px);
+  line-height: 0.9;
+  color: var(--genz-text);
+  margin-bottom: var(--space-md);
+}
+
+.genz-stat__number--accent {
+  color: var(--genz-accent);
+}
+
+.genz-stat__label {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 3vw, 28px);
+  font-weight: 500;
+  color: var(--genz-text-muted);
+  max-width: 400px;
+}
+
+/* ========================================
+   HIGHLIGHT / MARKER EFFECTS
+   ======================================== */
+
+.genz-highlight {
+  background: linear-gradient(180deg, transparent 50%, var(--genz-highlight-yellow) 50%);
+  padding: 0 4px;
+}
+
+.genz-highlight--green {
+  background: linear-gradient(180deg, transparent 50%, var(--genz-highlight-green) 50%);
+}
+
+.genz-highlight--pink {
+  background: linear-gradient(180deg, transparent 50%, var(--genz-highlight-pink) 50%);
+}
+
+.genz-highlight--block {
+  background: var(--genz-highlight-yellow);
+  color: #000;
+  padding: 2px 8px;
+}
+
+/* Strikethrough for emphasis */
+.genz-strike {
+  text-decoration: line-through;
+  text-decoration-color: var(--genz-accent);
+  text-decoration-thickness: 3px;
+  color: var(--genz-text-muted);
+}
+
+/* ========================================
+   STICKER LABELS
+   ======================================== */
+
+.genz-sticker {
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  transform: rotate(-2deg);
+  box-shadow: var(--shadow-sm);
+}
+
+.genz-sticker--yellow {
+  background: var(--genz-highlight-yellow);
+  color: #000;
+}
+
+.genz-sticker--red {
+  background: var(--genz-accent);
+  color: #fff;
+}
+
+.genz-sticker--green {
+  background: var(--genz-highlight-green);
+  color: #000;
+}
+
+.genz-sticker--blue {
+  background: var(--genz-highlight-blue);
+  color: #fff;
+}
+
+.genz-sticker--rotate-right {
+  transform: rotate(2deg);
+}
+
+.genz-sticker--rotate-more {
+  transform: rotate(-4deg);
+}
+
+/* ========================================
+   CARDS & CONTAINERS
+   ======================================== */
+
+.genz-card {
+  background: var(--genz-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.genz-card--elevated {
+  background: var(--genz-bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+.genz-card--bordered {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.genz-card__title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-md);
+}
+
+/* ========================================
+   CHART CONTAINERS
+   ======================================== */
+
+.genz-chart {
+  background: var(--genz-bg-elevated);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.genz-chart__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-md);
+}
+
+.genz-chart__title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 36px);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.genz-chart__insight {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--genz-highlight-yellow);
+  margin-top: var(--space-sm);
+}
+
+.genz-chart svg {
+  width: 100%;
+  height: 300px;
+  display: block;
+}
+
+/* Minimal axis styling */
+.genz-chart .axis text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--genz-text-subtle);
+}
+
+.genz-chart .axis line,
+.genz-chart .axis path {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+/* Hide axis lines for cleaner look */
+.genz-chart--minimal .axis line,
+.genz-chart--minimal .axis path {
+  display: none;
+}
+
+/* ========================================
+   EMBEDDED CONTENT (Screenshots, Tweets)
+   ======================================== */
+
+.genz-embed {
+  background: var(--genz-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  margin: var(--space-md) 0;
+}
+
+.genz-embed--rotated {
+  transform: rotate(-1deg);
+}
+
+.genz-embed__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.genz-embed__caption {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--genz-text-muted);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Tweet-style embed */
+.genz-tweet {
+  background: var(--genz-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.genz-tweet__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.genz-tweet__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--genz-text-subtle);
+}
+
+.genz-tweet__name {
+  font-weight: 600;
+}
+
+.genz-tweet__handle {
+  color: var(--genz-text-muted);
+  font-size: 14px;
+}
+
+.genz-tweet__body {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: var(--space-sm);
+}
+
+.genz-tweet__metrics {
+  display: flex;
+  gap: var(--space-lg);
+  color: var(--genz-text-muted);
+  font-size: 13px;
+}
+
+/* ========================================
+   COLLAGE LAYOUTS
+   ======================================== */
+
+.genz-collage {
+  display: grid;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+
+.genz-collage--2col {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.genz-collage--3col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.genz-collage--asymmetric {
+  grid-template-columns: 2fr 1fr;
+}
+
+.genz-collage__item {
+  position: relative;
+}
+
+.genz-collage__item--overlap {
+  margin: -20px 0 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.genz-collage__item--rotated {
+  transform: rotate(-2deg);
+}
+
+/* ========================================
+   SECTION DIVIDERS
+   ======================================== */
+
+.genz-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.genz-divider--black {
+  background: #000;
+  color: #fff;
+}
+
+.genz-divider--white {
+  background: #fff;
+  color: #000;
+}
+
+.genz-divider--accent {
+  background: var(--genz-accent);
+  color: #fff;
+}
+
+/* ========================================
+   INSIGHT CALLOUTS
+   ======================================== */
+
+.genz-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--genz-surface);
+  border-left: 4px solid var(--genz-highlight-yellow);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin: var(--space-lg) 0;
+}
+
+.genz-insight__icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.genz-insight__content {
+  flex: 1;
+}
+
+.genz-insight__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-xs);
+}
+
+.genz-insight__text {
+  font-size: 14px;
+  color: var(--genz-text-muted);
+  margin: 0;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+/* Fade in up */
+@keyframes genz-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.genz-animate-in {
+  animation: genz-fadeInUp 0.5s ease forwards;
+}
+
+/* Stagger children */
+.genz-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.genz-stagger > *:nth-child(2) { animation-delay: 0.15s; }
+.genz-stagger > *:nth-child(3) { animation-delay: 0.2s; }
+.genz-stagger > *:nth-child(4) { animation-delay: 0.25s; }
+.genz-stagger > *:nth-child(5) { animation-delay: 0.3s; }
+.genz-stagger > *:nth-child(6) { animation-delay: 0.35s; }
+.genz-stagger > *:nth-child(7) { animation-delay: 0.4s; }
+.genz-stagger > *:nth-child(8) { animation-delay: 0.45s; }
+
+/* Number count-up support */
+.genz-countup {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pulse on key stats */
+@keyframes genz-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.genz-pulse {
+  animation: genz-pulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+   HOVER EFFECTS
+   ======================================== */
+
+.genz-hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.genz-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.genz-hover-glow:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 640px) {
+  .genz-hero {
+    padding: var(--space-lg) 0;
+  }
+  
+  .genz-stat__number {
+    font-size: clamp(48px, 18vw, 96px);
+  }
+  
+  .genz-collage--2col,
+  .genz-collage--3col,
+  .genz-collage--asymmetric {
+    grid-template-columns: 1fr;
+  }
+  
+  .genz-chart svg {
+    height: 200px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .genz-collage--3col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.genz-text-center { text-align: center; }
+.genz-text-left { text-align: left; }
+.genz-text-right { text-align: right; }
+
+.genz-text-accent { color: var(--genz-accent); }
+.genz-text-yellow { color: var(--genz-highlight-yellow); }
+.genz-text-green { color: var(--genz-highlight-green); }
+.genz-text-muted { color: var(--genz-text-muted); }
+
+.genz-bg-black { background: #000; }
+.genz-bg-white { background: #fff; color: #000; }
+.genz-bg-accent { background: var(--genz-accent); color: #fff; }
+
+.genz-mt-0 { margin-top: 0; }
+.genz-mt-sm { margin-top: var(--space-sm); }
+.genz-mt-md { margin-top: var(--space-md); }
+.genz-mt-lg { margin-top: var(--space-lg); }
+.genz-mt-xl { margin-top: var(--space-xl); }
+
+.genz-mb-0 { margin-bottom: 0; }
+.genz-mb-sm { margin-bottom: var(--space-sm); }
+.genz-mb-md { margin-bottom: var(--space-md); }
+.genz-mb-lg { margin-bottom: var(--space-lg); }
+.genz-mb-xl { margin-bottom: var(--space-xl); }
+
+.genz-uppercase { text-transform: uppercase; }
+.genz-lowercase { text-transform: lowercase; }
+.genz-capitalize { text-transform: capitalize; }
+
+.genz-font-display { font-family: var(--font-display); }
+.genz-font-body { font-family: var(--font-body); }
+.genz-font-mono { font-family: var(--font-mono); }

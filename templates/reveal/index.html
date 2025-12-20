@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  
+  <!-- Reveal.js Core -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  
+  <!-- Gen Z Custom Theme -->
+  <link rel="stylesheet" href="./css/genz-theme.css">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      {{SLIDES}}
+    </div>
+  </div>
+
+  <!-- D3.js for charts -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  
+  <!-- Reveal.js Core -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  
+  <!-- Embedded Data -->
+  <script>
+    window.WRAPBOXD_DATA = {{DATA}};
+  </script>
+  
+  <!-- Chart Rendering -->
+  <script src="./js/charts.js"></script>
+  
+  <!-- Initialize Reveal.js -->
+  <script>
+    Reveal.initialize({
+      hash: true,
+      controls: true,
+      progress: true,
+      center: true,
+      transition: 'none',
+      backgroundTransition: 'none',
+      width: 1920,
+      height: 1080,
+      margin: 0,
+      minScale: 0.2,
+      maxScale: 2.0,
+      
+      // Keyboard shortcuts
+      keyboard: {
+        // Custom bindings can go here
+      }
+    });
+    
+    // Render charts when slides become visible
+    Reveal.on('slidechanged', event => {
+      const charts = event.currentSlide.querySelectorAll('[data-chart]');
+      charts.forEach(el => {
+        if (!el.dataset.rendered) {
+          window.renderChart(el);
+          el.dataset.rendered = 'true';
+        }
+      });
+    });
+    
+    // Initial render for first slide
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const currentSlide = Reveal.getCurrentSlide();
+        if (currentSlide) {
+          const charts = currentSlide.querySelectorAll('[data-chart]');
+          charts.forEach(el => {
+            if (!el.dataset.rendered) {
+              window.renderChart(el);
+              el.dataset.rendered = 'true';
+            }
+          });
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>

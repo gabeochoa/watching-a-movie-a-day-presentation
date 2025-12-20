@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wrapboxd</title>
+  
+  <!-- Reveal.js Core -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  
+  <!-- Gen Z Custom Theme -->
+  <link rel="stylesheet" href="./css/genz-theme.css">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+<section class="slide-title" data-background-color="black">
+  <h1>WRAPBOXD</h1>
+  <p class="text-muted" style="font-size: 48px; margin-top: 32px;">
+    Your 2025 in Film
+  </p>
+  <p style="margin-top: 64px;">
+    <span class="sticker sticker-yellow">12 FILMS</span>
+  </p>
+</section>
+
+<section class="slide-divider" data-background-color="black">
+  <h1>THE NUMBERS</h1>
+</section>
+
+<section class="slide-stat" data-background-color="black">
+  <div class="stat-number accent">12</div>
+  <div class="stat-label">unique films watched</div>
+  <p class="chart-insight" style="margin-top: 48px;">quality over quantity</p>
+</section>
+
+<section class="slide-stat" data-background-color="black">
+  <div class="stat-number">3.8</div>
+  <div class="stat-label">average rating</div>
+  <p class="chart-insight" style="margin-top: 48px;">fair and balanced</p>
+</section>
+
+<section class="slide-stat" data-background-color="black">
+  <div class="stat-number">1</div>
+  <div class="stat-label">rewatches (8% of all watches)</div>
+  <p class="chart-insight" style="margin-top: 48px;">mostly new discoveries</p>
+</section>
+
+<section class="slide-divider" data-background-color="black">
+  <h1>HOW YOU RATE</h1>
+</section>
+
+<section class="slide-chart" data-background-color="black">
+  <h2>YOUR RATINGS</h2>
+  <div class="chart-container" data-chart="ratings-histogram"></div>
+</section>
+
+<section class="slide-statement" data-background-color="black">
+  <h1>YOU'RE A <span class="text-accent">★★★★</span> PERSON</h1>
+  <p class="text-muted" style="font-size: 48px; margin-top: 32px;">
+    Your most given rating is 4 stars (6 times)
+  </p>
+</section>
+
+<section class="slide-divider" data-background-color="black">
+  <h1>WHEN YOU WATCH</h1>
+</section>
+
+<section class="slide-chart" data-background-color="black">
+  <h2>WHEN YOU WATCHED</h2>
+  <div class="chart-container" data-chart="watches-by-month"></div>
+  <p class="chart-insight">your busiest month: 2025-03 (4 films)</p>
+</section>
+
+<section class="slide-chart" data-background-color="black">
+  <h2>YOUR MOVIE DAYS</h2>
+  <div class="chart-container" data-chart="weekdays"></div>
+  <p class="chart-insight">Fri is your day</p>
+</section>
+
+<section class="slide-chart" data-background-color="black">
+  <h2>THE JOURNEY</h2>
+  <div class="chart-container" data-chart="cumulative"></div>
+  <p class="chart-insight">12 watches and counting</p>
+</section>
+
+<section class="slide-divider" data-background-color="black">
+  <h1>YOUR ERAS</h1>
+</section>
+
+<section class="slide-chart" data-background-color="black">
+  <h2>YOUR MOVIE ERAS</h2>
+  <div class="chart-container" data-chart="release-years"></div>
+  <p class="chart-insight">the 2020s are your era (4 films)</p>
+</section>
+
+<section class="slide-title" data-background-color="black">
+  <h1 style="font-size: 140px;">THAT'S A WRAP</h1>
+  <p class="text-muted" style="font-size: 48px; margin-top: 48px;">
+    12 films in 2025
+  </p>
+  <p style="margin-top: 64px; font-size: 32px; color: var(--genz-text-subtle);">
+    made with wrapboxd
+  </p>
+</section>
+    </div>
+  </div>
+
+  <!-- D3.js for charts -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  
+  <!-- Reveal.js Core -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  
+  <!-- Embedded Data -->
+  <script>
+    window.WRAPBOXD_DATA = {"meta":{"generatedAt":"2025-12-20T22:18:59.601Z","sourceZip":"example","tmdbEnabled":false},"parsed":{"zipFileNames":["example"],"filesFound":{"diary":"example","films":null,"ratings":null,"watched":null},"diary":[{"Date":"2025-01-03","Name":"Example Movie A","Year":"1999","Rating":"4","Rewatch":"","Tags":"","Watched Date":"2025-01-03"},{"Date":"2025-01-10","Name":"Example Movie B","Year":"2014","Rating":"3","Rewatch":"","Tags":"","Watched Date":"2025-01-10"},{"Date":"2025-01-15","Name":"Example Movie C","Year":"1982","Rating":"5","Rewatch":"Yes","Tags":"","Watched Date":"2025-01-15"},{"Date":"2025-02-02","Name":"Example Movie D","Year":"2023","Rating":"4","Rewatch":"","Tags":"","Watched Date":"2025-02-02"},{"Date":"2025-02-14","Name":"Example Movie E","Year":"2001","Rating":"4","Rewatch":"","Tags":"","Watched Date":"2025-02-14"},{"Date":"2025-03-01","Name":"Example Movie F","Year":"2019","Rating":"3","Rewatch":"","Tags":"","Watched Date":"2025-03-01"},{"Date":"2025-03-14","Name":"Example Movie G","Year":"2023","Rating":"2","Rewatch":"","Tags":"","Watched Date":"2025-03-14"},{"Date":"2025-03-20","Name":"Example Movie H","Year":"2001","Rating":"4","Rewatch":"","Tags":"","Watched Date":"2025-03-20"},{"Date":"2025-03-25","Name":"Example Movie I","Year":"1995","Rating":"5","Rewatch":"","Tags":"","Watched Date":"2025-03-25"},{"Date":"2025-04-05","Name":"Example Movie J","Year":"2020","Rating":"3","Rewatch":"","Tags":"","Watched Date":"2025-04-05"},{"Date":"2025-04-10","Name":"Example Movie K","Year":"2018","Rating":"4","Rewatch":"","Tags":"","Watched Date":"2025-04-10"},{"Date":"2025-04-20","Name":"Example Movie L","Year":"2022","Rating":"4","Rewatch":"","Tags":"","Watched Date":"2025-04-20"}],"films":[],"ratings":[],"watched":[]},"computedAll":{"counts":{"diaryEntries":12,"films":0,"watches":12,"ratings":12,"rewatches":1,"uniqueFilms":12,"avgRating":3.75},"series":{"watchesByMonth":[{"yearMonth":"2025-01","count":3},{"yearMonth":"2025-02","count":2},{"yearMonth":"2025-03","count":4},{"yearMonth":"2025-04","count":3}],"cumulativeWatches":[{"yearMonth":"2025-01","cumulative":3},{"yearMonth":"2025-02","cumulative":5},{"yearMonth":"2025-03","cumulative":9},{"yearMonth":"2025-04","cumulative":12}],"rewatchesByMonth":[{"yearMonth":"2025-01","count":1}],"watchesByWeekday":[{"weekday":"Sun","count":2},{"weekday":"Mon","count":0},{"weekday":"Tue","count":1},{"weekday":"Wed","count":1},{"weekday":"Thu","count":2},{"weekday":"Fri","count":4},{"weekday":"Sat","count":2}],"topMonths":[{"label":"2025-03","count":4},{"label":"2025-01","count":3},{"label":"2025-04","count":3},{"label":"2025-02","count":2}],"topYears":[{"label":"2025","count":12}],"avgRatingByMonth":[{"yearMonth":"2025-01","avgRating":4},{"yearMonth":"2025-02","avgRating":4},{"yearMonth":"2025-03","avgRating":3.5},{"yearMonth":"2025-04","avgRating":3.6666666666666665}],"avgRatingByReleaseYear":[{"year":1982,"avgRating":5},{"year":1995,"avgRating":5},{"year":1999,"avgRating":4},{"year":2001,"avgRating":4},{"year":2014,"avgRating":3},{"year":2018,"avgRating":4},{"year":2019,"avgRating":3},{"year":2020,"avgRating":3},{"year":2022,"avgRating":4},{"year":2023,"avgRating":3}],"ratingsHistogram":[{"rating":2,"count":1},{"rating":3,"count":3},{"rating":4,"count":6},{"rating":5,"count":2}],"releaseYears":[{"year":1982,"count":1},{"year":1995,"count":1},{"year":1999,"count":1},{"year":2001,"count":2},{"year":2014,"count":1},{"year":2018,"count":1},{"year":2019,"count":1},{"year":2020,"count":1},{"year":2022,"count":1},{"year":2023,"count":2}]}},"enrichmentByFilm":[],"enrichedAll":null,"tmdbCacheStats":null,"tmdbRequestStats":{"hit":0,"miss":0,"unknown":0}};
+  </script>
+  
+  <!-- Chart Rendering -->
+  <script src="./js/charts.js"></script>
+  
+  <!-- Initialize Reveal.js -->
+  <script>
+    Reveal.initialize({
+      hash: true,
+      controls: true,
+      progress: true,
+      center: true,
+      transition: 'none',
+      backgroundTransition: 'none',
+      width: 1920,
+      height: 1080,
+      margin: 0,
+      minScale: 0.2,
+      maxScale: 2.0,
+      
+      // Keyboard shortcuts
+      keyboard: {
+        // Custom bindings can go here
+      }
+    });
+    
+    // Render charts when slides become visible
+    Reveal.on('slidechanged', event => {
+      const charts = event.currentSlide.querySelectorAll('[data-chart]');
+      charts.forEach(el => {
+        if (!el.dataset.rendered) {
+          window.renderChart(el);
+          el.dataset.rendered = 'true';
+        }
+      });
+    });
+    
+    // Initial render for first slide
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const currentSlide = Reveal.getCurrentSlide();
+        if (currentSlide) {
+          const charts = currentSlide.querySelectorAll('[data-chart]');
+          charts.forEach(el => {
+            if (!el.dataset.rendered) {
+              window.renderChart(el);
+              el.dataset.rendered = 'true';
+            }
+          });
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>
