@@ -6,7 +6,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "generate": "node scripts/generate.js"
+    "generate": "node scripts/generate.js",
+    "dev": "node scripts/generate.js --zip example/letterboxd-choicehoney.zip --output dist"
   },
   "dependencies": {
     "better-sqlite3": "^12.4.1",
