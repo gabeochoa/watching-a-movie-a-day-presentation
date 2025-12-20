@@ -1,7 +1,12 @@
 import { el, on, setText, downloadJson } from "./ui/dom.js";
 import { parseLetterboxdZip } from "./letterboxd/parseZip.js";
 import { computeFromLetterboxd } from "./analytics/compute.js";
-import { renderBarChart, renderHorizontalBarChart, renderLineChart } from "./charts/d3charts.js";
+import {
+  renderBarChart,
+  renderHorizontalBarChart,
+  renderLineChart,
+  renderScatterPlot,
+} from "./charts/d3charts.js";
 import {
   fetchCacheStats,
   fetchTmdbCredits,
@@ -133,8 +138,33 @@ function render() {
     yKey: "avgRating",
   });
 
+  renderHorizontalBarChart(el("#chartTopMonths"), series.topMonths, {
+    xKey: "count",
+    yKey: "label",
+    maxBars: 12,
+  });
+
+  renderHorizontalBarChart(el("#chartTopYears"), series.topYears, {
+    xKey: "count",
+    yKey: "label",
+    maxBars: 10,
+  });
+
   // TMDB-enriched charts (if present)
   if (state.enriched) {
+    renderScatterPlot(el("#chartRatingRuntime"), state.enriched.ratingRuntimePoints, {
+      xKey: "runtime",
+      yKey: "rating",
+      xLabel: "runtime (min)",
+      yLabel: "rating",
+    });
+    renderScatterPlot(el("#chartRatingReleaseYear"), state.enriched.ratingReleaseYearPoints, {
+      xKey: "year",
+      yKey: "rating",
+      xLabel: "release year",
+      yLabel: "rating",
+    });
+
     renderHorizontalBarChart(el("#chartDirectors"), state.enriched.topDirectors, {
       xKey: "count",
       yKey: "name",
@@ -193,6 +223,33 @@ function normalizeDiaryFilms(parsed) {
   return Array.from(films.values());
 }
 
+function computeFilmAvgRatingsByKey(diaryRows) {
+  const sum = new Map();
+  const count = new Map();
+  for (const row of diaryRows ?? []) {
+    const title = String(row.Name ?? row.name ?? "").trim();
+    const year = String(row.Year ?? row.year ?? "").trim();
+    if (!title) continue;
+    const key = `${title} (${year || "n/a"})`;
+    const r = Number.parseFloat(String(row.Rating ?? row.rating));
+    if (!Number.isFinite(r)) continue;
+    sum.set(key, (sum.get(key) || 0) + r);
+    count.set(key, (count.get(key) || 0) + 1);
+  }
+  const out = new Map();
+  for (const [k, s] of sum.entries()) {
+    const n = count.get(k) || 0;
+    if (n) out.set(k, s / n);
+  }
+  return out;
+}
+
+function toReleaseYearFromTmdb(details) {
+  const d = String(details?.release_date ?? "").trim();
+  const y = Number.parseInt(d.slice(0, 4), 10);
+  return Number.isFinite(y) ? y : null;
+}
+
 async function promisePool(items, worker, { concurrency = 3 } = {}) {
   const executing = new Set();
   const results = new Array(items.length);
@@ -246,9 +303,12 @@ async function enrichWithTmdb() {
 
   logLine(`Enriching ${films.length} films with TMDB (cached by server)…`);
 
+  const filmAvgRatings = computeFilmAvgRatingsByKey(state.parsed.diary);
   const directorCounts = new Map();
   const genreCounts = new Map();
   const runtimes = [];
+  const ratingRuntimePoints = [];
+  const ratingReleaseYearPoints = [];
   let mapped = 0;
   let failed = 0;
 
@@ -306,6 +366,19 @@ async function enrichWithTmdb() {
           directorCounts.set(name, (directorCounts.get(name) || 0) + 1);
         }
 
+        // Scatter points (use average rating per filmKey if present)
+        const avgRating = filmAvgRatings.get(film.key) ?? null;
+        if (avgRating != null && Number.isFinite(avgRating)) {
+          const runtime = Number(details.runtime);
+          if (Number.isFinite(runtime) && runtime > 0) {
+            ratingRuntimePoints.push({ runtime, rating: avgRating });
+          }
+          const year = film.year ?? toReleaseYearFromTmdb(details);
+          if (Number.isFinite(year)) {
+            ratingReleaseYearPoints.push({ year, rating: avgRating });
+          }
+        }
+
         return { filmKey: film.key, tmdbId };
       } catch (e) {
         failed += 1;
@@ -329,7 +402,15 @@ async function enrichWithTmdb() {
     .sort((a, b) => b.count - a.count);
   const runtimeBins = computeRuntimeBins(runtimes);
 
-  state.enriched = { topDirectors, topGenres, runtimeBins, mapped, failed };
+  state.enriched = {
+    topDirectors,
+    topGenres,
+    runtimeBins,
+    ratingRuntimePoints,
+    ratingReleaseYearPoints,
+    mapped,
+    failed,
+  };
   logLine(`Enrichment complete: mapped=${mapped} failed=${failed}`);
   await refreshCacheStatsUi();
   render();

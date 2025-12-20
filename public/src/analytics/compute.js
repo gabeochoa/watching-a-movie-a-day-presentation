@@ -62,6 +62,12 @@ export function computeFromLetterboxd({ diary, films }) {
   const watchesByMonth = new Map();
   for (const w of watches) watchesByMonth.set(w.yearMonth, (watchesByMonth.get(w.yearMonth) || 0) + 1);
 
+  const watchesByYear = new Map();
+  for (const w of watches) {
+    const y = w.date.getFullYear();
+    watchesByYear.set(y, (watchesByYear.get(y) || 0) + 1);
+  }
+
   const rewatchesByMonth = new Map();
   for (const row of diary ?? []) {
     const d = parseDate(row.Date || row.date);
@@ -120,6 +126,16 @@ export function computeFromLetterboxd({ diary, films }) {
     return { yearMonth: p.yearMonth, cumulative };
   });
 
+  const topMonths = [...watchesByMonthSeries]
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 12)
+    .map((d) => ({ label: d.yearMonth, count: d.count }));
+
+  const topYears = Array.from(watchesByYear.entries())
+    .map(([year, count]) => ({ label: String(year), count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10);
+
   return {
     counts: {
       diaryEntries: (diary ?? []).length,
@@ -140,6 +156,8 @@ export function computeFromLetterboxd({ diary, films }) {
         weekday: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dow],
         count: watchesByWeekday.get(dow) || 0,
       })),
+      topMonths,
+      topYears,
       avgRatingByMonth: Array.from(ratingSumByMonth.entries())
         .map(([yearMonth, sum]) => {
           const n = ratingCountByMonth.get(yearMonth) || 0;

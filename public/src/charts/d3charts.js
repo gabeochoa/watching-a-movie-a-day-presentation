@@ -196,3 +196,80 @@ export function renderLineChart(svgEl, data, { xKey, yKey } = {}) {
     .attr("fill", "#6ea8ff");
 }
 
+export function renderScatterPlot(svgEl, data, { xKey, yKey, xLabel, yLabel } = {}) {
+  const d3 = window.d3;
+  if (!d3) throw new Error("D3 not loaded.");
+
+  clearSvg(svgEl);
+  const { width, height } = sizeFromSvg(svgEl);
+  const margin = { top: 10, right: 12, bottom: 34, left: 40 };
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+
+  const filtered = (data ?? []).filter(
+    (d) => Number.isFinite(d?.[xKey]) && Number.isFinite(d?.[yKey]),
+  );
+
+  const svg = d3.select(svgEl).attr("viewBox", `0 0 ${width} ${height}`);
+  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+  const x = d3
+    .scaleLinear()
+    .domain(d3.extent(filtered, (d) => d[xKey]) || [0, 1])
+    .nice()
+    .range([0, innerW]);
+
+  const y = d3
+    .scaleLinear()
+    .domain(d3.extent(filtered, (d) => d[yKey]) || [0, 1])
+    .nice()
+    .range([innerH, 0]);
+
+  g.append("g")
+    .attr("transform", `translate(0,${innerH})`)
+    .call(d3.axisBottom(x).ticks(6).tickSizeOuter(0))
+    .selectAll("text")
+    .attr("fill", "#a0a6b3")
+    .attr("font-size", 10);
+
+  g.append("g")
+    .call(d3.axisLeft(y).ticks(5).tickSizeOuter(0))
+    .selectAll("text")
+    .attr("fill", "#a0a6b3")
+    .attr("font-size", 10);
+
+  g.selectAll(".domain,.tick line").attr("stroke", "#26304a");
+
+  g.append("g")
+    .selectAll("circle")
+    .data(filtered)
+    .enter()
+    .append("circle")
+    .attr("cx", (d) => x(d[xKey]))
+    .attr("cy", (d) => y(d[yKey]))
+    .attr("r", 2.6)
+    .attr("fill", "#6ea8ff")
+    .attr("fill-opacity", 0.75);
+
+  if (xLabel) {
+    g.append("text")
+      .attr("x", innerW / 2)
+      .attr("y", innerH + 30)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#a0a6b3")
+      .attr("font-size", 10)
+      .text(xLabel);
+  }
+
+  if (yLabel) {
+    g.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -innerH / 2)
+      .attr("y", -32)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#a0a6b3")
+      .attr("font-size", 10)
+      .text(yLabel);
+  }
+}
+
