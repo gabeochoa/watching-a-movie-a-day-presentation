@@ -37,6 +37,20 @@ function logLine(msg) {
   node.scrollTop = node.scrollHeight;
 }
 
+function showTab(which) {
+  const isPresentation = which === "presentation";
+  el("#tabPresentation").hidden = !isPresentation;
+  el("#tabData").hidden = isPresentation;
+
+  el("#tabBtnPresentation").setAttribute("aria-selected", isPresentation ? "true" : "false");
+  el("#tabBtnData").setAttribute("aria-selected", isPresentation ? "false" : "true");
+
+  // When showing presentation, re-render so D3 can measure actual widths.
+  if (isPresentation && state.computed) {
+    setTimeout(() => render(), 0);
+  }
+}
+
 function bumpCacheCounter(cacheHeader) {
   const v = String(cacheHeader || "").toUpperCase();
   if (v === "HIT") state.tmdbRequestStats.hit += 1;
@@ -451,6 +465,9 @@ async function analyzeZipFile(zipFile, { auto = false } = {}) {
 }
 
 function initUi() {
+  on(el("#tabBtnPresentation"), "click", () => showTab("presentation"));
+  on(el("#tabBtnData"), "click", () => showTab("data"));
+
   on(el("#lbZip"), "change", async () => {
     const zipFile = el("#lbZip").files?.[0];
     await analyzeZipFile(zipFile, { auto: true });
@@ -549,9 +566,14 @@ function initUi() {
 
 async function main() {
   initUi();
+  showTab("presentation");
   render();
   await checkServer();
   await refreshCacheStatsUi();
+
+  window.addEventListener("resize", () => {
+    if (!el("#tabPresentation").hidden && state.computed) render();
+  });
 }
 
 main().catch((e) => {
