@@ -13,3 +13,9 @@ data/*.sqlite-*
 .env.*
 config.local.json
 
+# example data (optional, often large/sensitive)
+example/
+
+# local secrets file (if used)
+secrets.js
+
