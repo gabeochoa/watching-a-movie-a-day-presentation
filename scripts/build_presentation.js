@@ -173,29 +173,11 @@ function generateSlides(insights, controversy) {
     </section>
   `);
   
-  // Generate SVG cumulative chart for background with month labels
+  // Data used across multiple "numbers" slides
   const cumData = t.dailyCumulative || [];
-  const maxTotal = cumData.length > 0 ? cumData[cumData.length - 1]?.total || 361 : 361;
-  const chartPoints = cumData.map((d, i) => {
-    const x = (i / 365) * 1800 + 60;
-    const y = 850 - (d.total / maxTotal) * 650;
-    return `${x},${y}`;
-  }).join(' ');
-  
-  // Month labels along bottom
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const monthLabels = months.map((m, i) => {
-    const x = (i / 12) * 1800 + 60 + 75;
-    return `<text x="${x}" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">${m}</text>`;
-  }).join('');
   
   slides.push(`
     <section data-background="#000000" class="theme-numbers">
-      <svg class="bg-chart" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-        <polyline points="${chartPoints}" fill="none" stroke="rgba(48, 209, 88, 0.22)" stroke-width="4"/>
-        <polygon points="60,850 ${chartPoints} 1860,850" fill="rgba(48, 209, 88, 0.10)"/>
-        ${monthLabels}
-      </svg>
       <div class="contrast-stats">
         <div class="stat-block">
           <span class="number">${t.busiestMonth.count}</span>
