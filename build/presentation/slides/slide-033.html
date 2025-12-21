@@ -447,7 +447,7 @@
     
     .streak-gap-bottom .number {
       font-family: 'Anton', sans-serif;
-      font-size: 8rem;
+      font-size: 12rem;
       display: block;
       line-height: 1;
     }
@@ -462,23 +462,23 @@
     
     .streak-gap-bottom .unit {
       font-family: 'Inter', sans-serif;
-      font-size: 2rem;
+      font-size: 2.8rem;
       color: #fff;
       display: block;
-      margin-top: 8px;
+      margin-top: 12px;
     }
     
     .streak-gap-bottom .dates {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.2rem;
+      font-size: 1.6rem;
       color: rgba(255,255,255,0.5);
       display: block;
-      margin-top: 8px;
+      margin-top: 12px;
     }
     
     .streak-gap-bottom .divider {
       width: 2px;
-      height: 150px;
+      height: 200px;
       background: rgba(255,255,255,0.2);
     }
     
@@ -513,6 +513,123 @@
     .best-day .label, .worst-day .label {
       font-size: 1.2em;
       opacity: 0.6;
+    }
+
+    /* Weekday forecast (weather-style row) */
+    .forecast-panel {
+      width: 100%;
+      max-width: 1520px;
+      margin: 0 auto;
+      border: 3px solid rgba(255,255,255,0.22);
+      border-radius: 12px;
+      padding: 34px 34px 26px;
+      box-sizing: border-box;
+    }
+
+    .forecast-caption {
+      margin: 26px 0 0 0;
+      text-align: center;
+    }
+
+    .weekday-forecast {
+      width: 100%;
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .forecast-card {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 18px 14px 16px;
+      text-align: center;
+      box-sizing: border-box;
+      transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease;
+    }
+
+    .forecast-day {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.8em;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin: 0;
+    }
+
+    .forecast-hr {
+      border: 0;
+      height: 2px;
+      width: 100%;
+      background: rgba(255,255,255,0.18);
+      margin: 14px 0 12px;
+    }
+
+    .forecast-count {
+      margin-top: 0;
+    }
+
+    .forecast-count-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.65em;
+      line-height: 1;
+      display: block;
+      color: var(--green);
+    }
+
+    .forecast-count-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95em;
+      opacity: 0.75;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .forecast-rating {
+      margin-top: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.45em;
+      color: var(--gold);
+    }
+
+    .forecast-card.is-dim {
+      filter: saturate(0);
+      opacity: 0.55;
+      border-color: rgba(255,255,255,0.10);
+    }
+
+    .forecast-card.is-focus {
+      border-color: rgba(255,214,10,0.35);
+      background: rgba(255,214,10,0.06);
+    }
+
+    .forecast-card.is-focus .forecast-count-num {
+      opacity: 0.45;
+    }
+
+    .forecast-card.is-focus .forecast-rating {
+      font-size: 1.65em;
+    }
+
+    .forecast-card.is-spotlight {
+      transform: translateY(-6px);
+      border-color: rgba(48,209,88,0.65);
+      background: rgba(48,209,88,0.10);
+      box-shadow: 0 0 0 6px rgba(48,209,88,0.08);
+    }
+
+    .forecast-card.is-spotlight .forecast-day {
+      color: var(--green);
+    }
+
+    .forecast-card.is-spotlight .forecast-count-num {
+      font-size: 3.0em;
+    }
+
+    .forecast-card.is-spotlight .forecast-rating {
+      opacity: 0.45;
     }
     
     /* Section title slides - no border */
@@ -620,12 +737,13 @@
   <div class="reveal">
     <div class="slides">
       
-    <section style="background: #16213e;">
-      <h2 class="impact">DRAMA</h2>
-      <div class="big-number">178</div>
-      <p class="annotation">drama films watched</p>
-    </section>
-  
+      <section style="background: #1a1a2e;">
+        <h3>Wes Anderson's films I watched:</h3>
+        <ul class="film-list">
+          <li>The Royal Tenenbaums <span class="rating">★★</span></li><li>Poison <span class="rating">★★★★</span></li><li>The French Dispatch of the Liberty, Kansas Evening Sun <span class="rating">★★★</span></li><li>The Swan <span class="rating">★★★★</span></li><li>The Rat Catcher <span class="rating">★★★</span></li><li>The Phoenician Scheme <span class="rating">★★★★</span></li>
+        </ul>
+      </section>
+    
     </div>
   </div>
 </body>

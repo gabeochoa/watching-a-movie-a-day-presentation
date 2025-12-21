@@ -146,7 +146,7 @@ function generateSlides(insights, controversy) {
           <span class="number">${s.totalHours}</span>
           <span class="unit">hours</span>
         </div>
-        <div class="equals">=</div>
+        <div class="equals">or</div>
         <div class="stat">
           <span class="number">${s.totalDays}</span>
           <span class="unit">days</span>
@@ -170,24 +170,6 @@ function generateSlides(insights, controversy) {
   slides.push(`
     <section data-background="#000000" class="section-title-slide theme-numbers">
       <h2 class="section-title">THE NUMBERS</h2>
-    </section>
-  `);
-  
-  const filmsPerWeek = (s.totalFilms / 52).toFixed(1);
-  slides.push(`
-    <section data-background="#000000" class="theme-numbers">
-      <div class="big-number">${filmsPerWeek}</div>
-      <p class="label">films per week, on average</p>
-      <p class="annotation">that's almost one a day</p>
-    </section>
-  `);
-  
-  slides.push(`
-    <section data-background="#000000" class="theme-numbers">
-      <h2 class="impact">${formatMonth(t.busiestMonth.month)}</h2>
-      <div class="big-number">${t.busiestMonth.count}</div>
-      <p class="label">films in one month</p>
-      <p class="annotation">what happened?</p>
     </section>
   `);
   
@@ -226,6 +208,15 @@ function generateSlides(insights, controversy) {
         </div>
       </div>
       <p class="annotation">busiest vs quietest</p>
+    </section>
+  `);
+  
+  const filmsPerWeek = (s.totalFilms / 52).toFixed(1);
+  slides.push(`
+    <section data-background="#000000" class="theme-numbers">
+      <div class="big-number">${filmsPerWeek}</div>
+      <p class="label">films per week, on average</p>
+      <p class="annotation">that's almost one a day</p>
     </section>
   `);
   
@@ -325,34 +316,50 @@ function generateSlides(insights, controversy) {
       </div>
     </section>
   `);
-  
-  slides.push(`
-    <section data-background="#000000" class="theme-numbers numbers-impact-green">
-      <h2 class="impact">${t.busiestWeekday.day.toUpperCase()}</h2>
-      <p class="label">is my movie day</p>
-      <p class="subtitle">${t.busiestWeekday.count} films watched on ${t.busiestWeekday.day}s</p>
-    </section>
-  `);
-  
-  // Weekday ratings analysis
-  const bestDay = t.bestRatingDay;
-  const worstDay = t.worstRatingDay;
-  
+
+  // Weekday forecast (Sunday-first): counts + avg rating per day
+  const weekdayOrder = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekdayCounts = new Map((t.weekdayData || []).map((d) => [d.day, d.count]));
+  const weekdayAvgRatings = new Map((t.avgRatingByWeekday || []).map((d) => [d.day, d.avgRating]));
+
+  const dimDays = new Set(['Sun', 'Mon', 'Thu', 'Fri']);
+  const focusDays = new Set(['Tue', 'Wed']);
+  const spotlightDay = 'Sat';
+
+  const weekdayForecast = weekdayOrder.map((day) => {
+    const count = weekdayCounts.get(day) ?? 0;
+    const avgRating = weekdayAvgRatings.get(day);
+    return { day, count, avgRating: avgRating == null ? null : avgRating };
+  });
+
+  const forecastCards = weekdayForecast.map(({ day, count, avgRating }) => {
+    const classes = [
+      'forecast-card',
+      dimDays.has(day) ? 'is-dim' : '',
+      focusDays.has(day) ? 'is-focus' : '',
+      day === spotlightDay ? 'is-spotlight' : '',
+    ].filter(Boolean).join(' ');
+
+    const ratingText = avgRating == null ? '—' : `${avgRating.toFixed(2)}★`;
+
+    return `
+      <div class="${classes}">
+        <div class="forecast-day">${day}</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">${count}</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">${ratingText}</div>
+      </div>
+    `;
+  }).join('');
+
   slides.push(`
     <section data-background="#000000" class="theme-numbers">
-      <div class="weekday-ratings">
-        <div class="best-day">
-          <span class="day-name">${bestDay?.day || 'Sat'}</span>
-          <span class="avg-rating">${(bestDay?.avgRating || 3.5).toFixed(2)}★</span>
-          <span class="label">best vibes</span>
-        </div>
-        <div class="worst-day">
-          <span class="day-name">${worstDay?.day || 'Wed'}</span>
-          <span class="avg-rating">${(worstDay?.avgRating || 3.0).toFixed(2)}★</span>
-          <span class="label">worst vibes</span>
+      <div class="forecast-panel">
+        <div class="weekday-forecast">
+          ${forecastCards}
         </div>
       </div>
-      <p class="annotation">don't let me watch your favorite movie on a ${worstDay?.day || 'Wednesday'}</p>
+      <p class="annotation forecast-caption">dont let me watch your fav movie on a tues</p>
     </section>
   `);
   
@@ -1227,7 +1234,7 @@ function generateHtml(slides) {
     
     .streak-gap-bottom .number {
       font-family: 'Anton', sans-serif;
-      font-size: 8rem;
+      font-size: 12rem;
       display: block;
       line-height: 1;
     }
@@ -1242,23 +1249,23 @@ function generateHtml(slides) {
     
     .streak-gap-bottom .unit {
       font-family: 'Inter', sans-serif;
-      font-size: 2rem;
+      font-size: 2.8rem;
       color: #fff;
       display: block;
-      margin-top: 8px;
+      margin-top: 12px;
     }
     
     .streak-gap-bottom .dates {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.2rem;
+      font-size: 1.6rem;
       color: rgba(255,255,255,0.5);
       display: block;
-      margin-top: 8px;
+      margin-top: 12px;
     }
     
     .streak-gap-bottom .divider {
       width: 2px;
-      height: 150px;
+      height: 200px;
       background: rgba(255,255,255,0.2);
     }
     
@@ -1293,6 +1300,123 @@ function generateHtml(slides) {
     .best-day .label, .worst-day .label {
       font-size: 1.2em;
       opacity: 0.6;
+    }
+
+    /* Weekday forecast (weather-style row) */
+    .forecast-panel {
+      width: 100%;
+      max-width: 1520px;
+      margin: 0 auto;
+      border: 3px solid rgba(255,255,255,0.22);
+      border-radius: 12px;
+      padding: 34px 34px 26px;
+      box-sizing: border-box;
+    }
+
+    .forecast-caption {
+      margin: 26px 0 0 0;
+      text-align: center;
+    }
+
+    .weekday-forecast {
+      width: 100%;
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .forecast-card {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 18px 14px 16px;
+      text-align: center;
+      box-sizing: border-box;
+      transition: transform 180ms ease, opacity 180ms ease, filter 180ms ease;
+    }
+
+    .forecast-day {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.8em;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin: 0;
+    }
+
+    .forecast-hr {
+      border: 0;
+      height: 2px;
+      width: 100%;
+      background: rgba(255,255,255,0.18);
+      margin: 14px 0 12px;
+    }
+
+    .forecast-count {
+      margin-top: 0;
+    }
+
+    .forecast-count-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.65em;
+      line-height: 1;
+      display: block;
+      color: var(--green);
+    }
+
+    .forecast-count-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95em;
+      opacity: 0.75;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .forecast-rating {
+      margin-top: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.45em;
+      color: var(--gold);
+    }
+
+    .forecast-card.is-dim {
+      filter: saturate(0);
+      opacity: 0.55;
+      border-color: rgba(255,255,255,0.10);
+    }
+
+    .forecast-card.is-focus {
+      border-color: rgba(255,214,10,0.35);
+      background: rgba(255,214,10,0.06);
+    }
+
+    .forecast-card.is-focus .forecast-count-num {
+      opacity: 0.45;
+    }
+
+    .forecast-card.is-focus .forecast-rating {
+      font-size: 1.65em;
+    }
+
+    .forecast-card.is-spotlight {
+      transform: translateY(-6px);
+      border-color: rgba(48,209,88,0.65);
+      background: rgba(48,209,88,0.10);
+      box-shadow: 0 0 0 6px rgba(48,209,88,0.08);
+    }
+
+    .forecast-card.is-spotlight .forecast-day {
+      color: var(--green);
+    }
+
+    .forecast-card.is-spotlight .forecast-count-num {
+      font-size: 3.0em;
+    }
+
+    .forecast-card.is-spotlight .forecast-rating {
+      opacity: 0.45;
     }
     
     /* Section title slides - no border */
@@ -1412,20 +1536,36 @@ function generateHtml(slides) {
     const sections = {
       0: '', 1: '', 2: '', 3: '', 4: '',
       5: 'THE NUMBERS', 6: 'THE NUMBERS', 7: 'THE NUMBERS', 8: 'THE NUMBERS',
-      9: 'THE NUMBERS', 10: 'THE NUMBERS', 11: 'THE NUMBERS', 12: 'THE NUMBERS',
-      13: 'HOW I RATE', 14: 'HOW I RATE', 15: 'HOW I RATE', 16: 'HOW I RATE', 17: 'HOW I RATE',
-      18: 'FIVE STARS', 19: 'FIVE STARS', 20: 'FIVE STARS', 21: 'FIVE STARS', 22: 'FIVE STARS', 23: 'FIVE STARS',
-      24: 'HOT TAKES', 25: 'HOT TAKES', 26: 'HOT TAKES', 27: 'HOT TAKES', 28: 'HOT TAKES', 29: 'HOT TAKES', 30: 'HOT TAKES',
-      31: 'TASTE DNA', 32: 'TASTE DNA', 33: 'TASTE DNA', 34: 'TASTE DNA', 35: 'TASTE DNA', 36: 'TASTE DNA',
-      37: 'WHEN I WATCH', 38: 'WHEN I WATCH', 39: 'WHEN I WATCH',
-      40: 'FUN FACTS', 41: 'FUN FACTS', 42: 'FUN FACTS',
-      43: '', 44: '', 45: ''
+      9: 'THE NUMBERS', 10: 'THE NUMBERS', 11: 'THE NUMBERS',
+      12: 'HOW I RATE', 13: 'HOW I RATE', 14: 'HOW I RATE', 15: 'HOW I RATE', 16: 'HOW I RATE',
+      17: 'FIVE STARS', 18: 'FIVE STARS', 19: 'FIVE STARS', 20: 'FIVE STARS', 21: 'FIVE STARS', 22: 'FIVE STARS',
+      23: 'HOT TAKES', 24: 'HOT TAKES', 25: 'HOT TAKES', 26: 'HOT TAKES', 27: 'HOT TAKES', 28: 'HOT TAKES', 29: 'HOT TAKES',
+      30: 'TASTE DNA', 31: 'TASTE DNA', 32: 'TASTE DNA', 33: 'TASTE DNA', 34: 'TASTE DNA', 35: 'TASTE DNA',
+      36: 'WHEN I WATCH', 37: 'WHEN I WATCH', 38: 'WHEN I WATCH',
+      39: 'FUN FACTS', 40: 'FUN FACTS', 41: 'FUN FACTS',
+      42: '', 43: ''
+    };
+
+    // Accent color per chapter label
+    const sectionColors = {
+      'THE NUMBERS': 'var(--green)',
+      'HOW I RATE': 'var(--gold)',
+      'FIVE STARS': 'var(--green)',
+      'HOT TAKES': '#FF6B6B',
+      'TASTE DNA': '#E879F9',
+      'WHEN I WATCH': '#22D3D3',
+      'FUN FACTS': 'var(--accent)',
     };
     
     const indicator = document.getElementById('section-indicator');
-    Reveal.on('slidechanged', event => {
-      indicator.textContent = sections[event.indexh] || '';
-    });
+    const updateIndicator = (indexh) => {
+      const name = sections[indexh] || '';
+      indicator.textContent = name;
+      indicator.style.color = sectionColors[name] || 'var(--accent)';
+    };
+
+    Reveal.on('ready', event => updateIndicator(event.indexh));
+    Reveal.on('slidechanged', event => updateIndicator(event.indexh));
   </script>
 </body>
 </html>`;
@@ -1832,6 +1972,11 @@ function main() {
   // Generate per-slide thumbnail pages (lightweight: one section, no Reveal runtime)
   const slidesDir = path.join(OUTPUT_DIR, 'slides');
   ensureDir(slidesDir);
+  // Clean up old slide thumbnails so removed slides don't linger (e.g. after slide count changes).
+  for (const name of fs.readdirSync(slidesDir)) {
+    if (!/^slide-\d{3}\.html$/.test(name)) continue;
+    fs.unlinkSync(path.join(slidesDir, name));
+  }
   const baseStyle = extractBetween(html, '<style>', '</style>');
   const year = insights?.meta?.year || 2025;
   slides.forEach((slideHtml, idx) => {
