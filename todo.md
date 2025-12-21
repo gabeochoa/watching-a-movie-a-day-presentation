@@ -1,6 +1,6 @@
-- update slide 10 to channnge "Sat" to white text 
-- on slide 13, move the content to the left a bit 
-- delete slide 15 
-- change the text color on 17 to white 
-- slide 18 make the movie list two columns 
-- for slide 24 lets show the actual number because they are all 4 stars but it would be nice to see actual 4. something 
+- lets show all the 5 star movies on 18, make the font a bit smaller, and sort them by year 
+- replace the red fonts on 30-34 with the font color from 29 
+- replace the red fonts on 38-40 with the cyan from 35 
+- delete slide 25 and 27 and 28 
+- remove my rating from 24 and 26 
+- 
