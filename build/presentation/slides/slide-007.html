@@ -519,6 +519,95 @@
     .section-title-slide {
       /* clean look, no border */
     }
+
+    /* =================================================
+       SECTION THEME OVERRIDES (requested palettes)
+       ================================================= */
+
+    /* OPENING: white on black, red meta text */
+    .reveal .slides section.theme-opening {
+      color: #fff;
+    }
+    .reveal .slides section.theme-opening h1,
+    .reveal .slides section.theme-opening h2,
+    .reveal .slides section.theme-opening h3 {
+      color: #fff;
+    }
+    .reveal .slides section.theme-opening .subtitle,
+    .reveal .slides section.theme-opening .label,
+    .reveal .slides section.theme-opening .annotation,
+    .reveal .slides section.theme-opening .date {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    /* Opening slides 3–4: force the BIG numbers themselves to white */
+    .reveal .slides section.opening-numbers-white .big-number,
+    .reveal .slides section.opening-numbers-white .stat .number,
+    .reveal .slides section.opening-numbers-white .equals {
+      color: #fff !important;
+    }
+
+    /* THE NUMBERS: green on black, white meta text */
+    .reveal .slides section.theme-numbers {
+      color: #fff;
+    }
+    .reveal .slides section.theme-numbers h1,
+    .reveal .slides section.theme-numbers h2,
+    .reveal .slides section.theme-numbers h3 {
+      color: #fff;
+    }
+    .reveal .slides section.theme-numbers .section-title,
+    .reveal .slides section.theme-numbers .big-number,
+    .reveal .slides section.theme-numbers .stat .number,
+    .reveal .slides section.theme-numbers .stat-block .number {
+      color: var(--green);
+    }
+    .reveal .slides section.theme-numbers .subtitle,
+    .reveal .slides section.theme-numbers .label,
+    .reveal .slides section.theme-numbers .annotation,
+    .reveal .slides section.theme-numbers .unit,
+    .reveal .slides section.theme-numbers .date {
+      color: rgba(255,255,255,0.92);
+      opacity: 1;
+    }
+
+    /* Slide 11: make the "SAT" (impact headline) green */
+    .reveal .slides section.numbers-impact-green .impact {
+      color: var(--green) !important;
+    }
+
+    /* HOW I RATE: blue background (set in HTML), white primary + yellow meta */
+    .reveal .slides section.theme-rate {
+      color: #fff;
+    }
+    .reveal .slides section.theme-rate h1,
+    .reveal .slides section.theme-rate h2,
+    .reveal .slides section.theme-rate h3,
+    .reveal .slides section.theme-rate .section-title,
+    .reveal .slides section.theme-rate .big-number,
+    .reveal .slides section.theme-rate .stat .number,
+    .reveal .slides section.theme-rate .stat-block .number {
+      color: #fff;
+    }
+    .reveal .slides section.theme-rate .subtitle,
+    .reveal .slides section.theme-rate .label,
+    .reveal .slides section.theme-rate .annotation,
+    .reveal .slides section.theme-rate .rating-chart .count,
+    .reveal .slides section.theme-rate .summary-list .count {
+      color: var(--gold);
+      opacity: 1;
+    }
+    .reveal .slides section.theme-rate .rating-chart .bar {
+      background: rgba(255,255,255,0.86);
+    }
+    .reveal .slides section.theme-rate .rating-chart .count {
+      opacity: 0.95;
+    }
+    .reveal .slides section.theme-rate .stat-block .label {
+      color: var(--gold);
+      opacity: 1;
+    }
   
 
     /* Thumbnail-only tweaks */
@@ -531,7 +620,7 @@
   <div class="reveal">
     <div class="slides">
       
-    <section style="background: #0f0f23;">
+    <section class="theme-numbers" style="background: #000000;">
       <div class="big-number">6.9</div>
       <p class="label">films per week, on average</p>
       <p class="annotation">that's almost one a day</p>

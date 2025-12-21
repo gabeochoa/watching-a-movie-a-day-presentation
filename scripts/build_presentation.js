@@ -119,28 +119,28 @@ function generateSlides(insights, controversy) {
   // ============================================
   
   slides.push(`
-    <section data-background="#0a0a0a">
+    <section data-background="#000000" class="theme-opening">
       <h1 class="mega">MY 2025<br>IN FILM</h1>
       <p class="subtitle">${s.totalFilms} movies. ${s.totalHours} hours. One year.</p>
     </section>
   `);
   
   slides.push(`
-    <section data-background="#1a1a2e">
+    <section data-background="#000000" class="theme-opening">
       <h2 class="impact">I watched more movies than there are days in a year</h2>
       <p class="annotation">yes, really</p>
     </section>
   `);
   
   slides.push(`
-    <section data-background="#0f0f23">
+    <section data-background="#000000" class="theme-opening opening-numbers-white">
       <div class="big-number">${s.totalFilms}</div>
       <p class="label">unique films watched in 2025</p>
     </section>
   `);
   
   slides.push(`
-    <section data-background="#16213e">
+    <section data-background="#000000" class="theme-opening opening-numbers-white">
       <div class="stat-pair">
         <div class="stat">
           <span class="number">${s.totalHours}</span>
@@ -157,7 +157,7 @@ function generateSlides(insights, controversy) {
   `);
   
   slides.push(`
-    <section data-background="#0a0a0a">
+    <section data-background="#000000" class="theme-opening">
       <h2 class="editorial">Here's what I learned about myself</h2>
       <p class="subtitle">through the movies I watched</p>
     </section>
@@ -168,14 +168,14 @@ function generateSlides(insights, controversy) {
   // ============================================
   
   slides.push(`
-    <section data-background="#0a1628" class="section-title-slide">
-      <h2 class="section-title" style="color: #60A5FA;">THE NUMBERS</h2>
+    <section data-background="#000000" class="section-title-slide theme-numbers">
+      <h2 class="section-title">THE NUMBERS</h2>
     </section>
   `);
   
   const filmsPerWeek = (s.totalFilms / 52).toFixed(1);
   slides.push(`
-    <section data-background="#0f0f23">
+    <section data-background="#000000" class="theme-numbers">
       <div class="big-number">${filmsPerWeek}</div>
       <p class="label">films per week, on average</p>
       <p class="annotation">that's almost one a day</p>
@@ -183,7 +183,7 @@ function generateSlides(insights, controversy) {
   `);
   
   slides.push(`
-    <section data-background="#16213e">
+    <section data-background="#000000" class="theme-numbers">
       <h2 class="impact">${formatMonth(t.busiestMonth.month)}</h2>
       <div class="big-number">${t.busiestMonth.count}</div>
       <p class="label">films in one month</p>
@@ -208,10 +208,10 @@ function generateSlides(insights, controversy) {
   }).join('');
   
   slides.push(`
-    <section data-background="#0a0a0a">
+    <section data-background="#000000" class="theme-numbers">
       <svg class="bg-chart" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-        <polyline points="${chartPoints}" fill="none" stroke="rgba(255,107,53,0.2)" stroke-width="4"/>
-        <polygon points="60,850 ${chartPoints} 1860,850" fill="rgba(255,107,53,0.08)"/>
+        <polyline points="${chartPoints}" fill="none" stroke="rgba(48, 209, 88, 0.22)" stroke-width="4"/>
+        <polygon points="60,850 ${chartPoints} 1860,850" fill="rgba(48, 209, 88, 0.10)"/>
         ${monthLabels}
       </svg>
       <div class="contrast-stats">
@@ -304,7 +304,7 @@ function generateSlides(insights, controversy) {
   }
   
   slides.push(`
-    <section data-background="#0a0a0a">
+    <section data-background="#000000" class="theme-numbers">
       <div class="calendar-top">
         <svg viewBox="0 0 1150 400" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: auto;">
           ${calendarCells.join('')}
@@ -327,7 +327,7 @@ function generateSlides(insights, controversy) {
   `);
   
   slides.push(`
-    <section data-background="#16213e">
+    <section data-background="#000000" class="theme-numbers numbers-impact-green">
       <h2 class="impact">${t.busiestWeekday.day.toUpperCase()}</h2>
       <p class="label">is my movie day</p>
       <p class="subtitle">${t.busiestWeekday.count} films watched on ${t.busiestWeekday.day}s</p>
@@ -339,7 +339,7 @@ function generateSlides(insights, controversy) {
   const worstDay = t.worstRatingDay;
   
   slides.push(`
-    <section data-background="#0f0f23">
+    <section data-background="#000000" class="theme-numbers">
       <div class="weekday-ratings">
         <div class="best-day">
           <span class="day-name">${bestDay?.day || 'Sat'}</span>
@@ -357,7 +357,7 @@ function generateSlides(insights, controversy) {
   `);
   
   slides.push(`
-    <section data-background="#0a0a0a">
+    <section data-background="#000000" class="theme-numbers">
       <div class="big-number">${t.weekendPct}%</div>
       <p class="label">of films watched on weekends</p>
       <p class="annotation">${t.weekendPct > 50 ? 'weekend warrior' : 'weekday watcher'}</p>
@@ -369,8 +369,8 @@ function generateSlides(insights, controversy) {
   // ============================================
   
   slides.push(`
-    <section data-background="#1a1508" class="section-title-slide">
-      <h2 class="section-title" style="color: #FFD700;">HOW I RATE</h2>
+    <section data-background="#0F2847" class="section-title-slide theme-rate">
+      <h2 class="section-title">HOW I RATE</h2>
     </section>
   `);
   
@@ -387,7 +387,7 @@ function generateSlides(insights, controversy) {
     }).join('');
   
   slides.push(`
-    <section data-background="#0f0f23">
+    <section data-background="#0F2847" class="theme-rate">
       <table class="rating-chart">
         <tbody>
           ${ratingBars}
@@ -398,7 +398,7 @@ function generateSlides(insights, controversy) {
   `);
   
   slides.push(`
-    <section data-background="#16213e">
+    <section data-background="#0F2847" class="theme-rate">
       <h2 class="impact">I'M A ${stars(r.mostCommonRating.stars)} PERSON</h2>
       <p class="subtitle">${r.mostCommonRating.count} films got ${r.mostCommonRating.stars} stars</p>
       <p class="annotation">${r.mostCommonRating.stars <= 3 ? 'tough crowd' : 'easily pleased'}</p>
@@ -406,7 +406,7 @@ function generateSlides(insights, controversy) {
   `);
   
   slides.push(`
-    <section data-background="#0a0a0a">
+    <section data-background="#0F2847" class="theme-rate">
       <div class="big-number">${r.avgRating.toFixed(1)}</div>
       <p class="label">average rating</p>
       <p class="annotation">${r.avgRating < 3.5 ? "I don't hand out stars easily" : "I'm a generous rater"}</p>
@@ -414,7 +414,7 @@ function generateSlides(insights, controversy) {
   `);
   
   slides.push(`
-    <section data-background="#1a1a2e">
+    <section data-background="#0F2847" class="theme-rate">
       <div class="contrast-stats">
         <div class="stat-block gold">
           <span class="number">${s.fiveStarCount}</span>
@@ -1299,6 +1299,95 @@ function generateHtml(slides) {
     .section-title-slide {
       /* clean look, no border */
     }
+
+    /* =================================================
+       SECTION THEME OVERRIDES (requested palettes)
+       ================================================= */
+
+    /* OPENING: white on black, red meta text */
+    .reveal .slides section.theme-opening {
+      color: #fff;
+    }
+    .reveal .slides section.theme-opening h1,
+    .reveal .slides section.theme-opening h2,
+    .reveal .slides section.theme-opening h3 {
+      color: #fff;
+    }
+    .reveal .slides section.theme-opening .subtitle,
+    .reveal .slides section.theme-opening .label,
+    .reveal .slides section.theme-opening .annotation,
+    .reveal .slides section.theme-opening .date {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    /* Opening slides 3–4: force the BIG numbers themselves to white */
+    .reveal .slides section.opening-numbers-white .big-number,
+    .reveal .slides section.opening-numbers-white .stat .number,
+    .reveal .slides section.opening-numbers-white .equals {
+      color: #fff !important;
+    }
+
+    /* THE NUMBERS: green on black, white meta text */
+    .reveal .slides section.theme-numbers {
+      color: #fff;
+    }
+    .reveal .slides section.theme-numbers h1,
+    .reveal .slides section.theme-numbers h2,
+    .reveal .slides section.theme-numbers h3 {
+      color: #fff;
+    }
+    .reveal .slides section.theme-numbers .section-title,
+    .reveal .slides section.theme-numbers .big-number,
+    .reveal .slides section.theme-numbers .stat .number,
+    .reveal .slides section.theme-numbers .stat-block .number {
+      color: var(--green);
+    }
+    .reveal .slides section.theme-numbers .subtitle,
+    .reveal .slides section.theme-numbers .label,
+    .reveal .slides section.theme-numbers .annotation,
+    .reveal .slides section.theme-numbers .unit,
+    .reveal .slides section.theme-numbers .date {
+      color: rgba(255,255,255,0.92);
+      opacity: 1;
+    }
+
+    /* Slide 11: make the "SAT" (impact headline) green */
+    .reveal .slides section.numbers-impact-green .impact {
+      color: var(--green) !important;
+    }
+
+    /* HOW I RATE: blue background (set in HTML), white primary + yellow meta */
+    .reveal .slides section.theme-rate {
+      color: #fff;
+    }
+    .reveal .slides section.theme-rate h1,
+    .reveal .slides section.theme-rate h2,
+    .reveal .slides section.theme-rate h3,
+    .reveal .slides section.theme-rate .section-title,
+    .reveal .slides section.theme-rate .big-number,
+    .reveal .slides section.theme-rate .stat .number,
+    .reveal .slides section.theme-rate .stat-block .number {
+      color: #fff;
+    }
+    .reveal .slides section.theme-rate .subtitle,
+    .reveal .slides section.theme-rate .label,
+    .reveal .slides section.theme-rate .annotation,
+    .reveal .slides section.theme-rate .rating-chart .count,
+    .reveal .slides section.theme-rate .summary-list .count {
+      color: var(--gold);
+      opacity: 1;
+    }
+    .reveal .slides section.theme-rate .rating-chart .bar {
+      background: rgba(255,255,255,0.86);
+    }
+    .reveal .slides section.theme-rate .rating-chart .count {
+      opacity: 0.95;
+    }
+    .reveal .slides section.theme-rate .stat-block .label {
+      color: var(--gold);
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -1348,7 +1437,8 @@ function generateGridSlide(slideHtml, index, sectionName) {
   const bgColor = bgMatch ? bgMatch[1] : '#0a0a0a';
   
   // Determine if light or dark background
-  const isLight = bgColor === '#ffffff' || bgColor.includes('white') || bgColor === '#FFD60A';
+  const bgLower = String(bgColor || '').toLowerCase();
+  const isLight = bgLower === '#ffffff' || bgLower === '#fff' || bgLower.includes('white') || bgLower === '#ffd60a';
   const textClass = isLight ? 'text-black' : 'text-white';
   const mutedClass = isLight ? 'text-muted-dark' : 'text-muted-light';
   
