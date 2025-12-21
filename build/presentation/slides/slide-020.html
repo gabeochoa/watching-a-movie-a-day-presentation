@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, initial-scale=1.0">
+  <title>My 2025 in Film — Slide 20</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
+  <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+    
+    :root {
+      --bg-dark: #0a0a0a;
+      --ocean-navy: #0F2847;
+      --accent: #B91C1C;
+      --accent-dark: #991B1B;
+      --gold: #FFD60A;
+      --red: #B91C1C;
+      --blue: #0A84FF;
+      --green: #30D158;
+      --orange: #FF9500;
+    }
+    
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    .reveal {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .reveal .slides {
+      text-align: center;
+    }
+    
+    .reveal .slides section {
+      box-sizing: border-box;
+      padding: 40px 60px;
+      height: 100%;
+      width: 100%;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    
+    .reveal .slides section > * {
+      max-width: 100%;
+    }
+    
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin: 0.2em 0;
+    }
+    
+    .mega {
+      font-size: 7em !important;
+      line-height: 1;
+      margin: 0 !important;
+    }
+    
+    .impact {
+      font-size: 4.5em !important;
+      line-height: 1.1;
+      margin: 0 !important;
+    }
+    
+    .editorial {
+      font-family: 'Inter', sans-serif !important;
+      font-weight: 600;
+      font-size: 3em !important;
+      text-transform: none !important;
+    }
+    
+    .section-title {
+      font-size: 5em !important;
+      color: var(--accent);
+    }
+    
+    .big-number {
+      font-family: 'Anton', sans-serif;
+      font-size: 12em;
+      line-height: 1;
+      color: var(--accent);
+      margin: 0.05em 0;
+    }
+    
+    .label {
+      font-size: 1.8em;
+      opacity: 0.8;
+      margin: 0.3em 0;
+    }
+    
+    .subtitle {
+      font-size: 1.5em;
+      opacity: 0.7;
+      margin: 0.5em 0;
+    }
+    
+    .annotation {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2em;
+      color: var(--accent);
+      margin: 0.8em 0;
+    }
+    
+    .year {
+      opacity: 0.6;
+      font-size: 0.8em;
+    }
+    
+    .stat-pair {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5em;
+      flex-wrap: wrap;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat .number {
+      font-family: 'Anton', sans-serif;
+      font-size: 7em;
+      display: block;
+      color: var(--accent);
+      line-height: 1;
+    }
+    
+    .stat .unit {
+      font-size: 2em;
+      opacity: 0.7;
+    }
+    
+    .equals {
+      font-size: 4em;
+      opacity: 0.5;
+    }
+    
+    .contrast-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2em;
+      flex-wrap: wrap;
+    }
+    
+    .stat-block {
+      text-align: center;
+    }
+    
+    .stat-block .number {
+      font-family: 'Anton', sans-serif;
+      font-size: 8em;
+      display: block;
+      line-height: 1;
+    }
+    
+    .stat-block .label {
+      font-size: 1.8em;
+      margin-top: 0.2em;
+    }
+    
+    .stat-block.gold .number { color: var(--gold); }
+    .stat-block.red .number { color: #fff; }
+    .stat-block.quiet .number { opacity: 0.4; }
+    
+    .vs {
+      font-size: 1.8em;
+      opacity: 0.5;
+    }
+    
+    .rating-chart {
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+    
+    .rating-chart .rating-row td {
+      padding: 12px 20px;
+      vertical-align: middle;
+    }
+    
+    .rating-chart .stars {
+      color: var(--gold);
+      font-size: 2em;
+      text-align: right;
+      white-space: nowrap;
+      letter-spacing: -2px;
+    }
+    
+    .rating-chart .bar-cell {
+      width: 450px;
+    }
+    
+    .rating-chart .bar {
+      height: 35px;
+      background: var(--accent);
+      min-width: 10px;
+      border-radius: 3px;
+    }
+    
+    .rating-chart .count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8em;
+      opacity: 0.8;
+      text-align: left;
+    }
+    
+    .film-list, .ranked-list, .controversy-list, .summary-list, .pattern-list {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      max-width: 900px;
+      margin: 0.8em auto;
+      font-size: 1.3em;
+    }
+    
+    .film-list li, .ranked-list li, .controversy-list li, .summary-list li, .pattern-list li {
+      padding: 0.5em 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1em;
+    }
+    
+    .film-list li.more {
+      opacity: 0.5;
+      font-style: italic;
+    }
+    
+    .ranked-list .rank {
+      color: var(--accent);
+      margin-right: 0.5em;
+      flex-shrink: 0;
+    }
+    
+    .ranked-list .count {
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+    
+    .rating-diff {
+      font-size: 0.75em;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    
+    .film-title {
+      font-size: 3em !important;
+      margin: 0.2em 0 !important;
+    }
+    
+    .date {
+      opacity: 0.6;
+      font-size: 1.2em;
+    }
+    
+    .rating {
+      color: var(--gold);
+      font-size: 2em;
+    }
+    
+    .rating-compare {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5em;
+      margin: 1.5em 0;
+      flex-wrap: wrap;
+    }
+    
+    .rating-compare > div {
+      text-align: center;
+    }
+    
+    .rating-compare .label {
+      font-size: 1.2em;
+      opacity: 0.6;
+      display: block;
+      margin-bottom: 0.3em;
+    }
+    
+    .rating-compare .stars {
+      font-size: 3em;
+      color: var(--gold);
+    }
+    
+    .my-rating .stars { color: var(--accent); }
+    
+    .hot-take p {
+      font-size: 1.3em;
+      margin: 0.3em 0;
+    }
+    
+    .pattern-list li {
+      font-size: 1.1em;
+    }
+    
+    .pattern-list strong {
+      color: var(--accent);
+    }
+    
+    /* Ensure text doesn't overflow */
+    h1, h2, h3, p {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    /* Section indicator */
+    #section-indicator {
+      position: fixed;
+      bottom: 30px;
+      left: 40px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      color: var(--accent);
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      z-index: 100;
+    }
+    
+    /* Background chart */
+    .bg-chart {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .contrast-stats, .streak-gap-combo, .weekday-ratings {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Streak + Gap combo */
+    .streak-gap-combo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3em;
+    }
+    
+    .streak-block, .gap-block {
+      text-align: center;
+    }
+    
+    .streak-block .number, .gap-block .number {
+      font-family: 'Anton', sans-serif;
+      font-size: 8em;
+      display: block;
+      line-height: 1;
+    }
+    
+    .streak-block .number.green { color: #4ADE80; }
+    .gap-block .number.dim { color: #666; }
+    
+    .streak-block .unit, .gap-block .unit {
+      font-size: 1.8em;
+      opacity: 0.8;
+      display: block;
+      margin-top: 0.2em;
+    }
+    
+    .streak-block .dates, .gap-block .dates {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1em;
+      opacity: 0.5;
+      display: block;
+      margin-top: 0.5em;
+    }
+    
+    .streak-gap-combo .divider {
+      width: 2px;
+      height: 200px;
+      background: rgba(255,255,255,0.2);
+    }
+    
+    /* Calendar at top, numbers at bottom layout */
+    .calendar-top {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 1500px;
+    }
+    
+    .streak-gap-bottom {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 120px;
+    }
+    
+    .streak-gap-bottom .streak-block,
+    .streak-gap-bottom .gap-block {
+      text-align: center;
+    }
+    
+    .streak-gap-bottom .number {
+      font-family: 'Anton', sans-serif;
+      font-size: 8rem;
+      display: block;
+      line-height: 1;
+    }
+    
+    .streak-gap-bottom .number.green {
+      color: #4ade80;
+    }
+    
+    .streak-gap-bottom .number.dim {
+      color: #666;
+    }
+    
+    .streak-gap-bottom .unit {
+      font-family: 'Inter', sans-serif;
+      font-size: 2rem;
+      color: #fff;
+      display: block;
+      margin-top: 8px;
+    }
+    
+    .streak-gap-bottom .dates {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.5);
+      display: block;
+      margin-top: 8px;
+    }
+    
+    .streak-gap-bottom .divider {
+      width: 2px;
+      height: 150px;
+      background: rgba(255,255,255,0.2);
+    }
+    
+    /* Weekday ratings */
+    .weekday-ratings {
+      display: flex;
+      justify-content: center;
+      gap: 4em;
+    }
+    
+    .best-day, .worst-day {
+      text-align: center;
+    }
+    
+    .best-day .day-name, .worst-day .day-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 5em;
+      display: block;
+      line-height: 1;
+    }
+    
+    .best-day .day-name { color: #4ADE80; }
+    .worst-day .day-name { color: #FF6B6B; }
+    
+    .best-day .avg-rating, .worst-day .avg-rating {
+      font-size: 2.5em;
+      display: block;
+      margin: 0.3em 0;
+      color: var(--gold);
+    }
+    
+    .best-day .label, .worst-day .label {
+      font-size: 1.2em;
+      opacity: 0.6;
+    }
+    
+    /* Section title slides - no border */
+    .section-title-slide {
+      /* clean look, no border */
+    }
+  
+
+    /* Thumbnail-only tweaks */
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+    body { margin: 0; }
+    #section-indicator { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+    <section style="background: #0f0f23;">
+      <h3>My 37 five-star films include:</h3>
+      <ul class="film-list">
+        <li>Grease <span class="year">(1978)</span></li><li>La La Land <span class="year">(2016)</span></li><li>Superbad <span class="year">(2007)</span></li><li>Ferris Bueller's Day Off <span class="year">(1986)</span></li><li>One Week <span class="year">(1920)</span></li><li>Big <span class="year">(1988)</span></li><li>Fire of Love <span class="year">(2022)</span></li><li>Ocean's Eleven <span class="year">(2001)</span></li>
+        <li class="more">...and 29 more</li>
+      </ul>
+    </section>
+  
+    </div>
+  </div>
+</body>
+</html>

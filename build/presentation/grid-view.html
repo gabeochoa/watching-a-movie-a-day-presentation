@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My 2025 in Film - Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.6);
+      --border: rgba(255,255,255,0.10);
+      --shadow: rgba(0,0,0,0.55);
+      --blue: #0A84FF;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .title {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .meta {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn.primary {
+      border-color: rgba(10,132,255,0.45);
+      background: rgba(10,132,255,0.10);
+      color: #dbeafe;
+    }
+    .btn:hover { background: rgba(255,255,255,0.10); }
+    .btn.primary:hover { background: rgba(10,132,255,0.18); }
+
+    .wrap {
+      padding: 16px;
+      max-width: 2200px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .tile {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .tile__frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px var(--shadow);
+      background: #000;
+    }
+
+    /* The iframe renders a full 1920x1080 deck; scale it down to fit the tile */
+    .tile__frame iframe {
+      width: 1920px;
+      height: 1080px;
+      border: 0;
+      transform-origin: top left;
+      transform: scale(calc(100% / 1920));
+      /* Keep it non-interactive; clicking the tile opens the slide */
+      pointer-events: none;
+    }
+
+    /* Because scale(calc(100%/1920)) is not valid in all browsers, set scale via JS too */
+    .tile__frame[data-scale] iframe {
+      transform: scale(var(--scale));
+    }
+
+    .tile__meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 2px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .tile__num {
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .tile:hover .tile__frame {
+      border-color: rgba(10,132,255,0.35);
+      box-shadow: 0 14px 40px rgba(10,132,255,0.12), 0 10px 30px var(--shadow);
+      transform: translateY(-2px);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="title">My 2025 in Film — Grid</div>
+      <div class="meta">361 films • 45 slides • Click a thumbnail to open that slide</div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="./index.html">Open presentation →</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+
+      <a class="tile" href="./index.html#/0" aria-label="Open slide 1">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-001.html" title="Slide 1" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">1</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/1" aria-label="Open slide 2">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-002.html" title="Slide 2" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">2</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/2" aria-label="Open slide 3">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-003.html" title="Slide 3" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">3</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/3" aria-label="Open slide 4">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-004.html" title="Slide 4" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">4</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/4" aria-label="Open slide 5">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-005.html" title="Slide 5" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">5</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/5" aria-label="Open slide 6">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-006.html" title="Slide 6" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">6</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/6" aria-label="Open slide 7">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-007.html" title="Slide 7" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">7</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/7" aria-label="Open slide 8">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-008.html" title="Slide 8" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">8</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/8" aria-label="Open slide 9">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-009.html" title="Slide 9" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">9</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/9" aria-label="Open slide 10">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-010.html" title="Slide 10" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">10</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/10" aria-label="Open slide 11">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-011.html" title="Slide 11" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">11</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/11" aria-label="Open slide 12">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-012.html" title="Slide 12" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">12</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/12" aria-label="Open slide 13">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-013.html" title="Slide 13" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">13</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/13" aria-label="Open slide 14">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-014.html" title="Slide 14" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">14</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/14" aria-label="Open slide 15">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-015.html" title="Slide 15" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">15</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/15" aria-label="Open slide 16">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-016.html" title="Slide 16" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">16</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/16" aria-label="Open slide 17">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-017.html" title="Slide 17" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">17</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/17" aria-label="Open slide 18">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-018.html" title="Slide 18" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">18</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/18" aria-label="Open slide 19">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-019.html" title="Slide 19" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">19</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/19" aria-label="Open slide 20">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-020.html" title="Slide 20" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">20</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/20" aria-label="Open slide 21">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-021.html" title="Slide 21" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">21</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/21" aria-label="Open slide 22">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-022.html" title="Slide 22" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">22</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/22" aria-label="Open slide 23">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-023.html" title="Slide 23" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">23</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/23" aria-label="Open slide 24">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-024.html" title="Slide 24" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">24</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/24" aria-label="Open slide 25">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-025.html" title="Slide 25" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">25</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/25" aria-label="Open slide 26">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-026.html" title="Slide 26" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">26</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/26" aria-label="Open slide 27">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-027.html" title="Slide 27" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">27</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/27" aria-label="Open slide 28">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-028.html" title="Slide 28" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">28</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/28" aria-label="Open slide 29">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-029.html" title="Slide 29" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">29</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/29" aria-label="Open slide 30">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-030.html" title="Slide 30" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">30</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/30" aria-label="Open slide 31">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-031.html" title="Slide 31" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">31</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/31" aria-label="Open slide 32">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-032.html" title="Slide 32" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">32</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/32" aria-label="Open slide 33">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-033.html" title="Slide 33" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">33</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/33" aria-label="Open slide 34">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-034.html" title="Slide 34" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">34</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/34" aria-label="Open slide 35">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-035.html" title="Slide 35" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">35</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/35" aria-label="Open slide 36">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-036.html" title="Slide 36" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">36</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/36" aria-label="Open slide 37">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-037.html" title="Slide 37" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">37</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/37" aria-label="Open slide 38">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-038.html" title="Slide 38" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">38</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/38" aria-label="Open slide 39">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-039.html" title="Slide 39" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">39</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/39" aria-label="Open slide 40">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-040.html" title="Slide 40" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">40</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/40" aria-label="Open slide 41">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-041.html" title="Slide 41" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">41</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/41" aria-label="Open slide 42">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-042.html" title="Slide 42" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">42</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/42" aria-label="Open slide 43">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-043.html" title="Slide 43" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">43</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/43" aria-label="Open slide 44">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-044.html" title="Slide 44" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">44</span>
+        </div>
+      </a>
+
+      <a class="tile" href="./index.html#/44" aria-label="Open slide 45">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="./slides/slide-045.html" title="Slide 45" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">45</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Compute a reliable scale factor per tile so the 1920x1080 iframe fits perfectly.
+    // This avoids relying on CSS calc() support in transform: scale().
+    function updateScales() {
+      document.querySelectorAll('.tile__frame').forEach(frame => {
+        const w = frame.getBoundingClientRect().width;
+        const scale = w / 1920;
+        frame.style.setProperty('--scale', scale);
+        frame.setAttribute('data-scale', 'true');
+      });
+    }
+
+    // Lazy-load iframe src so the browser isn't forced to spin up 45 Reveal contexts at once.
+    function lazyLoadIframes() {
+      const frames = Array.from(document.querySelectorAll('.tile__frame'));
+
+      if (!('IntersectionObserver' in window)) {
+        frames.forEach((frame, idx) => {
+          const iframe = frame.querySelector('iframe');
+          if (!iframe) return;
+          const src = iframe.getAttribute('data-src');
+          if (!src) return;
+          if (idx < 12) iframe.src = src;
+          else setTimeout(() => { iframe.src = src; }, 800);
+        });
+        return;
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const iframe = entry.target.querySelector('iframe');
+          if (!iframe) return;
+          const src = iframe.getAttribute('data-src');
+          if (src && !iframe.src) iframe.src = src;
+          io.unobserve(entry.target);
+        });
+      }, { root: null, rootMargin: '1200px 0px', threshold: 0.01 });
+
+      frames.forEach(frame => io.observe(frame));
+    }
+
+    window.addEventListener('resize', () => {
+      window.requestAnimationFrame(updateScales);
+    });
+    updateScales();
+    lazyLoadIframes();
+  </script>
+</body>
+</html>

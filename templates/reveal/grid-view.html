@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} - Grid View</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      /* Core palette */
+      --bg-dark: #0a0a0a;
+      --bg-surface: #111;
+      --text-primary: #fff;
+      --text-muted: #888;
+      --text-subtle: #555;
+      
+      /* Key colors */
+      --ocean-navy: #0F2847;
+      --accent: #B91C1C;
+      --accent-dark: #991B1B;
+      --blue: #0A84FF;
+      --green: #30D158;
+      --yellow: #FFD60A;
+      --orange: #FF9500;
+      --cyan: #64D2FF;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      padding: 40px;
+      min-height: 100vh;
+    }
+    
+    /* Header */
+    .header {
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: 48px;
+      text-transform: uppercase;
+    }
+    
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+    
+    .nav-link {
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 16px;
+      border: 1px solid var(--blue);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    
+    .nav-link:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+    
+    /* Section headers */
+    h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: 32px;
+      margin-top: 60px;
+      margin-bottom: 24px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      border-bottom: 1px solid #333;
+      padding-bottom: 12px;
+    }
+    
+    /* Slide Grid */
+    .slide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    
+    .slide-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .slide-label {
+      font-size: 11px;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Individual Slide */
+    .slide {
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .slide:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+    
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    
+    .slide-overlay.dark { background: rgba(0,0,0,0.55); }
+    .slide-overlay.dark-heavy { background: rgba(0,0,0,0.7); }
+    .slide-overlay.navy-tint { background: rgba(15, 40, 71, 0.75); }
+    .slide-overlay.blue-tint { background: rgba(10, 132, 255, 0.8); }
+    .slide-overlay.accent-tint { background: rgba(185, 28, 28, 0.85); }
+    .slide-overlay.green-tint { background: rgba(48, 209, 88, 0.8); }
+    
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      padding: 24px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .slide-content.center {
+      align-items: center;
+      text-align: center;
+    }
+    
+    /* Typography */
+    .slide-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 32px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+    
+    .slide-subtitle {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    
+    .slide-stat-big {
+      font-family: 'Anton', sans-serif;
+      font-size: 72px;
+      line-height: 1;
+    }
+    
+    .slide-stat-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    
+    .slide-insight {
+      font-size: 12px;
+      margin-top: 12px;
+      font-style: italic;
+    }
+    
+    .slide-section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 48px;
+      text-transform: uppercase;
+    }
+    
+    .slide-h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Colors */
+    .text-white { color: #fff; }
+    .text-black { color: #000; }
+    .text-muted-light { color: rgba(255,255,255,0.6); }
+    .text-muted-dark { color: rgba(0,0,0,0.6); }
+    .text-accent { color: var(--accent); }
+    .text-yellow { color: var(--yellow); }
+    .text-orange { color: var(--orange); }
+    .text-green { color: var(--green); }
+    .text-blue { color: var(--blue); }
+    
+    /* Backgrounds */
+    .bg-black { background: #000; }
+    .bg-ocean-navy { background: var(--ocean-navy); }
+    .bg-white { background: #fff; }
+    .bg-blue { background: var(--blue); }
+    .bg-accent { background: var(--accent); }
+    .bg-green { background: var(--green); }
+    
+    /* Sticker */
+    .sticker {
+      font-family: 'Anton', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      transform: rotate(-2deg);
+      margin-top: 12px;
+      width: fit-content;
+      align-self: flex-start;
+    }
+    
+    .sticker-yellow { background: var(--yellow); color: #000; }
+    .sticker-red { background: var(--accent); color: #fff; }
+    
+    /* Chart placeholder */
+    .chart-placeholder {
+      background: rgba(255,255,255,0.1);
+      border-radius: 6px;
+      height: 80px;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+    }
+    
+    .chart-placeholder.light {
+      background: rgba(0,0,0,0.1);
+      color: rgba(0,0,0,0.3);
+    }
+    
+    /* Grid layouts within slides */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+    }
+    
+    .grid-3col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+    
+    /* List styles */
+    .slide-list {
+      font-size: 12px;
+      margin-top: 12px;
+      padding-left: 16px;
+    }
+    
+    .slide-list li {
+      margin-bottom: 6px;
+    }
+    
+    /* Poster grid backgrounds */
+    .slide-bg.poster-grid {
+      display: grid;
+      gap: 4px;
+      padding: 0;
+    }
+    
+    .slide-bg.poster-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .slide-bg.poster-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .slide-bg.poster-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+    .slide-bg.poster-grid.cols-6 { grid-template-columns: repeat(6, 1fr); }
+    
+    .poster-tile {
+      background-size: cover;
+      background-position: center;
+    }
+    
+    /* Slide number badge */
+    .slide-number-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <h1>{{TITLE}} - Grid View</h1>
+      <p class="subtitle">All slides in presentation order • Click any slide to navigate</p>
+    </div>
+    <a href="./index.html" class="nav-link">→ Open Presentation</a>
+  </div>
+
+  {{GRID_SLIDES}}
+
+  <script>
+    // Click handler to navigate to specific slide in presentation
+    document.querySelectorAll('.slide').forEach((slide, index) => {
+      slide.addEventListener('click', () => {
+        window.location.href = `./index.html#/${index}`;
+      });
+    });
+  </script>
+</body>
+</html>
+

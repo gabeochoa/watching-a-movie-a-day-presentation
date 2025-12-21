@@ -24,6 +24,69 @@ function ensureDir(dir) {
   }
 }
 
+function pad3(n) {
+  return String(n).padStart(3, '0');
+}
+
+function extractBetween(str, startToken, endToken) {
+  const start = str.indexOf(startToken);
+  if (start === -1) return '';
+  const end = str.indexOf(endToken, start + startToken.length);
+  if (end === -1) return '';
+  return str.slice(start + startToken.length, end);
+}
+
+function inlineBackgroundOnSection(slideHtml) {
+  // Reveal normally reads data-background and paints a separate background layer.
+  // For single-slide thumbnail HTML (no Reveal runtime), inline it onto the section.
+  const withBg = slideHtml.replace(
+    /<section([^>]*)\sdata-background="([^"]+)"([^>]*)>/,
+    (m, a, bg, b) => {
+      const attrs = `${a}${b}`;
+      const styleMatch = attrs.match(/\sstyle="([^"]*)"/);
+      if (styleMatch) {
+        const merged = `${styleMatch[1]}; background: ${bg};`;
+        return `<section${attrs.replace(/\sstyle="([^"]*)"/, ` style="${merged.replace(/"/g, '&quot;')}"`)}>`;
+      }
+      return `<section${attrs} style="background: ${bg};">`;
+    }
+  );
+
+  return withBg.replace(
+    /<section([^>]*)\sdata-background-color="([^"]+)"([^>]*)>/,
+    (m, a, bg, b) => `<section${a}${b} style="background: ${bg};">`
+  );
+}
+
+function generateSingleSlideHtml({ slideHtml, baseStyle, year, slideNumber }) {
+  const processed = inlineBackgroundOnSection(slideHtml);
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, initial-scale=1.0">
+  <title>My ${year} in Film — Slide ${slideNumber}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
+  <style>
+${baseStyle}
+
+    /* Thumbnail-only tweaks */
+    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+    body { margin: 0; }
+    #section-indicator { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      ${processed}
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
 function escapeHtml(text) {
   if (!text) return '';
   return text
@@ -729,9 +792,14 @@ function generateHtml(slides) {
     
     :root {
       --bg-dark: #0a0a0a;
-      --accent: #ff6b35;
-      --gold: #ffd700;
-      --red: #ff3333;
+      --ocean-navy: #0F2847;
+      --accent: #B91C1C;
+      --accent-dark: #991B1B;
+      --gold: #FFD60A;
+      --red: #B91C1C;
+      --blue: #0A84FF;
+      --green: #30D158;
+      --orange: #FF9500;
     }
     
     html, body {
@@ -1243,6 +1311,374 @@ function generateHtml(slides) {
 </html>`;
 }
 
+function generateGridSlide(slideHtml, index, sectionName) {
+  // Extract background color from the slide
+  const bgMatch = slideHtml.match(/data-background="([^"]*)"/);
+  const bgColor = bgMatch ? bgMatch[1] : '#0a0a0a';
+  
+  // Determine if light or dark background
+  const isLight = bgColor === '#ffffff' || bgColor.includes('white') || bgColor === '#FFD60A';
+  const textClass = isLight ? 'text-black' : 'text-white';
+  const mutedClass = isLight ? 'text-muted-dark' : 'text-muted-light';
+  
+  // Extract content with multiple patterns (order matters - first match wins for title/stat)
+  let title = '';
+  let stat = '';
+  let subtitle = '';
+  let extra = '';
+  
+  // Try to get main title from various patterns
+  const megaMatch = slideHtml.match(/class="mega"[^>]*>([\s\S]*?)<\/h1>/);
+  const impactMatch = slideHtml.match(/class="impact"[^>]*>([\s\S]*?)<\/h2>/);
+  const editorialMatch = slideHtml.match(/class="editorial"[^>]*>([\s\S]*?)<\/h2>/);
+  const sectionTitleMatch = slideHtml.match(/class="section-title"[^>]*>([\s\S]*?)<\/h2>/);
+  const h1Match = slideHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/);
+  const h2Match = slideHtml.match(/<h2[^>]*>([\s\S]*?)<\/h2>/);
+  const h3Match = slideHtml.match(/<h3[^>]*>([\s\S]*?)<\/h3>/);
+  
+  if (megaMatch) {
+    title = megaMatch[1].replace(/<br\s*\/?>/g, ' ').replace(/<[^>]*>/g, '').trim();
+  } else if (impactMatch) {
+    title = impactMatch[1].replace(/<br\s*\/?>/g, ' ').replace(/<[^>]*>/g, '').trim();
+  } else if (editorialMatch) {
+    title = editorialMatch[1].replace(/<br\s*\/?>/g, ' ').replace(/<[^>]*>/g, '').trim();
+  } else if (sectionTitleMatch) {
+    title = sectionTitleMatch[1].replace(/<br\s*\/?>/g, ' ').replace(/<[^>]*>/g, '').trim();
+  } else if (h1Match) {
+    title = h1Match[1].replace(/<br\s*\/?>/g, ' ').replace(/<[^>]*>/g, '').trim();
+  } else if (h2Match) {
+    title = h2Match[1].replace(/<br\s*\/?>/g, ' ').replace(/<[^>]*>/g, '').trim();
+  } else if (h3Match) {
+    title = h3Match[1].replace(/<br\s*\/?>/g, ' ').replace(/<[^>]*>/g, '').trim();
+  }
+  
+  // Get stat from big-number or stat-pair
+  const statMatch = slideHtml.match(/class="big-number"[^>]*>([\s\S]*?)<\/div>/);
+  const statPairNumberMatch = slideHtml.match(/class="number"[^>]*>([\d,.]+)</);
+  
+  if (statMatch) {
+    stat = statMatch[1].replace(/<[^>]*>/g, '').trim();
+  } else if (statPairNumberMatch) {
+    stat = statPairNumberMatch[1];
+    // Try to get the unit too
+    const unitMatch = slideHtml.match(/class="unit"[^>]*>([^<]*)</);
+    if (unitMatch) {
+      stat += ' ' + unitMatch[1];
+    }
+  }
+  
+  // Get subtitle/label/annotation - only direct text content, no nested structures
+  const subtitleMatch = slideHtml.match(/class="subtitle"[^>]*>([^<]+)</);
+  const labelMatch = slideHtml.match(/<p[^>]*class="label"[^>]*>([^<]+)</);
+  const annotationMatch = slideHtml.match(/class="annotation"[^>]*>([^<]+)</);
+  
+  if (subtitleMatch) {
+    subtitle = subtitleMatch[1].trim();
+  } else if (labelMatch) {
+    subtitle = labelMatch[1].trim();
+  } else if (annotationMatch) {
+    subtitle = annotationMatch[1].trim();
+  }
+  
+  // Check for complex content that needs a placeholder or special handling
+  const hasChart = slideHtml.includes('bg-chart') || (slideHtml.includes('<svg') && !slideHtml.includes('contrast-stats'));
+  const hasCalendar = slideHtml.includes('calendar-top') || slideHtml.includes('weekday-heatmap');
+  const hasContrastStats = slideHtml.includes('contrast-stats');
+  const hasFilmGrid = slideHtml.includes('film-poster-grid') || slideHtml.includes('poster-wall');
+  const hasMovieCard = slideHtml.includes('movie-card');
+  const hasBestWorst = slideHtml.includes('best-day') || slideHtml.includes('worst-day');
+  const hasFilmList = slideHtml.includes('film-list') || slideHtml.includes('pattern-list');
+  
+  if (hasChart && !stat && !hasContrastStats) {
+    extra = '<div class="chart-placeholder">[Chart]</div>';
+  } else if (hasCalendar) {
+    extra = '<div class="chart-placeholder">[Calendar]</div>';
+  } else if (hasContrastStats && !hasBestWorst) {
+    // Extract contrast stats for busiest/quietest month type slides
+    const contrastMatch = slideHtml.match(/class="stat-block"[\s\S]*?class="number">(\d+)[\s\S]*?class="label">([^<]+)[\s\S]*?class="stat-block[\s\S]*?class="number">(\d+)[\s\S]*?class="label">([^<]+)/);
+    if (contrastMatch) {
+      extra = `<div style="display:flex;gap:12px;align-items:center;margin-top:8px;">
+        <div><span style="font-family:Anton;font-size:24px;">${contrastMatch[1]}</span><div style="font-size:9px;opacity:0.6;">${contrastMatch[2]}</div></div>
+        <span style="opacity:0.4;">vs</span>
+        <div><span style="font-family:Anton;font-size:24px;opacity:0.5;">${contrastMatch[3]}</span><div style="font-size:9px;opacity:0.6;">${contrastMatch[4]}</div></div>
+      </div>`;
+    }
+  } else if (hasBestWorst) {
+    // Handle best/worst day slides
+    const bestMatch = slideHtml.match(/class="best-day"[\s\S]*?class="day-name">([^<]+)[\s\S]*?class="avg-rating">([^<]+)/);
+    const worstMatch = slideHtml.match(/class="worst-day"[\s\S]*?class="day-name">([^<]+)[\s\S]*?class="avg-rating">([^<]+)/);
+    if (bestMatch && worstMatch) {
+      extra = `<div style="display:flex;gap:16px;margin-top:8px;">
+        <div style="text-align:center;"><div style="font-family:Anton;font-size:20px;color:#4ADE80;">${bestMatch[1]}</div><div style="font-size:8px;opacity:0.6;">${bestMatch[2]}</div></div>
+        <div style="text-align:center;"><div style="font-family:Anton;font-size:20px;color:#FF6B6B;">${worstMatch[1]}</div><div style="font-size:8px;opacity:0.6;">${worstMatch[2]}</div></div>
+      </div>`;
+    }
+  } else if (hasFilmGrid || hasMovieCard) {
+    extra = '<div class="chart-placeholder">[Films]</div>';
+  } else if (hasFilmList) {
+    // Extract first few list items for preview
+    const listItems = slideHtml.match(/<li>([^<]+)/g);
+    if (listItems && listItems.length > 0) {
+      const preview = listItems.slice(0, 3).map(li => li.replace(/<li>/, '')).join(', ');
+      extra = `<div style="font-size:10px;opacity:0.6;margin-top:8px;">${preview}...</div>`;
+    }
+  }
+  
+  return `
+    <div class="slide-wrapper">
+      <div class="slide-label">${index + 1}. ${sectionName || 'Slide'}</div>
+      <div class="slide" style="background: ${bgColor};" data-slide-index="${index}">
+        <span class="slide-number-badge">${index + 1}</span>
+        <div class="slide-content center">
+          ${stat ? `<div class="slide-stat-big ${textClass}">${escapeHtml(stat)}</div>` : ''}
+          ${title ? `<div class="slide-title ${textClass}">${escapeHtml(title)}</div>` : ''}
+          ${subtitle ? `<div class="slide-subtitle ${mutedClass}">${escapeHtml(subtitle)}</div>` : ''}
+          ${extra}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generateGridViewHtml(slides, insights) {
+  const year = insights?.meta?.year || 2025;
+  const totalFilms = insights?.summary?.totalFilms || 0;
+
+  // A true wrapping grid: render each slide as an iframe of the real deck.
+  // This stays accurate (Reveal does the rendering) and works as a real grid even without vertical stacks.
+  const tiles = slides
+    .map((_, i) => {
+      const href = `./index.html#/${i}`;
+      const slideFile = `./slides/slide-${pad3(i + 1)}.html`;
+      return `
+      <a class="tile" href="${href}" aria-label="Open slide ${i + 1}">
+        <div class="tile__frame">
+          <iframe loading="lazy" data-src="${slideFile}" title="Slide ${i + 1}" tabindex="-1"></iframe>
+        </div>
+        <div class="tile__meta">
+          <span class="tile__num">${i + 1}</span>
+        </div>
+      </a>`;
+    })
+    .join('\n');
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My ${year} in Film - Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.6);
+      --border: rgba(255,255,255,0.10);
+      --shadow: rgba(0,0,0,0.55);
+      --blue: #0A84FF;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .title {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .meta {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn.primary {
+      border-color: rgba(10,132,255,0.45);
+      background: rgba(10,132,255,0.10);
+      color: #dbeafe;
+    }
+    .btn:hover { background: rgba(255,255,255,0.10); }
+    .btn.primary:hover { background: rgba(10,132,255,0.18); }
+
+    .wrap {
+      padding: 16px;
+      max-width: 2200px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .tile {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .tile__frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px var(--shadow);
+      background: #000;
+    }
+
+    /* The iframe renders a full 1920x1080 deck; scale it down to fit the tile */
+    .tile__frame iframe {
+      width: 1920px;
+      height: 1080px;
+      border: 0;
+      transform-origin: top left;
+      transform: scale(calc(100% / 1920));
+      /* Keep it non-interactive; clicking the tile opens the slide */
+      pointer-events: none;
+    }
+
+    /* Because scale(calc(100%/1920)) is not valid in all browsers, set scale via JS too */
+    .tile__frame[data-scale] iframe {
+      transform: scale(var(--scale));
+    }
+
+    .tile__meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 2px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .tile__num {
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .tile:hover .tile__frame {
+      border-color: rgba(10,132,255,0.35);
+      box-shadow: 0 14px 40px rgba(10,132,255,0.12), 0 10px 30px var(--shadow);
+      transform: translateY(-2px);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="title">My ${year} in Film — Grid</div>
+      <div class="meta">${totalFilms} films • ${slides.length} slides • Click a thumbnail to open that slide</div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="./index.html">Open presentation →</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+${tiles}
+    </div>
+  </div>
+
+  <script>
+    // Compute a reliable scale factor per tile so the 1920x1080 iframe fits perfectly.
+    // This avoids relying on CSS calc() support in transform: scale().
+    function updateScales() {
+      document.querySelectorAll('.tile__frame').forEach(frame => {
+        const w = frame.getBoundingClientRect().width;
+        const scale = w / 1920;
+        frame.style.setProperty('--scale', scale);
+        frame.setAttribute('data-scale', 'true');
+      });
+    }
+
+    // Lazy-load iframe src so the browser isn't forced to spin up 45 Reveal contexts at once.
+    function lazyLoadIframes() {
+      const frames = Array.from(document.querySelectorAll('.tile__frame'));
+
+      if (!('IntersectionObserver' in window)) {
+        frames.forEach((frame, idx) => {
+          const iframe = frame.querySelector('iframe');
+          if (!iframe) return;
+          const src = iframe.getAttribute('data-src');
+          if (!src) return;
+          if (idx < 12) iframe.src = src;
+          else setTimeout(() => { iframe.src = src; }, 800);
+        });
+        return;
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const iframe = entry.target.querySelector('iframe');
+          if (!iframe) return;
+          const src = iframe.getAttribute('data-src');
+          if (src && !iframe.src) iframe.src = src;
+          io.unobserve(entry.target);
+        });
+      }, { root: null, rootMargin: '1200px 0px', threshold: 0.01 });
+
+      frames.forEach(frame => io.observe(frame));
+    }
+
+    window.addEventListener('resize', () => {
+      window.requestAnimationFrame(updateScales);
+    });
+    updateScales();
+    lazyLoadIframes();
+  </script>
+</body>
+</html>`;
+}
+
 function main() {
   console.log('🎬 Building presentation...\n');
   
@@ -1265,12 +1701,39 @@ function main() {
   console.log(`\n📑 Generated ${slides.length} slides`);
   
   ensureDir(OUTPUT_DIR);
+  
+  // Generate main presentation
   const html = generateHtml(slides);
   const outputPath = path.join(OUTPUT_DIR, 'index.html');
   fs.writeFileSync(outputPath, html);
-  
   console.log(`\n✅ Presentation saved to: ${outputPath}`);
-  console.log(`\n🚀 Open in browser: file://${outputPath}`);
+
+  // Generate per-slide thumbnail pages (lightweight: one section, no Reveal runtime)
+  const slidesDir = path.join(OUTPUT_DIR, 'slides');
+  ensureDir(slidesDir);
+  const baseStyle = extractBetween(html, '<style>', '</style>');
+  const year = insights?.meta?.year || 2025;
+  slides.forEach((slideHtml, idx) => {
+    const slideNumber = idx + 1;
+    const slideOut = generateSingleSlideHtml({
+      slideHtml,
+      baseStyle,
+      year,
+      slideNumber,
+    });
+    const slidePath = path.join(slidesDir, `slide-${pad3(slideNumber)}.html`);
+    fs.writeFileSync(slidePath, slideOut);
+  });
+  console.log(`✅ Slide thumbnails saved to: ${slidesDir}`);
+  
+  // Generate grid view
+  const gridHtml = generateGridViewHtml(slides, insights);
+  const gridOutputPath = path.join(OUTPUT_DIR, 'grid-view.html');
+  fs.writeFileSync(gridOutputPath, gridHtml);
+  console.log(`✅ Grid view saved to: ${gridOutputPath}`);
+  
+  console.log(`\n🚀 Open presentation: file://${outputPath}`);
+  console.log(`📊 Open grid view: file://${gridOutputPath}`);
 }
 
 main();
