@@ -98,5 +98,773 @@
     "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/pb/tw/7z/mm/sing%20sing-1200-1200-675-675-crop-000000.jpg?v=449b71a30e",
     "slug": "sing-sing-2023",
     "watchDate": "2025-02-08"
+  },
+  "Ambulance (2022)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/u7/mm/fn/g1/umbulance-1200-1200-675-675-crop-000000.jpg?v=ad1d93a874",
+    "slug": "ambulance-2022",
+    "watchDate": "2025-02-09"
+  },
+  "50 First Dates (2004)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/kb/g2/8u/uj/50-first-dates-1200-1200-675-675-crop-000000.jpg?v=6bd2a79acb",
+    "slug": "50-first-dates",
+    "watchDate": "2025-02-10"
+  },
+  "The Fabelmans (2022)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/oi/nc/rl/26/fabel-1200-1200-675-675-crop-000000.jpg?v=00f46d5132",
+    "slug": "the-fabelmans",
+    "watchDate": "2025-02-11"
+  },
+  "She Said (2022)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ve/xq/oq/c9/she-said-1200-1200-675-675-crop-000000.jpg?v=5edf6018f8",
+    "slug": "she-said-2022",
+    "watchDate": "2025-02-12"
+  },
+  "La La Land (2016)": {
+    "posterUrl": null,
+    "slug": "la-la-land",
+    "error": "no_poster"
+  },
+  "Dear Evan Hansen (2021)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/kp/9z/60/v1/dear-evan-hansen-1200-1200-675-675-crop-000000.jpg?v=d0d952f8ec",
+    "slug": "dear-evan-hansen",
+    "watchDate": "2025-02-14"
+  },
+  "Be My Valentine, Charlie Brown (1975)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/66/l3/9a/9d/xDoIB1ZtAiP3AScFL8dlL0EV9CV-1200-1200-675-675-crop-000000.jpg?v=02251f8dfb",
+    "slug": "be-my-valentine-charlie-brown",
+    "watchDate": "2025-02-15"
+  },
+  "A Charlie Brown Valentine (2002)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/film-poster/3/3/9/5/2/33952-a-charlie-brown-valentine-0-230-0-345-crop.jpg?v=d0ca34c529",
+    "slug": "a-charlie-brown-valentine",
+    "watchDate": "2025-02-15"
+  },
+  "The Gorge (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/r1/zn/ag/o2/IMG_4727-1200-1200-675-675-crop-000000.jpg?v=43dd95f6b3",
+    "slug": "the-gorge-2025",
+    "watchDate": "2025-02-15"
+  },
+  "Groundhog Day (1993)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "Superbad (2007)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ba/l2/7b/a5/superbad-1200-1200-675-675-crop-000000.jpg?v=1bfdfde52a",
+    "slug": "superbad",
+    "watchDate": "2025-02-17"
+  },
+  "13 Hours: The Secret Soldiers of Benghazi (2016)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/eb/22/qy/xb/13-hours-1200-1200-675-675-crop-000000.jpg?v=e1e84b7237",
+    "slug": "13-hours-the-secret-soldiers-of-benghazi",
+    "watchDate": "2025-02-21"
+  },
+  "The Outrun (2024)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "Saturday Night (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ze/7h/4k/q8/3ZIPowwUwwMb6kO2Sh89GLnoLw9-1200-1200-675-675-crop-000000.jpg?v=4e3a905766",
+    "slug": "saturday-night-2024",
+    "watchDate": "2025-03-01"
+  },
+  "A Real Pain (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/j6/nm/pz/7d/cJUaa7KdSgxFMri4hdO6ZnxmLcr-1200-1200-675-675-crop-000000.jpg?v=41e980e877",
+    "slug": "a-real-pain",
+    "watchDate": "2025-03-01"
+  },
+  "The Parent Trap (1998)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/l9/my/ib/u0/eYJQUzZrAeQhHyeMgZ0Gx6rbDrw-1200-1200-675-675-crop-000000.jpg?v=83e696de78",
+    "slug": "the-parent-trap-1998",
+    "watchDate": "2025-03-07"
+  },
+  "Ferris Bueller's Day Off (1986)": {
+    "posterUrl": null,
+    "slug": "ferris-buellers-day-off",
+    "error": "no_poster"
+  },
+  "Swingers (1996)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/sv/tl/nv/um/swingers-1200-1200-675-675-crop-000000.jpg?v=a8874eb05f",
+    "slug": "swingers",
+    "watchDate": "2025-03-09"
+  },
+  "Nickel Boys (2024)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "Past Lives (2023)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "One Week (1920)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/fv/a5/cl/eu/oneweek-1200-1200-675-675-crop-000000.jpg?v=ce21fca8ec",
+    "slug": "one-week",
+    "watchDate": "2025-03-15"
+  },
+  "The Scarecrow (1920)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/07/tf/qh/zx/rrvEb34RpT9vTGaRABD8uw7vzgl-1200-1200-675-675-crop-000000.jpg?v=416bfa5f38",
+    "slug": "the-scarecrow",
+    "watchDate": "2025-03-15"
+  },
+  "Princess Mononoke (1997)": {
+    "posterUrl": null,
+    "slug": "princess-mononoke",
+    "error": "no_poster"
+  },
+  "The 40 Year Old Virgin (2005)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/pt/up/sm/e8/40-year-old-virgin-90-1200-1200-675-675-crop-000000.jpg?v=fbaeea4ad1",
+    "slug": "the-40-year-old-virgin",
+    "watchDate": "2025-03-16"
+  },
+  "The Lego Movie (2014)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/alternative-backdrop/1/0/5/1/8/8/tmdb/d4zaHEoI1yrpeQxBkulo8H9FEQP-1200-1200-675-675-crop-000000.jpg?v=500c7e755c",
+    "slug": "the-lego-movie",
+    "watchDate": "2025-03-16"
+  },
+  "September 5 (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ff/f7/uf/b3/s5-1200-1200-675-675-crop-000000.jpg?v=a312e314f8",
+    "slug": "september-5",
+    "watchDate": "2025-03-17"
+  },
+  "One Day in September (1999)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/tj/i8/f6/ts/one%20day%20in%20september-1200-1200-675-675-crop-000000.jpg?v=ec4ad9643b",
+    "slug": "one-day-in-september",
+    "watchDate": "2025-03-17"
+  },
+  "Munich (2005)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/tb/iu/vf/m3/munich-1200-1200-675-675-crop-000000.jpg?v=a0ac634921",
+    "slug": "munich",
+    "watchDate": "2025-03-19"
+  },
+  "The Big Sick (2017)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/by/b0/t8/91/the-big-sick-1200-1200-675-675-crop-000000.jpg?v=966794cec3",
+    "slug": "the-big-sick",
+    "watchDate": "2025-03-19"
+  },
+  "Sonic the Hedgehog 3 (2024)": {
+    "posterUrl": null,
+    "slug": "sonic-the-hedgehog-3",
+    "error": "no_poster"
+  },
+  "Big Fish (2003)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/wn/va/4u/ye/big-fish-1200-1200-675-675-crop-000000.jpg?v=a7707eeaa2",
+    "slug": "big-fish",
+    "watchDate": "2025-03-20"
+  },
+  "Big (1988)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/xo/wx/ht/2j/big-1200-1200-675-675-crop-000000.jpg?v=0cd31465fe",
+    "slug": "big",
+    "watchDate": "2025-03-22"
+  },
+  "Amadeus (1984)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/93/25/ds/ar/amadeus-1200-1200-675-675-crop-000000.jpg?v=6c64f3c798",
+    "slug": "amadeus",
+    "watchDate": "2025-03-22"
+  },
+  "The Truman Show (1998)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/z0/rf/dt/5l/truman-show-115-1200-1200-675-675-crop-000000.jpg?v=1047828fc6",
+    "slug": "the-truman-show",
+    "watchDate": "2025-03-23"
+  },
+  "Rush Hour (1998)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/3l/4l/vq/9m/rush-hour-1200-1200-675-675-crop-000000.jpg?v=4c01ebcb4c",
+    "slug": "rush-hour",
+    "watchDate": "2025-03-25"
+  },
+  "Rush Hour 2 (2001)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/qz/z2/do/ha/vNhz5wBc5gsc6GWhrcJalHy97Tw-1200-1200-675-675-crop-000000.jpg?v=dff4713971",
+    "slug": "rush-hour-2",
+    "watchDate": "2025-03-26"
+  },
+  "A Complete Unknown (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/y7/ha/y0/tk/a-complete-unknown-1200-1200-675-675-crop-000000.jpg?v=5519495df2",
+    "slug": "a-complete-unknown",
+    "watchDate": "2025-03-28"
+  },
+  "Black Bag (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/lu/oc/aq/ey/black-1200-1200-675-675-crop-000000.jpg?v=7e16e2aa78",
+    "slug": "black-bag-2025",
+    "watchDate": "2025-03-28"
+  },
+  "Sherlock Jr. (1924)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/5w/bn/ff/yt/sherlock-jr-1200-1200-675-675-crop-000000.jpg?v=a44af93dd3",
+    "slug": "sherlock-jr",
+    "watchDate": "2025-03-28"
+  },
+  "The Royal Tenenbaums (2001)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/h0/k9/wf/i4/the-royal-tenenbaums-1200-1200-675-675-crop-000000.jpg?v=a1be583052",
+    "slug": "the-royal-tenenbaums",
+    "watchDate": "2025-03-30"
+  },
+  "The Talented Mr. Ripley (1999)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/bu/72/zf/nq/the-talented-mr-ripley-1200-1200-675-675-crop-000000.jpg?v=3fc6f4747b",
+    "slug": "the-talented-mr-ripley",
+    "watchDate": "2025-03-30"
+  },
+  "Rush Hour 3 (2007)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/p4/rj/mv/b0/rush-hour-3-1200-1200-675-675-crop-000000.jpg?v=80f4909786",
+    "slug": "rush-hour-3",
+    "watchDate": "2025-03-31"
+  },
+  "Poison (2023)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/0f/qm/c7/qx/poison-1200-1200-675-675-crop-000000.jpg?v=50e110f994",
+    "slug": "poison-2023",
+    "watchDate": "2025-04-01"
+  },
+  "The French Dispatch of the Liberty, Kansas Evening Sun (2021)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/so/sr/fc/im/french%203-1200-1200-675-675-crop-000000.jpg?v=c49f740775",
+    "slug": "the-french-dispatch-of-the-liberty-kansas",
+    "watchDate": "2025-04-01"
+  },
+  "Grand Prix (1966)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/pk/f7/0h/3m/grand-prix-1200-1200-675-675-crop-000000.jpg?v=cbfbda04d6",
+    "slug": "grand-prix",
+    "watchDate": "2025-04-03"
+  },
+  "Flow (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/xl/29/a9/xh/Flow-1200-1200-675-675-crop-000000.jpg?v=9f04435233",
+    "slug": "flow-2024",
+    "watchDate": "2025-04-05"
+  },
+  "Are You There God? It's Me, Margaret. (2023)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ga/zu/mc/te/margraet-1200-1200-675-675-crop-000000.jpg?v=900263ad51",
+    "slug": "are-you-there-god-its-me-margaret",
+    "watchDate": "2025-04-06"
+  },
+  "Fire of Love (2022)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/s2/9d/ka/r6/fire-1200-1200-675-675-crop-000000.jpg?v=4ee0e00199",
+    "slug": "fire-of-love-2022",
+    "watchDate": "2025-04-07"
+  },
+  "Paddington 2 (2017)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "Greedy People (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/9r/i3/cm/96/greedy-people-1200-1200-675-675-crop-000000.jpg?v=b92958266f",
+    "slug": "greedy-people",
+    "watchDate": "2025-04-09"
+  },
+  "At Eternity's Gate (2018)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/0i/oq/hj/au/at-eternitys-gate-1200-1200-675-675-crop-000000.jpg?v=0d7651b23a",
+    "slug": "at-eternitys-gate",
+    "watchDate": "2025-04-10"
+  },
+  "Speed Racer (2008)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/0y/9x/ts/cw/speed-racer-1200-1200-675-675-crop-000000.jpg?v=abcacf7ac7",
+    "slug": "speed-racer",
+    "watchDate": "2025-04-11"
+  },
+  "Y Tu Mamá También (2001)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/75/nt/h7/s3/y%20tu-1200-1200-675-675-crop-000000.jpg?v=8758549cf7",
+    "slug": "y-tu-mama-tambien",
+    "watchDate": "2025-04-12"
+  },
+  "Mickey 17 (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ce/wj/ed/wq/7Oh1xRB8QbMduhqXEUHKlnwxMJi-1200-1200-675-675-crop-000000.jpg?v=c4a2895be9",
+    "slug": "mickey-17",
+    "watchDate": "2025-04-13"
+  },
+  "12 Angry Men (1957)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/h5/vs/mz/mj/12-angry-men-1200-1200-675-675-crop-000000.jpg?v=fa78296b3b",
+    "slug": "12-angry-men",
+    "watchDate": "2025-04-16"
+  },
+  "Ocean's Eleven (2001)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/oi/7t/zx/jy/oceans-eleven-1200-1200-675-675-crop-000000.jpg?v=42780e9996",
+    "slug": "oceans-eleven-2001",
+    "watchDate": "2025-04-17"
+  },
+  "Monsters, Inc. (2001)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/jw/dc/ub/ig/monsters-inc-1200-1200-675-675-crop-000000.jpg?v=dd1a6b4966",
+    "slug": "monsters-inc",
+    "watchDate": "2025-04-17"
+  },
+  "Barry Lyndon (1975)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/su/h6/e2/cr/barry-lyndon-1200-1200-675-675-crop-000000.jpg?v=b70b5426e8",
+    "slug": "barry-lyndon",
+    "watchDate": "2025-04-18"
+  },
+  "Better Man (2024)": {
+    "posterUrl": null,
+    "slug": "better-man-2024",
+    "error": "no_poster"
+  },
+  "Freedom Writers (2007)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/go/iu/af/n3/freedom-writers-1200-1200-675-675-crop-000000.jpg?v=34f5d41722",
+    "slug": "freedom-writers",
+    "watchDate": "2025-04-24"
+  },
+  "A Bug's Life (1998)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/09/0a/fs/fb/a-bugs-life-1200-1200-675-675-crop-000000.jpg?v=af4e3a1408",
+    "slug": "a-bugs-life",
+    "watchDate": "2025-04-24"
+  },
+  "Challengers (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/1v/t5/ny/lk/MV5BYWRmZWM2ZTktMzE1Ny00NmQyLWE3ZDItZTk5MjY5OGQ5NzdhXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_-1200-1200-675-675-crop-000000.jpg?v=bc9f57c5b8",
+    "slug": "challengers",
+    "watchDate": "2025-04-27"
+  },
+  "Clerks (1994)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/pn/20/rm/5e/clerks-1200-1200-675-675-crop-000000.jpg?v=394cf4d8f9",
+    "slug": "clerks",
+    "watchDate": "2025-04-27"
+  },
+  "Clerks II (2006)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/s1/qr/t9/yd/clerks-ii-1200-1200-675-675-crop-000000.jpg?v=21391f747d",
+    "slug": "clerks-ii",
+    "watchDate": "2025-04-27"
+  },
+  "Boston Strangler (2023)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/bs/t4/uv/lr/boston-1200-1200-675-675-crop-000000.jpg?v=a4ab40ab48",
+    "slug": "boston-strangler",
+    "watchDate": "2025-04-27"
+  },
+  "The Double (2013)": {
+    "posterUrl": null,
+    "slug": "the-double-2013",
+    "error": "no_poster"
+  },
+  "The Lighthouse (2019)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/q3/nd/ae/zn/the-lighthouse-1200-1200-675-675-crop-000000.jpg?v=d3734cdd04",
+    "slug": "the-lighthouse-2019",
+    "watchDate": "2025-04-29"
+  },
+  "Kiki's Delivery Service (1989)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/51/5v/eu/fn/kikis-delivery-service-1200-1200-675-675-crop-000000.jpg?v=426a2bd8ae",
+    "slug": "kikis-delivery-service",
+    "watchDate": "2025-05-02"
+  },
+  "Crazy, Stupid, Love. (2011)": {
+    "posterUrl": null,
+    "slug": "crazy-stupid-love",
+    "error": "no_poster"
+  },
+  "Chime (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/to/5k/p1/am/chime-1200-1200-675-675-crop-000000.jpg?v=55041b169a",
+    "slug": "chime",
+    "watchDate": "2025-05-09"
+  },
+  "The Girl Next Door (2004)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/alternative-backdrop/4/6/0/8/1/tmdb/hC9QftCUwQxgOoYrO6TwQ3Qr3HH-1200-1200-675-675-crop-000000.jpg?v=59531fd711",
+    "slug": "the-girl-next-door-2004",
+    "watchDate": "2025-05-10"
+  },
+  "Election (1999)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "The Descendants (2011)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "Born to Be Blue (2015)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/id/ar/wp/v8/born-to-be-blue-1200-1200-675-675-crop-000000.jpg?v=760aa3e097",
+    "slug": "born-to-be-blue",
+    "watchDate": "2025-05-10"
+  },
+  "The Pelican Brief (1993)": {
+    "posterUrl": null,
+    "slug": "the-pelican-brief",
+    "error": "no_poster"
+  },
+  "Slackers (2002)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/alternative-backdrop/3/9/2/9/3/tmdb/szfhi9pRI6FcQAZUVODqILze2Al-1200-1200-675-675-crop-000000.jpg?v=db8fd8fc9b",
+    "slug": "slackers",
+    "watchDate": "2025-05-11"
+  },
+  "Premium Rush (2012)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/jg/37/nw/xg/premium-rush-1200-1200-675-675-crop-000000.jpg?v=e2386641be",
+    "slug": "premium-rush",
+    "watchDate": "2025-05-12"
+  },
+  "Runaway Bride (1999)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/rh/jb/s3/0e/kqE0AWHcZRiax6l2rR2jAv4CZLB-1200-1200-675-675-crop-000000.jpg?v=50441cc89b",
+    "slug": "runaway-bride",
+    "watchDate": "2025-05-14"
+  },
+  "Ticket to Paradise (2022)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/cn/ai/hx/ks/ticket1-1200-1200-675-675-crop-000000.jpg?v=02a0473412",
+    "slug": "ticket-to-paradise-2022",
+    "watchDate": "2025-05-18"
+  },
+  "About Time (2013)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/am/me/g7/qk/about-time-1200-1200-675-675-crop-000000.jpg?v=1c599c55f6",
+    "slug": "about-time",
+    "watchDate": "2025-05-19"
+  },
+  "The Weather Man (2005)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/wg/jn/mx/29/the-weather-man-20-1200-1200-675-675-crop-000000.jpg?v=31c808c0af",
+    "slug": "the-weather-man",
+    "watchDate": "2025-05-22"
+  },
+  "Ace Ventura: Pet Detective (1994)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/0o/gu/38/23/ace-ventura-pet-detective-1200-1200-675-675-crop-000000.jpg?v=6bd0c6a1f4",
+    "slug": "ace-ventura-pet-detective",
+    "watchDate": "2025-05-23"
+  },
+  "Nick and Norah's Infinite Playlist (2008)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ea/fn/jc/54/nick-and-norahs-infinite-playlist-1200-1200-675-675-crop-000000.jpg?v=fef0c1479e",
+    "slug": "nick-and-norahs-infinite-playlist",
+    "watchDate": "2025-05-24"
+  },
+  "Den of Thieves 2: Pantera (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/zo/7k/3d/9g/thieves1-1200-1200-675-675-crop-000000.jpg?v=c50385e1a6",
+    "slug": "den-of-thieves-2-pantera",
+    "watchDate": "2025-05-25"
+  },
+  "The Accountant (2016)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/dc/n4/l1/3l/the-accountant-1200-1200-675-675-crop-000000.jpg?v=e7ed2ca6ca",
+    "slug": "the-accountant-2016",
+    "watchDate": "2025-05-26"
+  },
+  "The Accountant² (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/lw/u9/4g/oz/accountant-1200-1200-675-675-crop-000000.jpg?v=8376a88dd1",
+    "slug": "the-accountant-2025",
+    "watchDate": "2025-05-26"
+  },
+  "Scent of a Woman (1992)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "Adaptation. (2002)": {
+    "posterUrl": null,
+    "slug": "adaptation",
+    "error": "no_poster"
+  },
+  "Bernie (2011)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/sy/1u/10/20/bernie-2011-1200-1200-675-675-crop-000000.jpg?v=9f6e3b8350",
+    "slug": "bernie-2011",
+    "watchDate": "2025-05-29"
+  },
+  "Sweet Home Alabama (2002)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/o7/7z/o8/c5/sweet-home-alabama-1200-1200-675-675-crop-000000.jpg?v=775d067f01",
+    "slug": "sweet-home-alabama",
+    "watchDate": "2025-05-30"
+  },
+  "Atonement (2007)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/9c/ja/t9/wi/atonement-1200-1200-675-675-crop-000000.jpg?v=ffe69fb03c",
+    "slug": "atonement",
+    "watchDate": "2025-05-30"
+  },
+  "Elizabethtown (2005)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/p7/0r/du/6f/elizabethtown-1200-1200-675-675-crop-000000.jpg?v=edc6e4a628",
+    "slug": "elizabethtown",
+    "watchDate": "2025-05-31"
+  },
+  "Little Manhattan (2005)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/gr/fm/2r/mk/little%20manhattan-1200-1200-675-675-crop-000000.jpg?v=d2cedf1938",
+    "slug": "little-manhattan",
+    "watchDate": "2025-06-02"
+  },
+  "What If (2013)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/hs/ew/vu/me/odmCo5wceiX0ODFvZswhcLERqz0-1200-1200-675-675-crop-000000.jpg?v=6da23c676d",
+    "slug": "what-if-2013",
+    "watchDate": "2025-06-02"
+  },
+  "Inheritance (2024)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "Easy A (2010)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/zr/9p/3j/wo/easy-a-1200-1200-675-675-crop-000000.jpg?v=d731f15e59",
+    "slug": "easy-a",
+    "watchDate": "2025-06-02"
+  },
+  "But I'm a Cheerleader (1999)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/3j/co/y4/fz/but-im-cheerleader-1200-1200-675-675-crop-000000.jpg?v=d079732a18",
+    "slug": "but-im-a-cheerleader",
+    "watchDate": "2025-06-04"
+  },
+  "Roman Holiday (1953)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/s5/ve/96/c0/roman-holiday-1200-1200-675-675-crop-000000.jpg?v=f9aefe2d50",
+    "slug": "roman-holiday",
+    "watchDate": "2025-06-04"
+  },
+  "The Sisterhood of the Traveling Pants (2005)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/9h/qw/a8/z5/sisterhood-1200-1200-675-675-crop-000000.jpg?v=08e94d555b",
+    "slug": "the-sisterhood-of-the-traveling-pants",
+    "watchDate": "2025-06-04"
+  },
+  "Meet the Parents (2000)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/py/nx/0v/lp/meet-the-parents-1200-1200-675-675-crop-000000.jpg?v=b675917d99",
+    "slug": "meet-the-parents",
+    "watchDate": "2025-06-07"
+  },
+  "Meet the Fockers (2004)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/c0/la/ww/f0/meet-fockers-1200-1200-675-675-crop-000000.jpg?v=9b530557e8",
+    "slug": "meet-the-fockers",
+    "watchDate": "2025-06-07"
+  },
+  "Little Fockers (2010)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/91/wr/zi/97/little-fockers-1200-1200-675-675-crop-000000.jpg?v=ed9466225b",
+    "slug": "little-fockers",
+    "watchDate": "2025-06-07"
+  },
+  "Joy (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/7e/vz/vh/fy/93HgRn4HtTsH99MkOEFRPtUwg7I-1200-1200-675-675-crop-000000.jpg?v=c3dfd7d652",
+    "slug": "joy-2024",
+    "watchDate": "2025-06-08"
+  },
+  "Fried Green Tomatoes (1991)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/p4/aj/we/w3/fried%20green%20toatoes-1200-1200-675-675-crop-000000.jpg?v=9005799777",
+    "slug": "fried-green-tomatoes",
+    "watchDate": "2025-06-08"
+  },
+  "Call Me by Your Name (2017)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/3j/zm/4w/p5/call-me-by-your-name-1200-1200-675-675-crop-000000.jpg?v=d5bd5cddc0",
+    "slug": "call-me-by-your-name",
+    "watchDate": "2025-06-10"
+  },
+  "Mission: Impossible – The Final Reckoning (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/9x/mt/3l/1s/78Bgar8OaUalLNLWNtD4xr6AD8T-1200-1200-675-675-crop-000000.jpg?v=9a333c6d42",
+    "slug": "mission-impossible-the-final-reckoning",
+    "watchDate": "2025-06-10"
+  },
+  "Mountainhead (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/9a/yf/fs/qd/mountainhead-1200-1200-675-675-crop-000000.jpg?v=04439b6582",
+    "slug": "mountainhead",
+    "watchDate": "2025-06-13"
+  },
+  "A Different Man (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/gp/m2/rs/1m/ADifferentMan-1200-1200-675-675-crop-000000.jpg?v=0ad096bcad",
+    "slug": "a-different-man",
+    "watchDate": "2025-06-13"
+  },
+  "Bottoms (2023)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/az/63/do/1q/bottoms-1200-1200-675-675-crop-000000.jpg?v=2227c4e937",
+    "slug": "bottoms",
+    "watchDate": "2025-06-14"
+  },
+  "The Ballad of Wallis Island (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/alternative-backdrop/1/0/1/1/3/1/3/tmdb/hbwqS382gTbM5kFy4Q0wg9bTD2m-1200-1200-675-675-crop-000000.jpg?v=ff0046c500",
+    "slug": "the-ballad-of-wallis-island",
+    "watchDate": "2025-06-14"
+  },
+  "The One and Only Herb McGwyer Plays Wallis Island (2007)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/film-poster/2/7/9/5/5/8/279558-the-one-and-only-herb-mcgwyer-plays-wallis-island-0-230-0-345-crop.jpg?v=61719dc861",
+    "slug": "the-one-and-only-herb-mcgwyer-plays-wallis-island",
+    "watchDate": "2025-06-14"
+  },
+  "Good Morning, Vietnam (1987)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/g6/py/9q/um/good-morning-vietnam-1200-1200-675-675-crop-000000.jpg?v=063048ebd7",
+    "slug": "good-morning-vietnam",
+    "watchDate": "2025-06-16"
+  },
+  "The Worst Person in the World (2021)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/v8/ve/2g/xd/worst-person-in-world-1200-1200-675-675-crop-000000.jpg?v=d52bc99987",
+    "slug": "the-worst-person-in-the-world",
+    "watchDate": "2025-06-17"
+  },
+  "The Swan (2023)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/gn/6k/rh/kn/the%20swan-1200-1200-675-675-crop-000000.jpg?v=907e926a45",
+    "slug": "the-swan-2023",
+    "watchDate": "2025-06-19"
+  },
+  "The Rat Catcher (2023)": {
+    "posterUrl": null,
+    "slug": "the-rat-catcher-2023",
+    "error": "no_poster"
+  },
+  "The Amateur (2025)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "Sinners (2025)": {
+    "posterUrl": null,
+    "slug": "sinners-2025",
+    "error": "no_poster"
+  },
+  "Warfare (2025)": {
+    "posterUrl": null,
+    "slug": "warfare",
+    "error": "no_poster"
+  },
+  "What Happened Was... (1994)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/hj/dw/ab/cs/what%20happened-1200-1200-675-675-crop-000000.jpg?v=a853563665",
+    "slug": "what-happened-was",
+    "watchDate": "2025-06-22"
+  },
+  "tick, tick... BOOM! (2021)": {
+    "posterUrl": null,
+    "slug": "tick-tick-boom-2021",
+    "error": "no_poster"
+  },
+  "Rent (2005)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/sq/7k/ef/lt/rent-1200-1200-675-675-crop-000000.jpg?v=c68fb733c2",
+    "slug": "rent",
+    "watchDate": "2025-06-22"
+  },
+  "Rent (2019)": {
+    "posterUrl": null,
+    "slug": "rent-2019",
+    "error": "no_poster"
+  },
+  "John Tucker Must Die (2006)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "The Hudsucker Proxy (1994)": {
+    "posterUrl": null,
+    "slug": "the-hudsucker-proxy",
+    "error": "no_poster"
+  },
+  "The Master (2012)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/92/da/pm/v9/master-1200-1200-675-675-crop-000000.jpg?v=88afbd7335",
+    "slug": "the-master-2012",
+    "watchDate": "2025-06-25"
+  },
+  "Something's Gotta Give (2003)": {
+    "posterUrl": null,
+    "slug": "somethings-gotta-give",
+    "error": "no_poster"
+  },
+  "The Great Muppet Caper (1981)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/55/8n/v5/0w/great%20muppets%20caper-1200-1200-675-675-crop-000000.jpg?v=aec6afe63e",
+    "slug": "the-great-muppet-caper",
+    "watchDate": "2025-06-28"
+  },
+  "Jim Henson Idea Man (2024)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/e5/51/t8/2o/4WaiLliY9oxebgMZ2pbkaxs9QIn-1200-1200-675-675-crop-000000.jpg?v=1114850c0e",
+    "slug": "jim-henson-idea-man",
+    "watchDate": "2025-06-29"
+  },
+  "The Muppet Movie (1979)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "All the President's Men (1976)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/gi/fp/h3/l2/all-presidents-men-1200-1200-675-675-crop-000000.jpg?v=c2e844734d",
+    "slug": "all-the-presidents-men",
+    "watchDate": "2025-06-30"
+  },
+  "High Fidelity (2000)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/1d/zp/xd/8l/high-fidelity-1200-1200-675-675-crop-000000.jpg?v=ef4b42ecbc",
+    "slug": "high-fidelity",
+    "watchDate": "2025-07-02"
+  },
+  "The Intern (2015)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/g4/6j/u0/7w/the-intern-1200-1200-675-675-crop-000000.jpg?v=87b547d703",
+    "slug": "the-intern-2015",
+    "watchDate": "2025-07-03"
+  },
+  "Airplane! (1980)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/38/c2/o3/z7/airplane-1200-1200-675-675-crop-000000.jpg?v=18f59d1c9b",
+    "slug": "airplane",
+    "watchDate": "2025-07-04"
+  },
+  "Snatch (2000)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/6t/20/ji/66/snatch-1200-1200-675-675-crop-000000.jpg?v=7c36d37511",
+    "slug": "snatch",
+    "watchDate": "2025-07-05"
+  },
+  "Arrival (2016)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/oa/m7/ho/3a/arrival-2016-1200-1200-675-675-crop-000000.jpg?v=a5173b53c7",
+    "slug": "arrival-2016",
+    "watchDate": "2025-07-05"
+  },
+  "Me and You and Everyone We Know (2005)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/1u/g2/y8/pk/you-me-and-everyone-we-know-1200-1200-675-675-crop-000000.jpg?v=0284d7d0d3",
+    "slug": "me-and-you-and-everyone-we-know",
+    "watchDate": "2025-07-05"
+  },
+  "Man on Wire (2008)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/yi/bd/ca/on/man-on-wire-1200-1200-675-675-crop-000000.jpg?v=33019cf1dc",
+    "slug": "man-on-wire",
+    "watchDate": "2025-07-06"
+  },
+  "American Pie (1999)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/j4/ab/fr/kq/american-pie-10-alt-1200-1200-675-675-crop-000000.jpg?v=851bda503f",
+    "slug": "american-pie",
+    "watchDate": "2025-07-06"
+  },
+  "Scott Pilgrim vs. the World (2010)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/tj/1l/fv/xj/scott-pilgrim-170-1200-1200-675-675-crop-000000.jpg?v=a57694ded8",
+    "slug": "scott-pilgrim-vs-the-world",
+    "watchDate": "2025-07-07"
+  },
+  "Me and Earl and the Dying Girl (2015)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "O Brother, Where Art Thou? (2000)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/qq/61/de/06/o-brother-where-art-thou-1200-1200-675-675-crop-000000.jpg?v=e7a9a4de9c",
+    "slug": "o-brother-where-art-thou",
+    "watchDate": "2025-07-10"
+  },
+  "Quiz Show (1994)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/i8/c4/2z/sb/2qDxqeUClJrNO5NDgD9M59TlHEC-1200-1200-675-675-crop-000000.jpg?v=a6a1c9412d",
+    "slug": "quiz-show",
+    "watchDate": "2025-07-12"
+  },
+  "Good Boys (2019)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/qk/af/ie/bb/good-boys-2019-1200-1200-675-675-crop-000000.jpg?v=6376fa877f",
+    "slug": "good-boys-2019",
+    "watchDate": "2025-07-12"
+  },
+  "The Italian Job (2003)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "The Phoenician Scheme (2025)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/9x/61/x4/5e/phoe-1200-1200-675-675-crop-000000.jpg?v=4dc880d9fa",
+    "slug": "the-phoenician-scheme",
+    "watchDate": "2025-07-13"
+  },
+  "In the Mood for Love (2000)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/1a/ox/ht/6y/in-the-mood-for-love-1200-1200-675-675-crop-000000.jpg?v=1489906ac3",
+    "slug": "in-the-mood-for-love",
+    "watchDate": "2025-07-14"
+  },
+  "In the Mood for Love 2001 (2001)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "The Last Duel (2021)": {
+    "posterUrl": null,
+    "slug": "the-last-duel-2021",
+    "error": "no_poster"
+  },
+  "Rocketman (2019)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ie/jk/hs/wn/FC528C56-276C-44DB-B08C-EA3BB191D233-1200-1200-675-675-crop-000000.jpg?v=e50d712dcb",
+    "slug": "rocketman-2019",
+    "watchDate": "2025-07-16"
+  },
+  "Mr. Brooks (2007)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/vv/ag/ep/m6/ciLSVjLgS1BrtiWZ4kMVMldoZp9-1200-1200-675-675-crop-000000.jpg?v=5f9848bd52",
+    "slug": "mr-brooks",
+    "watchDate": "2025-07-18"
+  },
+  "Flight Risk (2025)": {
+    "posterUrl": null,
+    "slug": "flight-risk-2025",
+    "error": "no_poster"
+  },
+  "Rushmore (1998)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/ks/j4/zi/xf/rushmore-1200-1200-675-675-crop-000000.jpg?v=0eed998060",
+    "slug": "rushmore",
+    "watchDate": "2025-07-21"
+  },
+  "Superman (2025)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "The Muppets Take Manhattan (1984)": {
+    "posterUrl": null,
+    "error": "no_slug"
+  },
+  "The Favourite (2018)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/rx/nh/cj/pz/the-favourite-1200-1200-675-675-crop-000000.jpg?v=5e20cec26e",
+    "slug": "the-favourite",
+    "watchDate": "2025-07-26"
+  },
+  "Bridge of Spies (2015)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/xg/wq/m2/f0/bridge-of-spies-1200-1200-675-675-crop-000000.jpg?v=cfad9a7a9c",
+    "slug": "bridge-of-spies",
+    "watchDate": "2025-07-27"
+  },
+  "Into the Inferno (2016)": {
+    "posterUrl": "https://a.ltrbxd.com/resized/sm/upload/b2/ip/s0/ly/mRPvXooggmSav6wTiUXpnZE3OWG-1200-1200-675-675-crop-000000.jpg?v=3e56b61691",
+    "slug": "into-the-inferno",
+    "watchDate": "2025-07-27"
   }
 }
