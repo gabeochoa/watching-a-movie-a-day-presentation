@@ -1,0 +1,3588 @@
+{
+  "meta": {
+    "year": 2025,
+    "generatedAt": "2025-12-21T02:14:40.581Z"
+  },
+  "summary": {
+    "totalFilms": 361,
+    "totalWatches": 362,
+    "totalHours": 651,
+    "totalDays": 27.1,
+    "avgRating": 3.4,
+    "avgRuntime": 108,
+    "fiveStarCount": 37,
+    "fourStarCount": 124,
+    "oneStarCount": 7,
+    "twoStarCount": 41,
+    "uniqueDirectors": 304,
+    "uniqueGenres": 19
+  },
+  "ratings": {
+    "distribution": {
+      "1": 7,
+      "2": 41,
+      "3": 150,
+      "4": 124,
+      "5": 37
+    },
+    "avgRating": 3.4,
+    "mostCommonRating": {
+      "stars": 3,
+      "count": 150
+    },
+    "fiveStarFilms": [
+      {
+        "title": "Grease",
+        "year": 1978,
+        "directors": [
+          "Randal Kleiser"
+        ],
+        "genres": [
+          "Romance",
+          "Comedy"
+        ],
+        "runtime": 110,
+        "letterboxdUri": "https://boxd.it/8nJCbd"
+      },
+      {
+        "title": "La La Land",
+        "year": 2016,
+        "directors": [
+          "Damien Chazelle"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama",
+          "Romance"
+        ],
+        "runtime": 129,
+        "letterboxdUri": "https://boxd.it/8Pogxr"
+      },
+      {
+        "title": "Superbad",
+        "year": 2007,
+        "directors": [
+          "Greg Mottola"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "runtime": 113,
+        "letterboxdUri": "https://boxd.it/8Sj8KT"
+      },
+      {
+        "title": "Ferris Bueller's Day Off",
+        "year": 1986,
+        "directors": [
+          "John Hughes"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "runtime": 103,
+        "letterboxdUri": "https://boxd.it/94tv1F"
+      },
+      {
+        "title": "One Week",
+        "year": 1920,
+        "directors": [
+          "Buster Keaton",
+          "Edward F. Cline"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "runtime": 25,
+        "letterboxdUri": "https://boxd.it/98EjJj"
+      },
+      {
+        "title": "Big",
+        "year": 1988,
+        "directors": [
+          "Penny Marshall"
+        ],
+        "genres": [
+          "Fantasy",
+          "Drama",
+          "Comedy",
+          "Romance",
+          "Family"
+        ],
+        "runtime": 104,
+        "letterboxdUri": "https://boxd.it/9cGluZ"
+      },
+      {
+        "title": "Fire of Love",
+        "year": 2022,
+        "directors": [
+          "Sara Dosa"
+        ],
+        "genres": [
+          "Documentary"
+        ],
+        "runtime": 93,
+        "letterboxdUri": "https://boxd.it/9lV4zT"
+      },
+      {
+        "title": "Ocean's Eleven",
+        "year": 2001,
+        "directors": [
+          "Steven Soderbergh"
+        ],
+        "genres": [
+          "Thriller",
+          "Crime"
+        ],
+        "runtime": 116,
+        "letterboxdUri": "https://boxd.it/9rjGfb"
+      },
+      {
+        "title": "Monsters, Inc.",
+        "year": 2001,
+        "directors": [
+          "Pete Docter"
+        ],
+        "genres": [
+          "Animation",
+          "Comedy",
+          "Family"
+        ],
+        "runtime": 92,
+        "letterboxdUri": "https://boxd.it/9rmLAJ"
+      },
+      {
+        "title": "Freedom Writers",
+        "year": 2007,
+        "directors": [
+          "Richard LaGravenese"
+        ],
+        "genres": [
+          "Crime",
+          "Drama"
+        ],
+        "runtime": 123,
+        "letterboxdUri": "https://boxd.it/9vQx17"
+      },
+      {
+        "title": "The Double",
+        "year": 2013,
+        "directors": [
+          "Richard Ayoade"
+        ],
+        "genres": [
+          "Thriller",
+          "Drama"
+        ],
+        "runtime": 93,
+        "letterboxdUri": "https://boxd.it/9ymih7"
+      },
+      {
+        "title": "The Ballad of Wallis Island",
+        "year": 2025,
+        "directors": [
+          "James Griffiths"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama",
+          "Music"
+        ],
+        "runtime": 100,
+        "letterboxdUri": "https://boxd.it/a0qVJT"
+      },
+      {
+        "title": "tick, tick... BOOM!",
+        "year": 2021,
+        "directors": [
+          "Lin-Manuel Miranda"
+        ],
+        "genres": [
+          "Drama",
+          "Music"
+        ],
+        "runtime": 120,
+        "letterboxdUri": "https://boxd.it/a5ND2j"
+      },
+      {
+        "title": "Arrival",
+        "year": 2016,
+        "directors": [
+          "Denis Villeneuve"
+        ],
+        "genres": [
+          "Drama",
+          "Science Fiction",
+          "Mystery"
+        ],
+        "runtime": 116,
+        "letterboxdUri": "https://boxd.it/aej4kt"
+      },
+      {
+        "title": "Scott Pilgrim vs. the World",
+        "year": 2010,
+        "directors": [
+          "Edgar Wright"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Romance"
+        ],
+        "runtime": 113,
+        "letterboxdUri": "https://boxd.it/afjvgH"
+      },
+      {
+        "title": "Rushmore",
+        "year": 1998,
+        "directors": [
+          "Wes Anderson"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama"
+        ],
+        "runtime": 93,
+        "letterboxdUri": "https://boxd.it/apTarB"
+      },
+      {
+        "title": "Bridge of Spies",
+        "year": 2015,
+        "directors": [
+          "Steven Spielberg"
+        ],
+        "genres": [
+          "Thriller",
+          "Drama"
+        ],
+        "runtime": 141,
+        "letterboxdUri": "https://boxd.it/auKzzd"
+      },
+      {
+        "title": "Youth in Revolt",
+        "year": 2009,
+        "directors": [
+          "Miguel Arteta"
+        ],
+        "genres": [
+          "Comedy",
+          "Romance",
+          "Drama"
+        ],
+        "runtime": 89,
+        "letterboxdUri": "https://boxd.it/aAe9Ap"
+      },
+      {
+        "title": "The Incredibles",
+        "year": 2004,
+        "directors": [
+          "Brad Bird"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Animation",
+          "Family"
+        ],
+        "runtime": 115,
+        "letterboxdUri": "https://boxd.it/aF0SDl"
+      },
+      {
+        "title": "Kindergarten Cop",
+        "year": 1990,
+        "directors": [
+          "Ivan Reitman"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "runtime": 111,
+        "letterboxdUri": "https://boxd.it/aGGBz5"
+      },
+      {
+        "title": "Little Miss Sunshine",
+        "year": 2006,
+        "directors": [
+          "Valerie Faris",
+          "Jonathan Dayton"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama"
+        ],
+        "runtime": 102,
+        "letterboxdUri": "https://boxd.it/aR9cKP"
+      },
+      {
+        "title": "Happyend",
+        "year": 2024,
+        "directors": [
+          "Neo Sora"
+        ],
+        "genres": [
+          "Drama"
+        ],
+        "runtime": 113,
+        "letterboxdUri": "https://boxd.it/b5pw3J"
+      },
+      {
+        "title": "Inside Man",
+        "year": 2006,
+        "directors": [
+          "Spike Lee"
+        ],
+        "genres": [
+          "Crime",
+          "Drama",
+          "Thriller"
+        ],
+        "runtime": 129,
+        "letterboxdUri": "https://boxd.it/bbavdn"
+      },
+      {
+        "title": "I'm Still Here",
+        "year": 2024,
+        "directors": [
+          "Walter Salles"
+        ],
+        "genres": [
+          "Drama",
+          "History"
+        ],
+        "runtime": 138,
+        "letterboxdUri": "https://boxd.it/beGQHf"
+      },
+      {
+        "title": "Soulmate",
+        "year": 2023,
+        "directors": [
+          "Richard Fenwick"
+        ],
+        "genres": [
+          "Science Fiction",
+          "Romance",
+          "Drama",
+          "Thriller"
+        ],
+        "runtime": 15,
+        "letterboxdUri": "https://boxd.it/bhzTj9"
+      },
+      {
+        "title": "Dan in Real Life",
+        "year": 2007,
+        "directors": [
+          "Peter Hedges"
+        ],
+        "genres": [
+          "Comedy",
+          "Romance",
+          "Drama"
+        ],
+        "runtime": 98,
+        "letterboxdUri": "https://boxd.it/bjlZdV"
+      },
+      {
+        "title": "Swing Girls",
+        "year": 2004,
+        "directors": [
+          "Shinobu Yaguchi"
+        ],
+        "genres": [
+          "Comedy",
+          "Music"
+        ],
+        "runtime": 105,
+        "letterboxdUri": "https://boxd.it/bosEul"
+      },
+      {
+        "title": "Sing Street",
+        "year": 2016,
+        "directors": [
+          "John Carney"
+        ],
+        "genres": [
+          "Romance",
+          "Drama",
+          "Music",
+          "Comedy"
+        ],
+        "runtime": 105,
+        "letterboxdUri": "https://boxd.it/bp3Pb9"
+      },
+      {
+        "title": "The Bourne Identity",
+        "year": 2002,
+        "directors": [
+          "Doug Liman"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Mystery",
+          "Thriller"
+        ],
+        "runtime": 119,
+        "letterboxdUri": "https://boxd.it/brSpbx"
+      },
+      {
+        "title": "A Few Good Men",
+        "year": 1992,
+        "directors": [
+          "Rob Reiner"
+        ],
+        "genres": [
+          "Drama"
+        ],
+        "runtime": 138,
+        "letterboxdUri": "https://boxd.it/bzLHWp"
+      },
+      {
+        "title": "Jack Reacher",
+        "year": 2012,
+        "directors": [
+          "Christopher McQuarrie"
+        ],
+        "genres": [
+          "Crime",
+          "Drama",
+          "Thriller",
+          "Action"
+        ],
+        "runtime": 130,
+        "letterboxdUri": "https://boxd.it/bHvTWB"
+      },
+      {
+        "title": "Game Night",
+        "year": 2018,
+        "directors": [
+          "John Francis Daley",
+          "Jonathan Goldstein"
+        ],
+        "genres": [
+          "Mystery",
+          "Comedy",
+          "Crime"
+        ],
+        "runtime": 100,
+        "letterboxdUri": "https://boxd.it/bJrHA9"
+      },
+      {
+        "title": "Burden of Dreams",
+        "year": 1982,
+        "directors": [
+          "Les Blank"
+        ],
+        "genres": [
+          "Documentary"
+        ],
+        "runtime": 97,
+        "letterboxdUri": "https://boxd.it/bP6Gfh"
+      },
+      {
+        "title": "Cheaper by the Dozen",
+        "year": 2003,
+        "directors": [
+          "Shawn Levy"
+        ],
+        "genres": [
+          "Comedy",
+          "Family",
+          "Drama"
+        ],
+        "runtime": 98,
+        "letterboxdUri": "https://boxd.it/bSPPpd"
+      },
+      {
+        "title": "Beyond the Infinite Two Minutes",
+        "year": 2020,
+        "directors": [
+          "Junta Yamaguchi"
+        ],
+        "genres": [
+          "Comedy",
+          "Science Fiction"
+        ],
+        "runtime": 70,
+        "letterboxdUri": "https://boxd.it/bTJvGZ"
+      },
+      {
+        "title": "Hotel Rwanda",
+        "year": 2004,
+        "directors": [
+          "Terry George"
+        ],
+        "genres": [
+          "Drama",
+          "History",
+          "War"
+        ],
+        "runtime": 122,
+        "letterboxdUri": "https://boxd.it/bYyeVr"
+      },
+      {
+        "title": "Dune: Part Two",
+        "year": 2024,
+        "directors": [
+          "Denis Villeneuve"
+        ],
+        "genres": [
+          "Science Fiction",
+          "Adventure"
+        ],
+        "runtime": 167,
+        "letterboxdUri": "https://boxd.it/c6yFcv"
+      }
+    ],
+    "oneStarFilms": [
+      {
+        "title": "Death of a Salesman",
+        "year": 1985,
+        "directors": [
+          "Volker Schlöndorff"
+        ],
+        "letterboxdUri": "https://boxd.it/aEi8rl"
+      },
+      {
+        "title": "Brothers",
+        "year": 2024,
+        "directors": [
+          "Max Barbakow"
+        ],
+        "letterboxdUri": "https://boxd.it/aV0AhF"
+      },
+      {
+        "title": "Redacted",
+        "year": 2007,
+        "directors": [
+          "Brian De Palma"
+        ],
+        "letterboxdUri": "https://boxd.it/b4vut9"
+      },
+      {
+        "title": "The Thin Red Line",
+        "year": 1998,
+        "directors": [
+          "Terrence Malick"
+        ],
+        "letterboxdUri": "https://boxd.it/bhuo0b"
+      },
+      {
+        "title": "Here",
+        "year": 2024,
+        "directors": [
+          "Robert Zemeckis"
+        ],
+        "letterboxdUri": "https://boxd.it/bKOKf9"
+      },
+      {
+        "title": "Sex Appeal",
+        "year": 2022,
+        "directors": [
+          "Talia Osteen"
+        ],
+        "letterboxdUri": "https://boxd.it/bLxrBl"
+      },
+      {
+        "title": "Pretty in Pink",
+        "year": 1986,
+        "directors": [
+          "Howard Deutch"
+        ],
+        "letterboxdUri": "https://boxd.it/bO4KYR"
+      }
+    ],
+    "lowRatedFilms": [
+      {
+        "title": "Horizon: An American Saga – Chapter 1",
+        "year": 2024,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/8kVHLR"
+      },
+      {
+        "title": "Mr. & Mrs. Smith",
+        "year": 2005,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/8q88Xz"
+      },
+      {
+        "title": "Juror #2",
+        "year": 2024,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/8wXYgN"
+      },
+      {
+        "title": "Se7en",
+        "year": 1995,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/8yGv9R"
+      },
+      {
+        "title": "The Fabelmans",
+        "year": 2022,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/8OjLUn"
+      },
+      {
+        "title": "She Said",
+        "year": 2022,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/8ORivL"
+      },
+      {
+        "title": "The Gorge",
+        "year": 2025,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/8QDjXB"
+      },
+      {
+        "title": "The Scarecrow",
+        "year": 1920,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/98FHrF"
+      },
+      {
+        "title": "The 40 Year Old Virgin",
+        "year": 2005,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/99s8Zb"
+      },
+      {
+        "title": "The Truman Show",
+        "year": 1998,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9dmkGz"
+      },
+      {
+        "title": "The Royal Tenenbaums",
+        "year": 2001,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9hc8LD"
+      },
+      {
+        "title": "Barry Lyndon",
+        "year": 1975,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9rZ4sl"
+      },
+      {
+        "title": "Clerks II",
+        "year": 2006,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9xL3eN"
+      },
+      {
+        "title": "The Lighthouse",
+        "year": 2019,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9yGMC5"
+      },
+      {
+        "title": "Slackers",
+        "year": 2002,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9FM4qz"
+      },
+      {
+        "title": "The Accountant²",
+        "year": 2025,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9OHhGV"
+      },
+      {
+        "title": "Sweet Home Alabama",
+        "year": 2002,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9R6DIR"
+      },
+      {
+        "title": "Little Fockers",
+        "year": 2010,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9W4zzn"
+      },
+      {
+        "title": "Mountainhead",
+        "year": 2025,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/9ZbeST"
+      },
+      {
+        "title": "High Fidelity",
+        "year": 2000,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/acq61T"
+      },
+      {
+        "title": "Snatch",
+        "year": 2000,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/aeeUPD"
+      },
+      {
+        "title": "Death of a Salesman",
+        "year": 1985,
+        "rating": 1,
+        "letterboxdUri": "https://boxd.it/aEi8rl"
+      },
+      {
+        "title": "Days of Thunder",
+        "year": 1990,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/aHAOkT"
+      },
+      {
+        "title": "The Fighter",
+        "year": 2010,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/aOO1Zp"
+      },
+      {
+        "title": "Brothers",
+        "year": 2024,
+        "rating": 1,
+        "letterboxdUri": "https://boxd.it/aV0AhF"
+      },
+      {
+        "title": "Mamma Mia! Here We Go Again",
+        "year": 2018,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/aVZVVt"
+      },
+      {
+        "title": "Redacted",
+        "year": 2007,
+        "rating": 1,
+        "letterboxdUri": "https://boxd.it/b4vut9"
+      },
+      {
+        "title": "Prisoner of War",
+        "year": 2025,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/b9zQah"
+      },
+      {
+        "title": "The Thin Red Line",
+        "year": 1998,
+        "rating": 1,
+        "letterboxdUri": "https://boxd.it/bhuo0b"
+      },
+      {
+        "title": "Highest 2 Lowest",
+        "year": 2025,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bzIQbh"
+      },
+      {
+        "title": "Silver Linings Playbook",
+        "year": 2012,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bBNXh5"
+      },
+      {
+        "title": "Deep Impact",
+        "year": 1998,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bF4fKt"
+      },
+      {
+        "title": "The Woman in Cabin 10",
+        "year": 2025,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bG1qVv"
+      },
+      {
+        "title": "Not Okay",
+        "year": 2022,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bJ634P"
+      },
+      {
+        "title": "Hitchcock",
+        "year": 2012,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bKOiuP"
+      },
+      {
+        "title": "Here",
+        "year": 2024,
+        "rating": 1,
+        "letterboxdUri": "https://boxd.it/bKOKf9"
+      },
+      {
+        "title": "Sex Appeal",
+        "year": 2022,
+        "rating": 1,
+        "letterboxdUri": "https://boxd.it/bLxrBl"
+      },
+      {
+        "title": "Johnny English",
+        "year": 2003,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bMGzHt"
+      },
+      {
+        "title": "Shiva Baby",
+        "year": 2020,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bMIGaP"
+      },
+      {
+        "title": "Anyone But You",
+        "year": 2023,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bNrjl1"
+      },
+      {
+        "title": "Pretty in Pink",
+        "year": 1986,
+        "rating": 1,
+        "letterboxdUri": "https://boxd.it/bO4KYR"
+      },
+      {
+        "title": "Get Away",
+        "year": 2024,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bOFFdP"
+      },
+      {
+        "title": "Lessons of Darkness",
+        "year": 1992,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bQjuXr"
+      },
+      {
+        "title": "A Charlie Brown Thanksgiving",
+        "year": 1973,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bRrxDJ"
+      },
+      {
+        "title": "TRON: Legacy",
+        "year": 2010,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/bWStRB"
+      },
+      {
+        "title": "A Suite Holiday Romance",
+        "year": 2025,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/c3nIFr"
+      },
+      {
+        "title": "Christmas Above the Clouds",
+        "year": 2025,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/c3yZkd"
+      },
+      {
+        "title": "Everything Christmas",
+        "year": 2023,
+        "rating": 2,
+        "letterboxdUri": "https://boxd.it/c4uXjX"
+      }
+    ]
+  },
+  "fiveStarAnalysis": {
+    "count": 37,
+    "topDirectors": [
+      {
+        "name": "Denis Villeneuve",
+        "count": 2
+      },
+      {
+        "name": "Randal Kleiser",
+        "count": 1
+      },
+      {
+        "name": "Damien Chazelle",
+        "count": 1
+      },
+      {
+        "name": "Greg Mottola",
+        "count": 1
+      },
+      {
+        "name": "John Hughes",
+        "count": 1
+      },
+      {
+        "name": "Buster Keaton",
+        "count": 1
+      },
+      {
+        "name": "Edward F. Cline",
+        "count": 1
+      },
+      {
+        "name": "Penny Marshall",
+        "count": 1
+      },
+      {
+        "name": "Sara Dosa",
+        "count": 1
+      },
+      {
+        "name": "Steven Soderbergh",
+        "count": 1
+      }
+    ],
+    "topGenres": [
+      {
+        "name": "Drama",
+        "count": 22
+      },
+      {
+        "name": "Comedy",
+        "count": 19
+      },
+      {
+        "name": "Romance",
+        "count": 8
+      },
+      {
+        "name": "Thriller",
+        "count": 7
+      },
+      {
+        "name": "Crime",
+        "count": 5
+      },
+      {
+        "name": "Family",
+        "count": 4
+      },
+      {
+        "name": "Music",
+        "count": 4
+      },
+      {
+        "name": "Science Fiction",
+        "count": 4
+      },
+      {
+        "name": "Action",
+        "count": 4
+      },
+      {
+        "name": "Mystery",
+        "count": 3
+      }
+    ],
+    "topDecades": [
+      {
+        "decade": 2000,
+        "count": 13
+      },
+      {
+        "decade": 2010,
+        "count": 8
+      },
+      {
+        "decade": 2020,
+        "count": 8
+      },
+      {
+        "decade": 1980,
+        "count": 3
+      },
+      {
+        "decade": 1990,
+        "count": 3
+      }
+    ],
+    "avgRuntime": 107,
+    "films": [
+      {
+        "title": "Grease",
+        "year": 1978,
+        "directors": [
+          "Randal Kleiser"
+        ],
+        "genres": [
+          "Romance",
+          "Comedy"
+        ],
+        "runtime": 110
+      },
+      {
+        "title": "La La Land",
+        "year": 2016,
+        "directors": [
+          "Damien Chazelle"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama",
+          "Romance"
+        ],
+        "runtime": 129
+      },
+      {
+        "title": "Superbad",
+        "year": 2007,
+        "directors": [
+          "Greg Mottola"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "runtime": 113
+      },
+      {
+        "title": "Ferris Bueller's Day Off",
+        "year": 1986,
+        "directors": [
+          "John Hughes"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "runtime": 103
+      },
+      {
+        "title": "One Week",
+        "year": 1920,
+        "directors": [
+          "Buster Keaton",
+          "Edward F. Cline"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "runtime": 25
+      },
+      {
+        "title": "Big",
+        "year": 1988,
+        "directors": [
+          "Penny Marshall"
+        ],
+        "genres": [
+          "Fantasy",
+          "Drama",
+          "Comedy",
+          "Romance",
+          "Family"
+        ],
+        "runtime": 104
+      },
+      {
+        "title": "Fire of Love",
+        "year": 2022,
+        "directors": [
+          "Sara Dosa"
+        ],
+        "genres": [
+          "Documentary"
+        ],
+        "runtime": 93
+      },
+      {
+        "title": "Ocean's Eleven",
+        "year": 2001,
+        "directors": [
+          "Steven Soderbergh"
+        ],
+        "genres": [
+          "Thriller",
+          "Crime"
+        ],
+        "runtime": 116
+      },
+      {
+        "title": "Monsters, Inc.",
+        "year": 2001,
+        "directors": [
+          "Pete Docter"
+        ],
+        "genres": [
+          "Animation",
+          "Comedy",
+          "Family"
+        ],
+        "runtime": 92
+      },
+      {
+        "title": "Freedom Writers",
+        "year": 2007,
+        "directors": [
+          "Richard LaGravenese"
+        ],
+        "genres": [
+          "Crime",
+          "Drama"
+        ],
+        "runtime": 123
+      },
+      {
+        "title": "The Double",
+        "year": 2013,
+        "directors": [
+          "Richard Ayoade"
+        ],
+        "genres": [
+          "Thriller",
+          "Drama"
+        ],
+        "runtime": 93
+      },
+      {
+        "title": "The Ballad of Wallis Island",
+        "year": 2025,
+        "directors": [
+          "James Griffiths"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama",
+          "Music"
+        ],
+        "runtime": 100
+      },
+      {
+        "title": "tick, tick... BOOM!",
+        "year": 2021,
+        "directors": [
+          "Lin-Manuel Miranda"
+        ],
+        "genres": [
+          "Drama",
+          "Music"
+        ],
+        "runtime": 120
+      },
+      {
+        "title": "Arrival",
+        "year": 2016,
+        "directors": [
+          "Denis Villeneuve"
+        ],
+        "genres": [
+          "Drama",
+          "Science Fiction",
+          "Mystery"
+        ],
+        "runtime": 116
+      },
+      {
+        "title": "Scott Pilgrim vs. the World",
+        "year": 2010,
+        "directors": [
+          "Edgar Wright"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Romance"
+        ],
+        "runtime": 113
+      },
+      {
+        "title": "Rushmore",
+        "year": 1998,
+        "directors": [
+          "Wes Anderson"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama"
+        ],
+        "runtime": 93
+      },
+      {
+        "title": "Bridge of Spies",
+        "year": 2015,
+        "directors": [
+          "Steven Spielberg"
+        ],
+        "genres": [
+          "Thriller",
+          "Drama"
+        ],
+        "runtime": 141
+      },
+      {
+        "title": "Youth in Revolt",
+        "year": 2009,
+        "directors": [
+          "Miguel Arteta"
+        ],
+        "genres": [
+          "Comedy",
+          "Romance",
+          "Drama"
+        ],
+        "runtime": 89
+      },
+      {
+        "title": "The Incredibles",
+        "year": 2004,
+        "directors": [
+          "Brad Bird"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Animation",
+          "Family"
+        ],
+        "runtime": 115
+      },
+      {
+        "title": "Kindergarten Cop",
+        "year": 1990,
+        "directors": [
+          "Ivan Reitman"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "runtime": 111
+      },
+      {
+        "title": "Little Miss Sunshine",
+        "year": 2006,
+        "directors": [
+          "Valerie Faris",
+          "Jonathan Dayton"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama"
+        ],
+        "runtime": 102
+      },
+      {
+        "title": "Happyend",
+        "year": 2024,
+        "directors": [
+          "Neo Sora"
+        ],
+        "genres": [
+          "Drama"
+        ],
+        "runtime": 113
+      },
+      {
+        "title": "Inside Man",
+        "year": 2006,
+        "directors": [
+          "Spike Lee"
+        ],
+        "genres": [
+          "Crime",
+          "Drama",
+          "Thriller"
+        ],
+        "runtime": 129
+      },
+      {
+        "title": "I'm Still Here",
+        "year": 2024,
+        "directors": [
+          "Walter Salles"
+        ],
+        "genres": [
+          "Drama",
+          "History"
+        ],
+        "runtime": 138
+      },
+      {
+        "title": "Soulmate",
+        "year": 2023,
+        "directors": [
+          "Richard Fenwick"
+        ],
+        "genres": [
+          "Science Fiction",
+          "Romance",
+          "Drama",
+          "Thriller"
+        ],
+        "runtime": 15
+      },
+      {
+        "title": "Dan in Real Life",
+        "year": 2007,
+        "directors": [
+          "Peter Hedges"
+        ],
+        "genres": [
+          "Comedy",
+          "Romance",
+          "Drama"
+        ],
+        "runtime": 98
+      },
+      {
+        "title": "Swing Girls",
+        "year": 2004,
+        "directors": [
+          "Shinobu Yaguchi"
+        ],
+        "genres": [
+          "Comedy",
+          "Music"
+        ],
+        "runtime": 105
+      },
+      {
+        "title": "Sing Street",
+        "year": 2016,
+        "directors": [
+          "John Carney"
+        ],
+        "genres": [
+          "Romance",
+          "Drama",
+          "Music",
+          "Comedy"
+        ],
+        "runtime": 105
+      },
+      {
+        "title": "The Bourne Identity",
+        "year": 2002,
+        "directors": [
+          "Doug Liman"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Mystery",
+          "Thriller"
+        ],
+        "runtime": 119
+      },
+      {
+        "title": "A Few Good Men",
+        "year": 1992,
+        "directors": [
+          "Rob Reiner"
+        ],
+        "genres": [
+          "Drama"
+        ],
+        "runtime": 138
+      },
+      {
+        "title": "Jack Reacher",
+        "year": 2012,
+        "directors": [
+          "Christopher McQuarrie"
+        ],
+        "genres": [
+          "Crime",
+          "Drama",
+          "Thriller",
+          "Action"
+        ],
+        "runtime": 130
+      },
+      {
+        "title": "Game Night",
+        "year": 2018,
+        "directors": [
+          "John Francis Daley",
+          "Jonathan Goldstein"
+        ],
+        "genres": [
+          "Mystery",
+          "Comedy",
+          "Crime"
+        ],
+        "runtime": 100
+      },
+      {
+        "title": "Burden of Dreams",
+        "year": 1982,
+        "directors": [
+          "Les Blank"
+        ],
+        "genres": [
+          "Documentary"
+        ],
+        "runtime": 97
+      },
+      {
+        "title": "Cheaper by the Dozen",
+        "year": 2003,
+        "directors": [
+          "Shawn Levy"
+        ],
+        "genres": [
+          "Comedy",
+          "Family",
+          "Drama"
+        ],
+        "runtime": 98
+      },
+      {
+        "title": "Beyond the Infinite Two Minutes",
+        "year": 2020,
+        "directors": [
+          "Junta Yamaguchi"
+        ],
+        "genres": [
+          "Comedy",
+          "Science Fiction"
+        ],
+        "runtime": 70
+      },
+      {
+        "title": "Hotel Rwanda",
+        "year": 2004,
+        "directors": [
+          "Terry George"
+        ],
+        "genres": [
+          "Drama",
+          "History",
+          "War"
+        ],
+        "runtime": 122
+      },
+      {
+        "title": "Dune: Part Two",
+        "year": 2024,
+        "directors": [
+          "Denis Villeneuve"
+        ],
+        "genres": [
+          "Science Fiction",
+          "Adventure"
+        ],
+        "runtime": 167
+      }
+    ]
+  },
+  "taste": {
+    "topGenres": [
+      {
+        "name": "Drama",
+        "count": 178
+      },
+      {
+        "name": "Comedy",
+        "count": 173
+      },
+      {
+        "name": "Romance",
+        "count": 91
+      },
+      {
+        "name": "Thriller",
+        "count": 77
+      },
+      {
+        "name": "Action",
+        "count": 56
+      },
+      {
+        "name": "Crime",
+        "count": 51
+      },
+      {
+        "name": "Adventure",
+        "count": 32
+      },
+      {
+        "name": "Family",
+        "count": 28
+      },
+      {
+        "name": "Science Fiction",
+        "count": 26
+      },
+      {
+        "name": "Mystery",
+        "count": 26
+      },
+      {
+        "name": "History",
+        "count": 23
+      },
+      {
+        "name": "Animation",
+        "count": 20
+      },
+      {
+        "name": "Fantasy",
+        "count": 20
+      },
+      {
+        "name": "Music",
+        "count": 15
+      },
+      {
+        "name": "War",
+        "count": 14
+      }
+    ],
+    "topDirectors": [
+      {
+        "name": "Wes Anderson",
+        "count": 7
+      },
+      {
+        "name": "Ron Howard",
+        "count": 5
+      },
+      {
+        "name": "Steven Spielberg",
+        "count": 5
+      },
+      {
+        "name": "Steven Soderbergh",
+        "count": 4
+      },
+      {
+        "name": "Jay Roach",
+        "count": 4
+      },
+      {
+        "name": "Denis Villeneuve",
+        "count": 4
+      },
+      {
+        "name": "Doug Liman",
+        "count": 3
+      },
+      {
+        "name": "Bill Melendez",
+        "count": 3
+      },
+      {
+        "name": "Nancy Meyers",
+        "count": 3
+      },
+      {
+        "name": "Buster Keaton",
+        "count": 3
+      },
+      {
+        "name": "Brett Ratner",
+        "count": 3
+      },
+      {
+        "name": "Paul Weitz",
+        "count": 3
+      },
+      {
+        "name": "Paul Thomas Anderson",
+        "count": 3
+      },
+      {
+        "name": "Werner Herzog",
+        "count": 3
+      },
+      {
+        "name": "David O. Russell",
+        "count": 3
+      },
+      {
+        "name": "Robert Zemeckis",
+        "count": 3
+      },
+      {
+        "name": "Michael Bay",
+        "count": 2
+      },
+      {
+        "name": "Peter Segal",
+        "count": 2
+      },
+      {
+        "name": "Phil Roman",
+        "count": 2
+      },
+      {
+        "name": "John Hughes",
+        "count": 2
+      }
+    ],
+    "filmsByDirector": {
+      "Wes Anderson": [
+        {
+          "title": "The Royal Tenenbaums",
+          "year": 2001,
+          "rating": 2
+        },
+        {
+          "title": "Poison",
+          "year": 2023,
+          "rating": 4
+        },
+        {
+          "title": "The French Dispatch of the Liberty, Kansas Evening Sun",
+          "year": 2021,
+          "rating": 3
+        },
+        {
+          "title": "The Swan",
+          "year": 2023,
+          "rating": 4
+        },
+        {
+          "title": "The Rat Catcher",
+          "year": 2023,
+          "rating": 3
+        },
+        {
+          "title": "The Phoenician Scheme",
+          "year": 2025,
+          "rating": 4
+        },
+        {
+          "title": "Rushmore",
+          "year": 1998,
+          "rating": 5
+        }
+      ],
+      "Ron Howard": [
+        {
+          "title": "A Beautiful Mind",
+          "year": 2001,
+          "rating": 3
+        },
+        {
+          "title": "Jim Henson Idea Man",
+          "year": 2024,
+          "rating": 4
+        },
+        {
+          "title": "The Da Vinci Code",
+          "year": 2006,
+          "rating": 3
+        },
+        {
+          "title": "Angels & Demons",
+          "year": 2009,
+          "rating": 3
+        },
+        {
+          "title": "Frost/Nixon",
+          "year": 2008,
+          "rating": 4
+        }
+      ],
+      "Steven Spielberg": [
+        {
+          "title": "The Fabelmans",
+          "year": 2022,
+          "rating": 2
+        },
+        {
+          "title": "Munich",
+          "year": 2005,
+          "rating": 3
+        },
+        {
+          "title": "Bridge of Spies",
+          "year": 2015,
+          "rating": 5
+        },
+        {
+          "title": "Minority Report",
+          "year": 2002,
+          "rating": 3
+        },
+        {
+          "title": "The Post",
+          "year": 2017,
+          "rating": 4
+        }
+      ],
+      "Steven Soderbergh": [
+        {
+          "title": "Black Bag",
+          "year": 2025,
+          "rating": 3
+        },
+        {
+          "title": "Ocean's Eleven",
+          "year": 2001,
+          "rating": 5
+        },
+        {
+          "title": "sex, lies, and videotape",
+          "year": 1989,
+          "rating": 4
+        },
+        {
+          "title": "Ocean's Twelve",
+          "year": 2004,
+          "rating": 4
+        }
+      ],
+      "Jay Roach": [
+        {
+          "title": "Meet the Parents",
+          "year": 2000,
+          "rating": 3
+        },
+        {
+          "title": "Meet the Fockers",
+          "year": 2004,
+          "rating": 3
+        },
+        {
+          "title": "Austin Powers: International Man of Mystery",
+          "year": 1997,
+          "rating": 4
+        },
+        {
+          "title": "Austin Powers: The Spy Who Shagged Me",
+          "year": 1999,
+          "rating": 3
+        }
+      ],
+      "Denis Villeneuve": [
+        {
+          "title": "Arrival",
+          "year": 2016,
+          "rating": 5
+        },
+        {
+          "title": "Prisoners",
+          "year": 2013,
+          "rating": 4
+        },
+        {
+          "title": "Dune",
+          "year": 2021,
+          "rating": 4
+        },
+        {
+          "title": "Dune: Part Two",
+          "year": 2024,
+          "rating": 5
+        }
+      ],
+      "Doug Liman": [
+        {
+          "title": "Mr. & Mrs. Smith",
+          "year": 2005,
+          "rating": 2
+        },
+        {
+          "title": "Swingers",
+          "year": 1996,
+          "rating": 4
+        },
+        {
+          "title": "The Bourne Identity",
+          "year": 2002,
+          "rating": 5
+        }
+      ],
+      "Bill Melendez": [
+        {
+          "title": "A Charlie Brown Valentine",
+          "year": 2002,
+          "rating": 3
+        },
+        {
+          "title": "It's the Great Pumpkin, Charlie Brown",
+          "year": 1966,
+          "rating": 3
+        },
+        {
+          "title": "A Charlie Brown Thanksgiving",
+          "year": 1973,
+          "rating": 2
+        }
+      ],
+      "Nancy Meyers": [
+        {
+          "title": "The Parent Trap",
+          "year": 1998,
+          "rating": 3
+        },
+        {
+          "title": "Something's Gotta Give",
+          "year": 2003,
+          "rating": 3
+        },
+        {
+          "title": "The Intern",
+          "year": 2015,
+          "rating": 3
+        }
+      ],
+      "Buster Keaton": [
+        {
+          "title": "One Week",
+          "year": 1920,
+          "rating": 5
+        },
+        {
+          "title": "The Scarecrow",
+          "year": 1920,
+          "rating": 2
+        },
+        {
+          "title": "Sherlock Jr.",
+          "year": 1924,
+          "rating": 4
+        }
+      ]
+    },
+    "decades": [
+      {
+        "decade": 1920,
+        "count": 5
+      },
+      {
+        "decade": 1950,
+        "count": 2
+      },
+      {
+        "decade": 1960,
+        "count": 3
+      },
+      {
+        "decade": 1970,
+        "count": 7
+      },
+      {
+        "decade": 1980,
+        "count": 17
+      },
+      {
+        "decade": 1990,
+        "count": 44
+      },
+      {
+        "decade": 2000,
+        "count": 95
+      },
+      {
+        "decade": 2010,
+        "count": 66
+      },
+      {
+        "decade": 2020,
+        "count": 122
+      }
+    ],
+    "dominantDecade": {
+      "decade": 2020,
+      "count": 122
+    }
+  },
+  "temporal": {
+    "firstWatch": {
+      "name": "Carry-On",
+      "date": "2025-01-04",
+      "rating": "3"
+    },
+    "lastWatch": {
+      "name": "Tom Clancy's Without Remorse",
+      "date": "2025-12-19",
+      "rating": "3"
+    },
+    "busiestMonth": {
+      "month": "2025-11",
+      "count": 65
+    },
+    "quietestMonth": {
+      "month": "2025-01",
+      "count": 15
+    },
+    "busiestWeekday": {
+      "day": "Sat",
+      "count": 88,
+      "dayNum": 6
+    },
+    "weekendPct": 38,
+    "weekdayData": [
+      {
+        "day": "Sat",
+        "count": 88,
+        "dayNum": 6
+      },
+      {
+        "day": "Fri",
+        "count": 72,
+        "dayNum": 5
+      },
+      {
+        "day": "Sun",
+        "count": 49,
+        "dayNum": 0
+      },
+      {
+        "day": "Thu",
+        "count": 41,
+        "dayNum": 4
+      },
+      {
+        "day": "Wed",
+        "count": 40,
+        "dayNum": 3
+      },
+      {
+        "day": "Mon",
+        "count": 36,
+        "dayNum": 1
+      },
+      {
+        "day": "Tue",
+        "count": 36,
+        "dayNum": 2
+      }
+    ],
+    "monthlyData": [
+      {
+        "month": "2025-01",
+        "count": 15
+      },
+      {
+        "month": "2025-02",
+        "count": 20
+      },
+      {
+        "month": "2025-03",
+        "count": 29
+      },
+      {
+        "month": "2025-04",
+        "count": 23
+      },
+      {
+        "month": "2025-05",
+        "count": 25
+      },
+      {
+        "month": "2025-06",
+        "count": 39
+      },
+      {
+        "month": "2025-07",
+        "count": 31
+      },
+      {
+        "month": "2025-08",
+        "count": 32
+      },
+      {
+        "month": "2025-09",
+        "count": 24
+      },
+      {
+        "month": "2025-10",
+        "count": 28
+      },
+      {
+        "month": "2025-11",
+        "count": 65
+      },
+      {
+        "month": "2025-12",
+        "count": 31
+      }
+    ],
+    "longestStreak": 11,
+    "longestGap": 8,
+    "streakStart": "2025-11-15",
+    "streakEnd": "2025-11-25",
+    "gapStart": "2025-02-21",
+    "gapEnd": "2025-03-01",
+    "avgRatingByWeekday": [
+      {
+        "day": "Wed",
+        "dayNum": 3,
+        "avgRating": 3.475,
+        "count": 40
+      },
+      {
+        "day": "Sun",
+        "dayNum": 0,
+        "avgRating": 3.4693877551020407,
+        "count": 49
+      },
+      {
+        "day": "Mon",
+        "dayNum": 1,
+        "avgRating": 3.4444444444444446,
+        "count": 36
+      },
+      {
+        "day": "Fri",
+        "dayNum": 5,
+        "avgRating": 3.4225352112676055,
+        "count": 71
+      },
+      {
+        "day": "Thu",
+        "dayNum": 4,
+        "avgRating": 3.3658536585365852,
+        "count": 41
+      },
+      {
+        "day": "Sat",
+        "dayNum": 6,
+        "avgRating": 3.3563218390804597,
+        "count": 87
+      },
+      {
+        "day": "Tue",
+        "dayNum": 2,
+        "avgRating": 3.3055555555555554,
+        "count": 36
+      }
+    ],
+    "bestRatingDay": {
+      "day": "Wed",
+      "dayNum": 3,
+      "avgRating": 3.475,
+      "count": 40
+    },
+    "worstRatingDay": {
+      "day": "Tue",
+      "dayNum": 2,
+      "avgRating": 3.3055555555555554,
+      "count": 36
+    },
+    "dailyCumulative": [
+      {
+        "date": "2025-01-01",
+        "total": 0
+      },
+      {
+        "date": "2025-01-02",
+        "total": 0
+      },
+      {
+        "date": "2025-01-03",
+        "total": 0
+      },
+      {
+        "date": "2025-01-04",
+        "total": 1
+      },
+      {
+        "date": "2025-01-05",
+        "total": 3
+      },
+      {
+        "date": "2025-01-06",
+        "total": 3
+      },
+      {
+        "date": "2025-01-07",
+        "total": 4
+      },
+      {
+        "date": "2025-01-08",
+        "total": 4
+      },
+      {
+        "date": "2025-01-09",
+        "total": 4
+      },
+      {
+        "date": "2025-01-10",
+        "total": 6
+      },
+      {
+        "date": "2025-01-11",
+        "total": 6
+      },
+      {
+        "date": "2025-01-12",
+        "total": 6
+      },
+      {
+        "date": "2025-01-13",
+        "total": 7
+      },
+      {
+        "date": "2025-01-14",
+        "total": 7
+      },
+      {
+        "date": "2025-01-15",
+        "total": 7
+      },
+      {
+        "date": "2025-01-16",
+        "total": 8
+      },
+      {
+        "date": "2025-01-17",
+        "total": 8
+      },
+      {
+        "date": "2025-01-18",
+        "total": 10
+      },
+      {
+        "date": "2025-01-19",
+        "total": 10
+      },
+      {
+        "date": "2025-01-20",
+        "total": 11
+      },
+      {
+        "date": "2025-01-21",
+        "total": 11
+      },
+      {
+        "date": "2025-01-22",
+        "total": 11
+      },
+      {
+        "date": "2025-01-23",
+        "total": 11
+      },
+      {
+        "date": "2025-01-24",
+        "total": 12
+      },
+      {
+        "date": "2025-01-25",
+        "total": 12
+      },
+      {
+        "date": "2025-01-26",
+        "total": 12
+      },
+      {
+        "date": "2025-01-27",
+        "total": 12
+      },
+      {
+        "date": "2025-01-28",
+        "total": 12
+      },
+      {
+        "date": "2025-01-29",
+        "total": 13
+      },
+      {
+        "date": "2025-01-30",
+        "total": 13
+      },
+      {
+        "date": "2025-01-31",
+        "total": 14
+      },
+      {
+        "date": "2025-02-01",
+        "total": 15
+      },
+      {
+        "date": "2025-02-02",
+        "total": 15
+      },
+      {
+        "date": "2025-02-03",
+        "total": 16
+      },
+      {
+        "date": "2025-02-04",
+        "total": 17
+      },
+      {
+        "date": "2025-02-05",
+        "total": 18
+      },
+      {
+        "date": "2025-02-06",
+        "total": 19
+      },
+      {
+        "date": "2025-02-07",
+        "total": 19
+      },
+      {
+        "date": "2025-02-08",
+        "total": 20
+      },
+      {
+        "date": "2025-02-09",
+        "total": 21
+      },
+      {
+        "date": "2025-02-10",
+        "total": 22
+      },
+      {
+        "date": "2025-02-11",
+        "total": 23
+      },
+      {
+        "date": "2025-02-12",
+        "total": 24
+      },
+      {
+        "date": "2025-02-13",
+        "total": 25
+      },
+      {
+        "date": "2025-02-14",
+        "total": 26
+      },
+      {
+        "date": "2025-02-15",
+        "total": 29
+      },
+      {
+        "date": "2025-02-16",
+        "total": 30
+      },
+      {
+        "date": "2025-02-17",
+        "total": 31
+      },
+      {
+        "date": "2025-02-18",
+        "total": 31
+      },
+      {
+        "date": "2025-02-19",
+        "total": 31
+      },
+      {
+        "date": "2025-02-20",
+        "total": 31
+      },
+      {
+        "date": "2025-02-21",
+        "total": 32
+      },
+      {
+        "date": "2025-02-22",
+        "total": 32
+      },
+      {
+        "date": "2025-02-23",
+        "total": 32
+      },
+      {
+        "date": "2025-02-24",
+        "total": 32
+      },
+      {
+        "date": "2025-02-25",
+        "total": 32
+      },
+      {
+        "date": "2025-02-26",
+        "total": 32
+      },
+      {
+        "date": "2025-02-27",
+        "total": 32
+      },
+      {
+        "date": "2025-02-28",
+        "total": 32
+      },
+      {
+        "date": "2025-03-01",
+        "total": 35
+      },
+      {
+        "date": "2025-03-02",
+        "total": 35
+      },
+      {
+        "date": "2025-03-03",
+        "total": 35
+      },
+      {
+        "date": "2025-03-04",
+        "total": 35
+      },
+      {
+        "date": "2025-03-05",
+        "total": 35
+      },
+      {
+        "date": "2025-03-06",
+        "total": 35
+      },
+      {
+        "date": "2025-03-07",
+        "total": 36
+      },
+      {
+        "date": "2025-03-08",
+        "total": 37
+      },
+      {
+        "date": "2025-03-09",
+        "total": 38
+      },
+      {
+        "date": "2025-03-09",
+        "total": 39
+      },
+      {
+        "date": "2025-03-10",
+        "total": 39
+      },
+      {
+        "date": "2025-03-11",
+        "total": 39
+      },
+      {
+        "date": "2025-03-12",
+        "total": 41
+      },
+      {
+        "date": "2025-03-13",
+        "total": 41
+      },
+      {
+        "date": "2025-03-14",
+        "total": 41
+      },
+      {
+        "date": "2025-03-15",
+        "total": 43
+      },
+      {
+        "date": "2025-03-16",
+        "total": 46
+      },
+      {
+        "date": "2025-03-17",
+        "total": 48
+      },
+      {
+        "date": "2025-03-18",
+        "total": 48
+      },
+      {
+        "date": "2025-03-19",
+        "total": 50
+      },
+      {
+        "date": "2025-03-20",
+        "total": 52
+      },
+      {
+        "date": "2025-03-21",
+        "total": 52
+      },
+      {
+        "date": "2025-03-22",
+        "total": 54
+      },
+      {
+        "date": "2025-03-23",
+        "total": 55
+      },
+      {
+        "date": "2025-03-24",
+        "total": 55
+      },
+      {
+        "date": "2025-03-25",
+        "total": 56
+      },
+      {
+        "date": "2025-03-26",
+        "total": 57
+      },
+      {
+        "date": "2025-03-27",
+        "total": 57
+      },
+      {
+        "date": "2025-03-28",
+        "total": 60
+      },
+      {
+        "date": "2025-03-29",
+        "total": 60
+      },
+      {
+        "date": "2025-03-30",
+        "total": 62
+      },
+      {
+        "date": "2025-03-31",
+        "total": 63
+      },
+      {
+        "date": "2025-04-01",
+        "total": 65
+      },
+      {
+        "date": "2025-04-02",
+        "total": 65
+      },
+      {
+        "date": "2025-04-03",
+        "total": 66
+      },
+      {
+        "date": "2025-04-04",
+        "total": 66
+      },
+      {
+        "date": "2025-04-05",
+        "total": 67
+      },
+      {
+        "date": "2025-04-06",
+        "total": 68
+      },
+      {
+        "date": "2025-04-07",
+        "total": 69
+      },
+      {
+        "date": "2025-04-08",
+        "total": 70
+      },
+      {
+        "date": "2025-04-09",
+        "total": 71
+      },
+      {
+        "date": "2025-04-10",
+        "total": 72
+      },
+      {
+        "date": "2025-04-11",
+        "total": 73
+      },
+      {
+        "date": "2025-04-12",
+        "total": 74
+      },
+      {
+        "date": "2025-04-13",
+        "total": 75
+      },
+      {
+        "date": "2025-04-14",
+        "total": 75
+      },
+      {
+        "date": "2025-04-15",
+        "total": 75
+      },
+      {
+        "date": "2025-04-16",
+        "total": 76
+      },
+      {
+        "date": "2025-04-17",
+        "total": 78
+      },
+      {
+        "date": "2025-04-18",
+        "total": 79
+      },
+      {
+        "date": "2025-04-19",
+        "total": 79
+      },
+      {
+        "date": "2025-04-20",
+        "total": 80
+      },
+      {
+        "date": "2025-04-21",
+        "total": 80
+      },
+      {
+        "date": "2025-04-22",
+        "total": 80
+      },
+      {
+        "date": "2025-04-23",
+        "total": 80
+      },
+      {
+        "date": "2025-04-24",
+        "total": 82
+      },
+      {
+        "date": "2025-04-25",
+        "total": 82
+      },
+      {
+        "date": "2025-04-26",
+        "total": 82
+      },
+      {
+        "date": "2025-04-27",
+        "total": 86
+      },
+      {
+        "date": "2025-04-28",
+        "total": 86
+      },
+      {
+        "date": "2025-04-29",
+        "total": 88
+      },
+      {
+        "date": "2025-04-30",
+        "total": 88
+      },
+      {
+        "date": "2025-05-01",
+        "total": 88
+      },
+      {
+        "date": "2025-05-02",
+        "total": 89
+      },
+      {
+        "date": "2025-05-03",
+        "total": 89
+      },
+      {
+        "date": "2025-05-04",
+        "total": 89
+      },
+      {
+        "date": "2025-05-05",
+        "total": 89
+      },
+      {
+        "date": "2025-05-06",
+        "total": 89
+      },
+      {
+        "date": "2025-05-07",
+        "total": 90
+      },
+      {
+        "date": "2025-05-08",
+        "total": 90
+      },
+      {
+        "date": "2025-05-09",
+        "total": 91
+      },
+      {
+        "date": "2025-05-10",
+        "total": 95
+      },
+      {
+        "date": "2025-05-11",
+        "total": 97
+      },
+      {
+        "date": "2025-05-12",
+        "total": 98
+      },
+      {
+        "date": "2025-05-13",
+        "total": 98
+      },
+      {
+        "date": "2025-05-14",
+        "total": 99
+      },
+      {
+        "date": "2025-05-15",
+        "total": 99
+      },
+      {
+        "date": "2025-05-16",
+        "total": 99
+      },
+      {
+        "date": "2025-05-17",
+        "total": 99
+      },
+      {
+        "date": "2025-05-18",
+        "total": 100
+      },
+      {
+        "date": "2025-05-19",
+        "total": 101
+      },
+      {
+        "date": "2025-05-20",
+        "total": 101
+      },
+      {
+        "date": "2025-05-21",
+        "total": 101
+      },
+      {
+        "date": "2025-05-22",
+        "total": 102
+      },
+      {
+        "date": "2025-05-23",
+        "total": 103
+      },
+      {
+        "date": "2025-05-24",
+        "total": 104
+      },
+      {
+        "date": "2025-05-25",
+        "total": 105
+      },
+      {
+        "date": "2025-05-26",
+        "total": 107
+      },
+      {
+        "date": "2025-05-27",
+        "total": 108
+      },
+      {
+        "date": "2025-05-28",
+        "total": 109
+      },
+      {
+        "date": "2025-05-29",
+        "total": 110
+      },
+      {
+        "date": "2025-05-30",
+        "total": 112
+      },
+      {
+        "date": "2025-05-31",
+        "total": 113
+      },
+      {
+        "date": "2025-06-01",
+        "total": 113
+      },
+      {
+        "date": "2025-06-02",
+        "total": 117
+      },
+      {
+        "date": "2025-06-03",
+        "total": 117
+      },
+      {
+        "date": "2025-06-04",
+        "total": 120
+      },
+      {
+        "date": "2025-06-05",
+        "total": 120
+      },
+      {
+        "date": "2025-06-06",
+        "total": 120
+      },
+      {
+        "date": "2025-06-07",
+        "total": 123
+      },
+      {
+        "date": "2025-06-08",
+        "total": 125
+      },
+      {
+        "date": "2025-06-09",
+        "total": 125
+      },
+      {
+        "date": "2025-06-10",
+        "total": 127
+      },
+      {
+        "date": "2025-06-11",
+        "total": 127
+      },
+      {
+        "date": "2025-06-12",
+        "total": 127
+      },
+      {
+        "date": "2025-06-13",
+        "total": 129
+      },
+      {
+        "date": "2025-06-14",
+        "total": 132
+      },
+      {
+        "date": "2025-06-15",
+        "total": 132
+      },
+      {
+        "date": "2025-06-16",
+        "total": 134
+      },
+      {
+        "date": "2025-06-17",
+        "total": 135
+      },
+      {
+        "date": "2025-06-18",
+        "total": 135
+      },
+      {
+        "date": "2025-06-19",
+        "total": 138
+      },
+      {
+        "date": "2025-06-20",
+        "total": 139
+      },
+      {
+        "date": "2025-06-21",
+        "total": 140
+      },
+      {
+        "date": "2025-06-22",
+        "total": 143
+      },
+      {
+        "date": "2025-06-23",
+        "total": 144
+      },
+      {
+        "date": "2025-06-24",
+        "total": 146
+      },
+      {
+        "date": "2025-06-25",
+        "total": 147
+      },
+      {
+        "date": "2025-06-26",
+        "total": 147
+      },
+      {
+        "date": "2025-06-27",
+        "total": 148
+      },
+      {
+        "date": "2025-06-28",
+        "total": 149
+      },
+      {
+        "date": "2025-06-29",
+        "total": 151
+      },
+      {
+        "date": "2025-06-30",
+        "total": 152
+      },
+      {
+        "date": "2025-07-01",
+        "total": 152
+      },
+      {
+        "date": "2025-07-02",
+        "total": 153
+      },
+      {
+        "date": "2025-07-03",
+        "total": 154
+      },
+      {
+        "date": "2025-07-04",
+        "total": 155
+      },
+      {
+        "date": "2025-07-05",
+        "total": 158
+      },
+      {
+        "date": "2025-07-06",
+        "total": 160
+      },
+      {
+        "date": "2025-07-07",
+        "total": 161
+      },
+      {
+        "date": "2025-07-08",
+        "total": 161
+      },
+      {
+        "date": "2025-07-09",
+        "total": 162
+      },
+      {
+        "date": "2025-07-10",
+        "total": 163
+      },
+      {
+        "date": "2025-07-11",
+        "total": 163
+      },
+      {
+        "date": "2025-07-12",
+        "total": 165
+      },
+      {
+        "date": "2025-07-13",
+        "total": 167
+      },
+      {
+        "date": "2025-07-14",
+        "total": 169
+      },
+      {
+        "date": "2025-07-15",
+        "total": 170
+      },
+      {
+        "date": "2025-07-16",
+        "total": 171
+      },
+      {
+        "date": "2025-07-17",
+        "total": 171
+      },
+      {
+        "date": "2025-07-18",
+        "total": 172
+      },
+      {
+        "date": "2025-07-19",
+        "total": 173
+      },
+      {
+        "date": "2025-07-20",
+        "total": 173
+      },
+      {
+        "date": "2025-07-21",
+        "total": 174
+      },
+      {
+        "date": "2025-07-22",
+        "total": 174
+      },
+      {
+        "date": "2025-07-23",
+        "total": 174
+      },
+      {
+        "date": "2025-07-24",
+        "total": 175
+      },
+      {
+        "date": "2025-07-25",
+        "total": 175
+      },
+      {
+        "date": "2025-07-26",
+        "total": 177
+      },
+      {
+        "date": "2025-07-27",
+        "total": 179
+      },
+      {
+        "date": "2025-07-28",
+        "total": 180
+      },
+      {
+        "date": "2025-07-29",
+        "total": 182
+      },
+      {
+        "date": "2025-07-30",
+        "total": 182
+      },
+      {
+        "date": "2025-07-31",
+        "total": 182
+      },
+      {
+        "date": "2025-08-01",
+        "total": 183
+      },
+      {
+        "date": "2025-08-02",
+        "total": 184
+      },
+      {
+        "date": "2025-08-03",
+        "total": 184
+      },
+      {
+        "date": "2025-08-04",
+        "total": 184
+      },
+      {
+        "date": "2025-08-05",
+        "total": 184
+      },
+      {
+        "date": "2025-08-06",
+        "total": 185
+      },
+      {
+        "date": "2025-08-07",
+        "total": 187
+      },
+      {
+        "date": "2025-08-08",
+        "total": 190
+      },
+      {
+        "date": "2025-08-09",
+        "total": 194
+      },
+      {
+        "date": "2025-08-10",
+        "total": 196
+      },
+      {
+        "date": "2025-08-11",
+        "total": 197
+      },
+      {
+        "date": "2025-08-12",
+        "total": 198
+      },
+      {
+        "date": "2025-08-13",
+        "total": 198
+      },
+      {
+        "date": "2025-08-14",
+        "total": 199
+      },
+      {
+        "date": "2025-08-15",
+        "total": 199
+      },
+      {
+        "date": "2025-08-16",
+        "total": 199
+      },
+      {
+        "date": "2025-08-17",
+        "total": 201
+      },
+      {
+        "date": "2025-08-18",
+        "total": 201
+      },
+      {
+        "date": "2025-08-19",
+        "total": 201
+      },
+      {
+        "date": "2025-08-20",
+        "total": 201
+      },
+      {
+        "date": "2025-08-21",
+        "total": 202
+      },
+      {
+        "date": "2025-08-22",
+        "total": 203
+      },
+      {
+        "date": "2025-08-23",
+        "total": 204
+      },
+      {
+        "date": "2025-08-24",
+        "total": 206
+      },
+      {
+        "date": "2025-08-25",
+        "total": 207
+      },
+      {
+        "date": "2025-08-26",
+        "total": 207
+      },
+      {
+        "date": "2025-08-27",
+        "total": 207
+      },
+      {
+        "date": "2025-08-28",
+        "total": 207
+      },
+      {
+        "date": "2025-08-29",
+        "total": 208
+      },
+      {
+        "date": "2025-08-30",
+        "total": 210
+      },
+      {
+        "date": "2025-08-31",
+        "total": 210
+      },
+      {
+        "date": "2025-09-01",
+        "total": 215
+      },
+      {
+        "date": "2025-09-02",
+        "total": 215
+      },
+      {
+        "date": "2025-09-03",
+        "total": 215
+      },
+      {
+        "date": "2025-09-04",
+        "total": 215
+      },
+      {
+        "date": "2025-09-05",
+        "total": 215
+      },
+      {
+        "date": "2025-09-06",
+        "total": 215
+      },
+      {
+        "date": "2025-09-07",
+        "total": 216
+      },
+      {
+        "date": "2025-09-08",
+        "total": 218
+      },
+      {
+        "date": "2025-09-09",
+        "total": 220
+      },
+      {
+        "date": "2025-09-10",
+        "total": 220
+      },
+      {
+        "date": "2025-09-11",
+        "total": 221
+      },
+      {
+        "date": "2025-09-12",
+        "total": 221
+      },
+      {
+        "date": "2025-09-13",
+        "total": 223
+      },
+      {
+        "date": "2025-09-14",
+        "total": 226
+      },
+      {
+        "date": "2025-09-15",
+        "total": 227
+      },
+      {
+        "date": "2025-09-16",
+        "total": 228
+      },
+      {
+        "date": "2025-09-17",
+        "total": 228
+      },
+      {
+        "date": "2025-09-18",
+        "total": 228
+      },
+      {
+        "date": "2025-09-19",
+        "total": 229
+      },
+      {
+        "date": "2025-09-20",
+        "total": 231
+      },
+      {
+        "date": "2025-09-21",
+        "total": 231
+      },
+      {
+        "date": "2025-09-22",
+        "total": 233
+      },
+      {
+        "date": "2025-09-23",
+        "total": 234
+      },
+      {
+        "date": "2025-09-24",
+        "total": 234
+      },
+      {
+        "date": "2025-09-25",
+        "total": 236
+      },
+      {
+        "date": "2025-09-26",
+        "total": 237
+      },
+      {
+        "date": "2025-09-27",
+        "total": 237
+      },
+      {
+        "date": "2025-09-28",
+        "total": 237
+      },
+      {
+        "date": "2025-09-29",
+        "total": 237
+      },
+      {
+        "date": "2025-09-30",
+        "total": 237
+      },
+      {
+        "date": "2025-10-01",
+        "total": 239
+      },
+      {
+        "date": "2025-10-02",
+        "total": 239
+      },
+      {
+        "date": "2025-10-03",
+        "total": 239
+      },
+      {
+        "date": "2025-10-04",
+        "total": 239
+      },
+      {
+        "date": "2025-10-05",
+        "total": 243
+      },
+      {
+        "date": "2025-10-06",
+        "total": 243
+      },
+      {
+        "date": "2025-10-07",
+        "total": 245
+      },
+      {
+        "date": "2025-10-08",
+        "total": 246
+      },
+      {
+        "date": "2025-10-09",
+        "total": 248
+      },
+      {
+        "date": "2025-10-10",
+        "total": 248
+      },
+      {
+        "date": "2025-10-11",
+        "total": 248
+      },
+      {
+        "date": "2025-10-12",
+        "total": 252
+      },
+      {
+        "date": "2025-10-13",
+        "total": 252
+      },
+      {
+        "date": "2025-10-14",
+        "total": 252
+      },
+      {
+        "date": "2025-10-15",
+        "total": 252
+      },
+      {
+        "date": "2025-10-16",
+        "total": 252
+      },
+      {
+        "date": "2025-10-17",
+        "total": 254
+      },
+      {
+        "date": "2025-10-18",
+        "total": 255
+      },
+      {
+        "date": "2025-10-19",
+        "total": 256
+      },
+      {
+        "date": "2025-10-20",
+        "total": 259
+      },
+      {
+        "date": "2025-10-21",
+        "total": 260
+      },
+      {
+        "date": "2025-10-22",
+        "total": 260
+      },
+      {
+        "date": "2025-10-23",
+        "total": 260
+      },
+      {
+        "date": "2025-10-24",
+        "total": 260
+      },
+      {
+        "date": "2025-10-25",
+        "total": 260
+      },
+      {
+        "date": "2025-10-26",
+        "total": 260
+      },
+      {
+        "date": "2025-10-27",
+        "total": 263
+      },
+      {
+        "date": "2025-10-28",
+        "total": 263
+      },
+      {
+        "date": "2025-10-29",
+        "total": 263
+      },
+      {
+        "date": "2025-10-30",
+        "total": 265
+      },
+      {
+        "date": "2025-10-31",
+        "total": 266
+      },
+      {
+        "date": "2025-11-01",
+        "total": 267
+      },
+      {
+        "date": "2025-11-03",
+        "total": 267
+      },
+      {
+        "date": "2025-11-04",
+        "total": 268
+      },
+      {
+        "date": "2025-11-05",
+        "total": 270
+      },
+      {
+        "date": "2025-11-06",
+        "total": 271
+      },
+      {
+        "date": "2025-11-07",
+        "total": 272
+      },
+      {
+        "date": "2025-11-08",
+        "total": 272
+      },
+      {
+        "date": "2025-11-09",
+        "total": 275
+      },
+      {
+        "date": "2025-11-10",
+        "total": 275
+      },
+      {
+        "date": "2025-11-11",
+        "total": 277
+      },
+      {
+        "date": "2025-11-12",
+        "total": 279
+      },
+      {
+        "date": "2025-11-13",
+        "total": 280
+      },
+      {
+        "date": "2025-11-14",
+        "total": 280
+      },
+      {
+        "date": "2025-11-15",
+        "total": 284
+      },
+      {
+        "date": "2025-11-16",
+        "total": 288
+      },
+      {
+        "date": "2025-11-17",
+        "total": 291
+      },
+      {
+        "date": "2025-11-18",
+        "total": 292
+      },
+      {
+        "date": "2025-11-19",
+        "total": 296
+      },
+      {
+        "date": "2025-11-20",
+        "total": 299
+      },
+      {
+        "date": "2025-11-21",
+        "total": 300
+      },
+      {
+        "date": "2025-11-22",
+        "total": 305
+      },
+      {
+        "date": "2025-11-23",
+        "total": 309
+      },
+      {
+        "date": "2025-11-24",
+        "total": 311
+      },
+      {
+        "date": "2025-11-25",
+        "total": 314
+      },
+      {
+        "date": "2025-11-26",
+        "total": 314
+      },
+      {
+        "date": "2025-11-27",
+        "total": 318
+      },
+      {
+        "date": "2025-11-28",
+        "total": 319
+      },
+      {
+        "date": "2025-11-29",
+        "total": 322
+      },
+      {
+        "date": "2025-11-30",
+        "total": 323
+      },
+      {
+        "date": "2025-12-01",
+        "total": 323
+      },
+      {
+        "date": "2025-12-02",
+        "total": 323
+      },
+      {
+        "date": "2025-12-03",
+        "total": 325
+      },
+      {
+        "date": "2025-12-04",
+        "total": 325
+      },
+      {
+        "date": "2025-12-05",
+        "total": 326
+      },
+      {
+        "date": "2025-12-06",
+        "total": 329
+      },
+      {
+        "date": "2025-12-07",
+        "total": 336
+      },
+      {
+        "date": "2025-12-08",
+        "total": 336
+      },
+      {
+        "date": "2025-12-09",
+        "total": 336
+      },
+      {
+        "date": "2025-12-10",
+        "total": 336
+      },
+      {
+        "date": "2025-12-11",
+        "total": 336
+      },
+      {
+        "date": "2025-12-12",
+        "total": 337
+      },
+      {
+        "date": "2025-12-13",
+        "total": 340
+      },
+      {
+        "date": "2025-12-14",
+        "total": 346
+      },
+      {
+        "date": "2025-12-15",
+        "total": 346
+      },
+      {
+        "date": "2025-12-16",
+        "total": 349
+      },
+      {
+        "date": "2025-12-17",
+        "total": 351
+      },
+      {
+        "date": "2025-12-18",
+        "total": 352
+      },
+      {
+        "date": "2025-12-19",
+        "total": 354
+      },
+      {
+        "date": "2025-12-20",
+        "total": 354
+      },
+      {
+        "date": "2025-12-21",
+        "total": 354
+      },
+      {
+        "date": "2025-12-22",
+        "total": 354
+      },
+      {
+        "date": "2025-12-23",
+        "total": 354
+      },
+      {
+        "date": "2025-12-24",
+        "total": 354
+      },
+      {
+        "date": "2025-12-25",
+        "total": 354
+      },
+      {
+        "date": "2025-12-26",
+        "total": 354
+      },
+      {
+        "date": "2025-12-27",
+        "total": 354
+      },
+      {
+        "date": "2025-12-28",
+        "total": 354
+      },
+      {
+        "date": "2025-12-29",
+        "total": 354
+      },
+      {
+        "date": "2025-12-30",
+        "total": 354
+      },
+      {
+        "date": "2025-12-31",
+        "total": 354
+      }
+    ]
+  },
+  "runtime": {
+    "avgRuntime": 108,
+    "avgFiveStarRuntime": 107,
+    "totalHours": 651,
+    "longestFilms": [
+      {
+        "title": "Avatar: Fire and Ash",
+        "runtime": 198,
+        "year": 2025
+      },
+      {
+        "title": "Magnolia",
+        "runtime": 189,
+        "year": 1999
+      },
+      {
+        "title": "Barry Lyndon",
+        "runtime": 188,
+        "year": 1975
+      },
+      {
+        "title": "Horizon: An American Saga – Chapter 1",
+        "runtime": 182,
+        "year": 2024
+      },
+      {
+        "title": "Meet Joe Black",
+        "runtime": 178,
+        "year": 1998
+      }
+    ],
+    "shortestFilms": [
+      {
+        "title": "Sherlock Jr.",
+        "runtime": 45,
+        "year": 1924
+      },
+      {
+        "title": "Chime",
+        "runtime": 45,
+        "year": 2024
+      },
+      {
+        "title": "Lessons of Darkness",
+        "runtime": 54,
+        "year": 1992
+      },
+      {
+        "title": "Hank Green: Pissing Out Cancer",
+        "runtime": 60,
+        "year": 2024
+      },
+      {
+        "title": "The Kid",
+        "runtime": 68,
+        "year": 1921
+      }
+    ]
+  },
+  "highlights": {
+    "oldestFilm": {
+      "title": "One Week",
+      "year": 1920
+    },
+    "newestFilm": {
+      "title": "Companion",
+      "year": 2025
+    },
+    "mostRewatched": [
+      {
+        "key": "Fire of Love (2022)",
+        "count": 2,
+        "title": "Fire of Love",
+        "year": 2022
+      }
+    ]
+  }
+}
