@@ -5,9 +5,9 @@ Transform data into an editorial, magazine-style "Gen Z" deck with ~50 punchy sl
 
 ## Key Constraints
 - **Filter to 2025 only** (calendar year)
-- **Re-runnable** - presentation generates from JSON data
 - **Reveal.js** with Gen Z CSS theme
 - **Time stats in raw hours/days** (no work-week comparisons)
+- **Deck is now manual/frozen** - do not regenerate `build/presentation/`
 
 ---
 
@@ -49,10 +49,9 @@ They said: [top review snippets]
 - Output: `build/data/controversy.json`
 
 ### Step 3: Generate Presentation
-`scripts/build_presentation.js`
-- Reads all JSON data
-- Generates Reveal.js HTML with ~50 slides
-- Uses Gen Z CSS theme
+Manual deck:
+- `build/presentation/` is the source of truth and is manually edited.
+- Do **not** run generators that overwrite it.
 
 ---
 
@@ -60,7 +59,6 @@ They said: [top review snippets]
 ```bash
 node scripts/extract_insights.js
 node scripts/scrape_letterboxd_ratings.js  # needs network
-node scripts/build_presentation.js
 open build/presentation/index.html
 ```
 

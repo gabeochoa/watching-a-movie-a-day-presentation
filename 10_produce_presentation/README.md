@@ -1,13 +1,10 @@
 # 10_produce_presentation/
 
-Final output: the **Reveal.js presentation** (HTML/CSS/JS) generated from:
+This directory previously contained a generated Reveal.js deck output.
 
-- `01_csvs_processed/*`
-- `02_tmdb_db_info/*`
+That generated output (`10_produce_presentation/dist-reveal/`) has been removed.
 
-Expected output directory:
+Current deck source of truth:
 
-- `10_produce_presentation/dist-reveal/`
-
-Note: the generated `index.html` embeds your data, so treat it accordingly.
+- `build/presentation/` (manual/frozen)
 

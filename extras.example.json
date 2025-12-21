@@ -1,5 +1,5 @@
 {
-  "_comment": "Optional manual inputs / presentation context for Wrapboxd. Pass with: node scripts/generate.js --zip export.zip --extras extras.json -o dist-reveal",
+  "_comment": "Optional manual inputs / presentation context for Wrapboxd. Pass with: node scripts/generate.js --zip export.zip --extras extras.json -o dist",
   "presentation": {
     "audience": "coworkers",
     "context": "An end-of-year fun show-and-tell: my Letterboxd year in review."

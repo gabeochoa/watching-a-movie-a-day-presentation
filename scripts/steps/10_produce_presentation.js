@@ -12,7 +12,7 @@ const argv = yargs(hideBin(process.argv))
   .option("parsed", { type: "string", demandOption: true, describe: "Path to 01_csvs_processed/parsed.json" })
   .option("enrichment", { type: "string", demandOption: false, describe: "Path to 02_tmdb_db_info/enrichment_by_film.json" })
   .option("enriched", { type: "string", demandOption: false, describe: "Path to 02_tmdb_db_info/enriched_aggregates.json" })
-  .option("out", { type: "string", default: "10_produce_presentation/dist-reveal", describe: "Output directory for reveal deck" })
+  .option("out", { type: "string", default: "10_produce_presentation/out", describe: "Output directory for reveal deck" })
   .option("title", { type: "string", default: "Wrapboxd", describe: "Deck title" })
   .help()
   .argv;

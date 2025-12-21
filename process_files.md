@@ -10,7 +10,7 @@ Folder flow:
 1) `raw_data/` (original inputs)
 2) `01_csvs_processed/` (parsed + normalized)
 3) `02_tmdb_db_info/` (TMDB cache + enrichment outputs)
-4) `10_produce_presentation/` (final deck)
+4) `build/presentation/` (final deck — **manual/frozen**)
 
 ---
 
@@ -84,34 +84,16 @@ Notes:
 
 ---
 
-## Step 10 — produce the presentation (Reveal.js)
+## Step 10 — presentation
 
-Produces:
+The presentation in `build/presentation/` is now **manually edited and frozen**.
 
-- `10_produce_presentation/dist-reveal/index.html`
-- `10_produce_presentation/dist-reveal/css/*`
-- `10_produce_presentation/dist-reveal/js/*`
-- `10_produce_presentation/dist-reveal/prompts.md`
-
-Command:
-
-```bash
-node scripts/steps/10_produce_presentation.js \
-  --parsed 01_csvs_processed/parsed.json \
-  --enrichment 02_tmdb_db_info/enrichment_by_film.json \
-  --enriched 02_tmdb_db_info/enriched_aggregates.json \
-  --out 10_produce_presentation/dist-reveal \
-  --title "My Year in Film"
-```
-
-Open:
-
-- `10_produce_presentation/dist-reveal/index.html`
+- Do **not** run any slide generators that overwrite `build/presentation/`.
+- Open: `build/presentation/index.html`
 
 ---
 
 ## Optional: steps that can be done by another AI instead of code
 
-- Write slide copy refinements: use `10_produce_presentation/dist-reveal/prompts.md` as the “brief”.
-- Decide which slides to delete/merge: `scripts/lib/slides.js` is very long and currently includes some placeholder slides (we can tighten it once the data pipeline is stable).
+- Write slide copy refinements directly in the frozen deck (`build/presentation/`).
 

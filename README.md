@@ -20,7 +20,7 @@ npm run make:presentation
 
 Output:
 
-- `10_produce_presentation/dist-reveal/index.html`
+- The presentation is **manually edited and frozen** in: `build/presentation/index.html`
 
 ## Alternative: run steps manually
 

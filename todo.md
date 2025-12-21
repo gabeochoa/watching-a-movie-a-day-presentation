@@ -1,0 +1,6 @@
+- update slide 10 to channnge "Sat" to white text 
+- on slide 13, move the content to the left a bit 
+- delete slide 15 
+- change the text color on 17 to white 
+- slide 18 make the movie list two columns 
+- for slide 24 lets show the actual number because they are all 4 stars but it would be nice to see actual 4. something 
