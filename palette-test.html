@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wrapboxd Slide Templates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; padding: 40px; }
+    h1 { font-family: 'Anton', sans-serif; font-size: 48px; margin-bottom: 20px; text-transform: uppercase; }
+    .intro { color: #888; margin-bottom: 40px; font-size: 18px; }
+    h2 { font-family: 'Anton', sans-serif; font-size: 24px; margin: 60px 0 20px; text-transform: uppercase; color: #666; }
+    
+    /* Grid View */
+    .slide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+    
+    /* Slide Container */
+    .slide {
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 48px;
+    }
+    
+    .slide-label {
+      font-size: 11px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    
+    .slide-wrapper {
+      margin-bottom: 0;
+    }
+    
+    /* Background layers */
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    /* Poster grid as background */
+    .slide-bg.poster-grid {
+      display: grid;
+      gap: 4px;
+      padding: 0;
+    }
+    
+    .slide-bg.poster-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .slide-bg.poster-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .slide-bg.poster-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+    .slide-bg.poster-grid.cols-6 { grid-template-columns: repeat(6, 1fr); }
+    
+    .poster-tile {
+      background-size: cover;
+      background-position: center;
+    }
+    
+    /* Overlay */
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+    }
+    
+    .slide-overlay.dark { background: rgba(0, 0, 0, 0.55); }
+    .slide-overlay.dark-heavy { background: rgba(0, 0, 0, 0.7); }
+    .slide-overlay.dark-gradient { background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%); }
+    .slide-overlay.navy-tint { background: rgba(15, 40, 71, 0.75); }
+    .slide-overlay.ocean-tint { background: rgba(15, 40, 71, 0.75); }
+    .slide-overlay.red-tint { background: rgba(153, 27, 27, 0.75); }
+    .slide-overlay.blue-tint { background: rgba(10, 132, 255, 0.8); }
+    .slide-overlay.orange-tint { background: rgba(255, 149, 0, 0.8); }
+    .slide-overlay.cyan-tint { background: rgba(100, 210, 255, 0.8); }
+    
+    /* Content Layer */
+    .slide-content {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .slide-content.center {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
+    /* Typography */
+    .slide-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 56px;
+      line-height: 0.9;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    
+    .slide-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    
+    .slide-stat-big {
+      font-family: 'Anton', sans-serif;
+      font-size: 140px;
+      line-height: 0.85;
+    }
+    
+    .slide-stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+    }
+    
+    .slide-insight {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-style: italic;
+      margin-top: 16px;
+    }
+    
+    /* Sticker - SMALL, just text + padding */
+    .sticker {
+      font-family: 'Anton', sans-serif;
+      font-size: 14px;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 4px;
+      display: inline-block;
+      transform: rotate(-2deg);
+      margin-top: 16px;
+      width: fit-content;
+      align-self: flex-start;
+    }
+    
+    .divider { height: 2px; background: #222; margin: 80px 0; }
+  </style>
+</head>
+<body>
+  <h1>Slide Templates</h1>
+  <p class="intro">Poster grids for contextual slides, single poster/solid for general slides</p>
+
+  <!-- ============================================ -->
+  <h2>Title & Intro (Solid or Single Poster)</h2>
+  <!-- ============================================ -->
+  
+  <div class="slide-grid">
+    
+    <div class="slide-wrapper">
+      <div class="slide-label">Title — Ocean Navy Solid</div>
+      <div class="slide" style="background: #0F2847;">
+        <div class="slide-content">
+          <div class="slide-title" style="color: #fff;">MY 2024 IN FILM</div>
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.6);">142 films • ~300 hours</div>
+          <span class="sticker" style="background: #FFD60A; color: #000;">142 FILMS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Title — Single Poster BG + Ocean Navy Tint</div>
+      <div class="slide">
+        <div class="slide-bg" style="background-image: url('https://picsum.photos/seed/titlefilm/1920/1080');"></div>
+        <div class="slide-overlay navy-tint"></div>
+        <div class="slide-content">
+          <div class="slide-title" style="color: #fff;">MY 2024 IN FILM</div>
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.6);">142 films • ~300 hours</div>
+          <span class="sticker" style="background: #FFD60A; color: #000;">142 FILMS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Intro — White Solid</div>
+      <div class="slide" style="background: #fff;">
+        <div class="slide-content">
+          <div class="slide-title" style="color: #000;">HERE'S WHAT I WATCHED</div>
+          <div class="slide-subtitle" style="color: #333;">142 films • ~300 hours • opinions</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <h2>Section Dividers (Solid Color)</h2>
+  <!-- ============================================ -->
+  
+  <div class="slide-grid">
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Black Solid</div>
+      <div class="slide" style="background: #000;">
+        <div class="slide-content center">
+          <div class="slide-title" style="color: #fff;">THE NUMBERS</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Ocean Navy Solid</div>
+      <div class="slide" style="background: #0F2847;">
+        <div class="slide-content center">
+          <div class="slide-title" style="color: #fff;">WHEN I WATCH</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Red 800 Solid</div>
+      <div class="slide" style="background: #991B1B;">
+        <div class="slide-content center">
+          <div class="slide-title" style="color: #fff;">HOT TAKES</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <h2>General Stat Slides (Solid or Single Poster)</h2>
+  <!-- ============================================ -->
+  
+  <div class="slide-grid">
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Stat — Black Solid + Red 700</div>
+      <div class="slide" style="background: #000;">
+        <div class="slide-content center">
+          <div class="slide-stat-big" style="color: #B91C1C;">142</div>
+          <div class="slide-stat-label" style="color: #888;">unique films</div>
+          <div class="slide-insight" style="color: #FFD60A;">more movies than days</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Stat — Single Poster + Dark Overlay</div>
+      <div class="slide">
+        <div class="slide-bg" style="background-image: url('https://picsum.photos/seed/statfilm/1920/1080');"></div>
+        <div class="slide-overlay dark-heavy"></div>
+        <div class="slide-content center">
+          <div class="slide-stat-big" style="color: #B91C1C;">142</div>
+          <div class="slide-stat-label" style="color: rgba(255,255,255,0.8);">unique films</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Hours — Blue Solid + White Stat</div>
+      <div class="slide" style="background: #0A84FF;">
+        <div class="slide-content center">
+          <div class="slide-stat-big" style="color: #fff;">284</div>
+          <div class="slide-stat-label" style="color: rgba(255,255,255,0.8);">hours of movies</div>
+          <div class="slide-insight" style="color: #FFD60A;">that's 12 full days</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Hours — Blue Solid + Orange Stat</div>
+      <div class="slide" style="background: #0A84FF;">
+        <div class="slide-content center">
+          <div class="slide-stat-big" style="color: #FF9500;">284</div>
+          <div class="slide-stat-label" style="color: rgba(255,255,255,0.8);">hours of movies</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Busiest Month — Red 700 Solid</div>
+      <div class="slide" style="background: #B91C1C;">
+        <div class="slide-content center">
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.7);">BUSIEST MONTH</div>
+          <div class="slide-stat-big" style="color: #fff;">DEC</div>
+          <div class="slide-stat-label" style="color: rgba(255,255,255,0.8);">42 films</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Busiest Month — Red 800 Solid</div>
+      <div class="slide" style="background: #991B1B;">
+        <div class="slide-content center">
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.7);">BUSIEST MONTH</div>
+          <div class="slide-stat-big" style="color: #fff;">DEC</div>
+          <div class="slide-stat-label" style="color: rgba(255,255,255,0.8);">42 films</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <h2>Contextual Slides — Poster Grid Makes Sense</h2>
+  <!-- ============================================ -->
+  
+  <div class="slide-grid">
+
+    <div class="slide-wrapper">
+      <div class="slide-label">★★★★★ Films — Show the actual 5-star films</div>
+      <div class="slide">
+        <div class="slide-bg poster-grid cols-4">
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/5star1/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/5star2/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/5star3/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/5star4/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/5star5/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/5star6/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/5star7/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/5star8/300/450');"></div>
+        </div>
+        <div class="slide-overlay dark"></div>
+        <div class="slide-content">
+          <div class="slide-title" style="color: #fff;">★★★★★ FILMS</div>
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.7);">The ones I loved</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Favorite Director — Show their films</div>
+      <div class="slide">
+        <div class="slide-bg poster-grid cols-3">
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/nolan1/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/nolan2/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/nolan3/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/nolan4/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/nolan5/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/nolan6/300/450');"></div>
+        </div>
+        <div class="slide-overlay dark-heavy"></div>
+        <div class="slide-content center">
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.6);">MY #1 DIRECTOR</div>
+          <div class="slide-title" style="color: #fff;">CHRISTOPHER NOLAN</div>
+          <div class="slide-stat-label" style="color: rgba(255,255,255,0.7);">6 films watched</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Top Genre — Show films from that genre</div>
+      <div class="slide">
+        <div class="slide-bg poster-grid cols-4">
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/drama1/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/drama2/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/drama3/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/drama4/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/drama5/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/drama6/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/drama7/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/drama8/300/450');"></div>
+        </div>
+        <div class="slide-overlay dark"></div>
+        <div class="slide-content center">
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.6);">TOP GENRE</div>
+          <div class="slide-title" style="color: #fff;">DRAMA</div>
+          <div class="slide-stat-label" style="color: rgba(255,255,255,0.7);">42% of all films</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Closing — Show highlights from the year</div>
+      <div class="slide">
+        <div class="slide-bg poster-grid cols-6">
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr1/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr2/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr3/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr4/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr5/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr6/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr7/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr8/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr9/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr10/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr11/300/450');"></div>
+          <div class="poster-tile" style="background-image: url('https://picsum.photos/seed/yr12/300/450');"></div>
+        </div>
+        <div class="slide-overlay blue-tint"></div>
+        <div class="slide-content center">
+          <div class="slide-title" style="color: #fff;">THAT'S A WRAP</div>
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">142 films in 2024</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <h2>"How I Rate" Options (Solid Colors)</h2>
+  <!-- ============================================ -->
+  
+  <div class="slide-grid">
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Orange Solid</div>
+      <div class="slide" style="background: #FF9500;">
+        <div class="slide-content">
+          <div class="slide-title" style="color: #000;">I'M A ★★★★ PERSON</div>
+          <div class="slide-subtitle" style="color: rgba(0,0,0,0.7);">My most given rating: 4 stars (89 times)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Cyan Solid</div>
+      <div class="slide" style="background: #64D2FF;">
+        <div class="slide-content">
+          <div class="slide-title" style="color: #000;">I'M A ★★★★ PERSON</div>
+          <div class="slide-subtitle" style="color: rgba(0,0,0,0.7);">My most given rating: 4 stars (89 times)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Blue Solid</div>
+      <div class="slide" style="background: #0A84FF;">
+        <div class="slide-content">
+          <div class="slide-title" style="color: #fff;">I'M A ★★★★ PERSON</div>
+          <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">My most given rating: 4 stars (89 times)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-wrapper">
+      <div class="slide-label">Off-White Solid</div>
+      <div class="slide" style="background: #F5F5F5;">
+        <div class="slide-content">
+          <div class="slide-title" style="color: #000;">I'M A ★★★★ PERSON</div>
+          <div class="slide-subtitle" style="color: rgba(0,0,0,0.6);">My most given rating: 4 stars (89 times)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+</html>
+

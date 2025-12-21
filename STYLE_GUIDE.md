@@ -52,27 +52,37 @@ font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
 | Role | Light Mode | Dark Mode | Usage |
 |------|-----------|-----------|-------|
 | Background | `#FFFFFF` | `#000000` / `#0A0A0A` | Primary surface |
+| Ocean Navy | — | `#0F2847` | Title/intro sections |
 | Text | `#000000` | `#FFFFFF` | Headlines, body |
 | Muted | `#666666` | `#888888` | Secondary text |
-| Accent | `#FF3B30` | `#FF453A` | Key emphasis |
-| Highlight Yellow | `#FFEB3B` | `#FFD60A` | Marker effect |
-| Highlight Green | `#4ADE80` | `#30D158` | Positive/growth |
-| Highlight Pink | `#FF6B9D` | `#FF375F` | Fun callouts |
+| Accent Red | `#B91C1C` | `#B91C1C` | Key emphasis (Tailwind Red 700) |
+| Highlight Yellow | `#FFEB3B` | `#FFD60A` | Marker effect / stickers |
+| Highlight Blue | `#0A84FF` | `#0A84FF` | Section dividers |
+
+### Section Background Colors
+| Section | Background | Text | Accent/Stat |
+|---------|-----------|------|-------------|
+| Title/Intro | Ocean Navy `#0F2847` | White | Yellow sticker |
+| The Numbers | Black `#000000` | White | Red 700 `#B91C1C` |
+| Blue Sections | Blue `#0A84FF` | White | White or Orange |
+| General Stats | Black `#000000` | White | Red 700 or Yellow |
 
 ### Color Rules
 1. **High contrast always** — black on white, white on black, no muddy grays
 2. **One accent per slide** — pick your moment, don't rainbow
 3. **Highlight sparingly** — marker effect on 1-3 words max
 4. **Photos/screenshots provide color** — keep UI elements neutral
+5. **No green or purple stats** — avoid on blue backgrounds
+6. **No cyan stats** — stick to white/orange for readability
 
 ### Chart Colors
 ```javascript
 const chartPalette = {
-  primary: '#FF3B30',     // Your main metric
-  secondary: '#FFD60A',   // Supporting data
-  tertiary: '#4ADE80',    // Comparison/positive
+  primary: '#B91C1C',     // Red 700 - main metric
+  secondary: '#FFD60A',   // Yellow - supporting data
   neutral: '#666666',     // Everything else (intentionally muted)
   background: '#0A0A0A',  // Dark mode default
+  navy: '#0F2847',        // Ocean Navy - title sections
 };
 ```
 
@@ -210,7 +220,7 @@ const axisStyle = {
 // Bar Styling
 const barStyle = {
   defaultFill: '#333333',     // muted bars
-  highlightFill: '#FF3B30',   // accent for key bar
+  highlightFill: '#B91C1C',   // Red 700 accent for key bar
   borderRadius: '4px',        // slightly rounded
   gap: '4px',                 // space between bars
 };
@@ -269,8 +279,7 @@ const annotationStyle = {
   display: inline-block;
 }
 .sticker-yellow { background: #FFD60A; color: #000; }
-.sticker-red { background: #FF3B30; color: #FFF; }
-.sticker-green { background: #30D158; color: #000; }
+.sticker-red { background: #B91C1C; color: #FFF; }
 ```
 
 ---
