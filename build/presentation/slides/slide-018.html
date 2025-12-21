@@ -222,6 +222,21 @@
       margin: 0.8em auto;
       font-size: 1.3em;
     }
+
+    /* Two-column film list variant (used on Slide 18) */
+    .film-list.two-col {
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 90px;
+    }
+
+    .film-list.two-col li.more {
+      grid-column: 1 / -1;
+      justify-content: center;
+      border-bottom: 0;
+      padding-top: 0.9em;
+    }
     
     .film-list li, .ranked-list li, .controversy-list li, .summary-list li, .pattern-list li {
       padding: 0.5em 0;
@@ -739,7 +754,7 @@
       
     <section class="theme-rate" style="background: #0F2847;">
       <h3>My 37 five-star films include:</h3>
-      <ul class="film-list">
+      <ul class="film-list two-col">
         <li>Grease <span class="year">(1978)</span></li><li>La La Land <span class="year">(2016)</span></li><li>Superbad <span class="year">(2007)</span></li><li>Ferris Bueller's Day Off <span class="year">(1986)</span></li><li>One Week <span class="year">(1920)</span></li><li>Big <span class="year">(1988)</span></li><li>Fire of Love <span class="year">(2022)</span></li><li>Ocean's Eleven <span class="year">(2001)</span></li>
         <li class="more">...and 29 more</li>
       </ul>
