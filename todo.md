@@ -1,4 +1,4 @@
-- lets show all the 5 star movies on 18, make the font a bit smaller, and sort them by year 
+- 18, make the font a bit smaller, and sort them by year 
 - replace the red fonts on 30-34 with the font color from 29 
 - replace the red fonts on 38-40 with the cyan from 35 
 - delete slide 25 and 27 and 28 
