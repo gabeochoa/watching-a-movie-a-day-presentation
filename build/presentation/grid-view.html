@@ -249,15 +249,6 @@
           <span class="tile__num">13</span>
         </div>
       </a>
-      <a class="tile" href="./index.html#/12" aria-label="Open slide 16">
-        <div class="tile__frame">
-          <iframe loading="lazy" data-src="./slides/slide-016.html" title="Slide 16" tabindex="-1"></iframe>
-        </div>
-        <div class="tile__meta">
-          <span class="tile__num">16</span>
-        </div>
-      </a>
-
       <a class="tile" href="./index.html#/13" aria-label="Open slide 17">
         <div class="tile__frame">
           <iframe loading="lazy" data-src="./slides/slide-017.html" title="Slide 17" tabindex="-1"></iframe>
@@ -506,6 +497,14 @@
   <script>
     // Compute a reliable scale factor per tile so the 1920x1080 iframe fits perfectly.
     // This avoids relying on CSS calc() support in transform: scale().
+    // Also, keep tile links pointing at the right Reveal slide index even when slides are
+    // deleted/reordered in the deck (so we don't have to hand-update dozens of hrefs).
+    function syncTileLinks() {
+      document.querySelectorAll('.grid .tile').forEach((tile, idx) => {
+        tile.setAttribute('href', `./index.html#/${idx}`);
+      });
+    }
+
     function updateScales() {
       document.querySelectorAll('.tile__frame').forEach(frame => {
         const w = frame.getBoundingClientRect().width;
@@ -548,6 +547,7 @@
     window.addEventListener('resize', () => {
       window.requestAnimationFrame(updateScales);
     });
+    syncTileLinks();
     updateScales();
     lazyLoadIframes();
   </script>
