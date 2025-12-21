@@ -720,7 +720,7 @@ function generateSlides(insights, controversy) {
   
   if (insights.runtime.longestFilms[0]) {
     slides.push(`
-      <section data-background="#1a1a2e">
+      <section data-background="#0F2847">
         <h3>Longest sit:</h3>
         <h2 class="film-title">${escapeHtml(insights.runtime.longestFilms[0].title)}</h2>
         <div class="big-number">${insights.runtime.longestFilms[0].runtime}</div>
@@ -735,7 +735,7 @@ function generateSlides(insights, controversy) {
       .join('');
     
     slides.push(`
-      <section data-background="#0f0f23">
+      <section data-background="#0a0a0a">
         <h3>Most rewatched:</h3>
         <ul class="film-list">
           ${rewatchList}
@@ -750,7 +750,7 @@ function generateSlides(insights, controversy) {
   // ============================================
   
   slides.push(`
-    <section data-background="#1a1a2e">
+    <section data-background="#FFFFFF" class="light-slide">
       <h2 class="section-title">TL;DR</h2>
       <ul class="summary-list">
         <li><strong>${s.totalFilms}</strong> films in one year</li>
@@ -763,14 +763,14 @@ function generateSlides(insights, controversy) {
   `);
   
   slides.push(`
-    <section data-background="#0a0a0a">
+    <section data-background="#0A84FF">
       <h1 class="mega">THAT'S<br>A WRAP</h1>
       <p class="subtitle">2025</p>
     </section>
   `);
   
   slides.push(`
-    <section data-background="#16213e">
+    <section data-background="#0F2847">
       <h2 class="impact">QUESTIONS?</h2>
     </section>
   `);
@@ -1086,6 +1086,37 @@ function generateHtml(slides) {
     }
     
     .pattern-list strong {
+      color: var(--accent);
+    }
+
+    /* Light slide variant (for white/off-white backgrounds) */
+    .reveal .slides section.light-slide {
+      color: #000;
+    }
+
+    .reveal .slides section.light-slide h1,
+    .reveal .slides section.light-slide h2,
+    .reveal .slides section.light-slide h3 {
+      color: #000;
+    }
+
+    .reveal .slides section.light-slide .label,
+    .reveal .slides section.light-slide .subtitle,
+    .reveal .slides section.light-slide .date {
+      color: rgba(0,0,0,0.70);
+      opacity: 1;
+    }
+
+    .reveal .slides section.light-slide .summary-list li,
+    .reveal .slides section.light-slide .film-list li,
+    .reveal .slides section.light-slide .ranked-list li,
+    .reveal .slides section.light-slide .controversy-list li,
+    .reveal .slides section.light-slide .pattern-list li {
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+      color: rgba(0,0,0,0.88);
+    }
+
+    .reveal .slides section.light-slide strong {
       color: var(--accent);
     }
     

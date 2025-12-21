@@ -308,6 +308,37 @@
     .pattern-list strong {
       color: var(--accent);
     }
+
+    /* Light slide variant (for white/off-white backgrounds) */
+    .reveal .slides section.light-slide {
+      color: #000;
+    }
+
+    .reveal .slides section.light-slide h1,
+    .reveal .slides section.light-slide h2,
+    .reveal .slides section.light-slide h3 {
+      color: #000;
+    }
+
+    .reveal .slides section.light-slide .label,
+    .reveal .slides section.light-slide .subtitle,
+    .reveal .slides section.light-slide .date {
+      color: rgba(0,0,0,0.70);
+      opacity: 1;
+    }
+
+    .reveal .slides section.light-slide .summary-list li,
+    .reveal .slides section.light-slide .film-list li,
+    .reveal .slides section.light-slide .ranked-list li,
+    .reveal .slides section.light-slide .controversy-list li,
+    .reveal .slides section.light-slide .pattern-list li {
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+      color: rgba(0,0,0,0.88);
+    }
+
+    .reveal .slides section.light-slide strong {
+      color: var(--accent);
+    }
     
     /* Ensure text doesn't overflow */
     h1, h2, h3, p {
