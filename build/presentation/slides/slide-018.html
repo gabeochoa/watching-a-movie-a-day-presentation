@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
   <style>
-
     @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
     
     :root {
@@ -741,12 +740,65 @@
       color: var(--gold);
       opacity: 1;
     }
-  
+
+    /* Monthly bar chart (used by Slide 7: Films by Month) */
+    .monthly-bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 20px;
+      height: 450px;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .month-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .month-bar .bar {
+      width: 80px;
+      background: var(--green);
+      border-radius: 6px 6px 0 0;
+      transition: all 0.3s ease;
+    }
+    
+    .month-bar .bar.highlight {
+      background: #4ADE80;
+      box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+    }
+    
+    .month-bar .bar.dim {
+      background: rgba(48, 209, 88, 0.4);
+    }
+    
+    .month-bar .count {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.8em;
+      color: var(--green);
+    }
+    
+    .month-bar .count.highlight {
+      color: #4ADE80;
+    }
+    
+    .month-bar .month-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1em;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
 
     /* Thumbnail-only tweaks */
     html, body { width: 1920px; height: 1080px; overflow: hidden; }
     body { margin: 0; }
     #section-indicator { display: none !important; }
+
   </style>
 </head>
 <body>

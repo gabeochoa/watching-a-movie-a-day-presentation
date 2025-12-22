@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=1920, initial-scale=1.0">
-  <title>My 2025 in Film — Slide 19</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
-  <style>
+#!/usr/bin/env node
+/**
+ * Normalize all slide files to use the same CSS.
+ * This ensures grid view and presentation mode render identically.
+ */
+
+import { readFile, writeFile, readdir } from "node:fs/promises";
+import path from "node:path";
+
+const SLIDES_DIR = path.join(process.cwd(), "build", "presentation", "slides");
+const INDEX_PATH = path.join(process.cwd(), "build", "presentation", "index.html");
+
+// The canonical CSS block that ALL slide files should use.
+// This is extracted from the most complete slide files and includes all styles.
+const CANONICAL_CSS = `
     @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
     
     :root {
@@ -793,25 +799,93 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
+`;
 
+// Thumbnail-only tweaks for slide files (not in index.html)
+const THUMBNAIL_TWEAKS = `
     /* Thumbnail-only tweaks */
     html, body { width: 1920px; height: 1080px; overflow: hidden; }
     body { margin: 0; }
     #section-indicator { display: none !important; }
+`;
 
+function extractSection(html) {
+  const match = html.match(/<section\b[\s\S]*?<\/section>/);
+  return match ? match[0] : null;
+}
+
+function extractTitle(html) {
+  const match = html.match(/<title>([^<]+)<\/title>/);
+  return match ? match[1] : "Slide";
+}
+
+function buildSlideHtml(title, section) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, initial-scale=1.0">
+  <title>${title}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
+  <style>${CANONICAL_CSS}${THUMBNAIL_TWEAKS}
   </style>
 </head>
 <body>
   <div class="reveal">
     <div class="slides">
       
-    <section class="theme-rate" style="background: #0F2847;">
-        <h2 class="impact">Denis Villeneuve</h2>
-        <p class="subtitle">2 five-star films</p>
-        <p class="annotation">my most reliable director</p>
-      </section>
+    ${section}
   
     </div>
   </div>
 </body>
-</html>
+</html>`;
+}
+
+async function main() {
+  const files = await readdir(SLIDES_DIR);
+  const slideFiles = files.filter(f => f.match(/^slide-\d+\.html$/) && !f.endsWith('.bak'));
+  
+  let updated = 0;
+  for (const file of slideFiles) {
+    const filePath = path.join(SLIDES_DIR, file);
+    const html = await readFile(filePath, "utf8");
+    
+    const section = extractSection(html);
+    if (!section) {
+      console.warn(`⚠️  No section found in ${file}, skipping`);
+      continue;
+    }
+    
+    const title = extractTitle(html);
+    const newHtml = buildSlideHtml(title, section);
+    
+    await writeFile(filePath, newHtml);
+    updated++;
+  }
+  
+  console.log(`✅ Normalized ${updated} slide files with canonical CSS`);
+  
+  // Now update index.html CSS to match (without thumbnail tweaks)
+  let indexHtml = await readFile(INDEX_PATH, "utf8");
+  
+  // Replace the style block in index.html
+  const styleStart = indexHtml.indexOf('<style>');
+  const styleEnd = indexHtml.indexOf('</style>') + '</style>'.length;
+  
+  if (styleStart !== -1 && styleEnd !== -1) {
+    const beforeStyle = indexHtml.substring(0, styleStart);
+    const afterStyle = indexHtml.substring(styleEnd);
+    
+    indexHtml = beforeStyle + '<style>' + CANONICAL_CSS + '\n  </style>' + afterStyle;
+    await writeFile(INDEX_PATH, indexHtml);
+    console.log(`✅ Updated index.html with canonical CSS (without thumbnail tweaks)`);
+  }
+}
+
+main().catch(e => {
+  console.error(`❌ ${e.message}`);
+  process.exit(1);
+});
+
