@@ -12,6 +12,7 @@
     "step:02": "node scripts/steps/02_enrich_tmdb.js --in 01_csvs_processed/parsed.json --cache-dir 02_tmdb_db_info --out 02_tmdb_db_info --concurrency 3",
     "make:presentation": "npm run step:01 && npm run step:02",
     "sync:deck": "node scripts/sync_deck_from_grid.js",
+    "sync:views": "node scripts/sync_views.js",
     "normalize:css": "node scripts/normalize_slide_css.js"
   },
   "dependencies": {
