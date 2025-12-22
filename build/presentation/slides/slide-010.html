@@ -628,6 +628,20 @@
       font-size: 1.65em;
     }
 
+    .forecast-card.is-warning {
+      border-color: rgba(255,59,48,0.45);
+      background: rgba(255,59,48,0.08);
+    }
+
+    .forecast-card.is-warning .forecast-count-num {
+      opacity: 0.45;
+    }
+
+    .forecast-card.is-warning .forecast-rating {
+      font-size: 1.65em;
+      color: rgba(255,59,48,0.9);
+    }
+
     .forecast-card.is-spotlight {
       transform: translateY(-6px);
       border-color: rgba(48,209,88,0.65);
@@ -824,21 +838,21 @@
         <div class="forecast-rating">3.47★</div>
       </div>
     
-      <div class="forecast-card is-focus">
+      <div class="forecast-card is-dim">
         <div class="forecast-day">Tue</div>
         <hr class="forecast-hr" />
         <div class="forecast-count"><span class="forecast-count-num">36</span><span class="forecast-count-label">films</span></div>
         <div class="forecast-rating">3.44★</div>
       </div>
     
-      <div class="forecast-card is-focus">
+      <div class="forecast-card is-warning">
         <div class="forecast-day">Wed</div>
         <hr class="forecast-hr" />
         <div class="forecast-count"><span class="forecast-count-num">37</span><span class="forecast-count-label">films</span></div>
         <div class="forecast-rating">3.27★</div>
       </div>
     
-      <div class="forecast-card is-dim">
+      <div class="forecast-card is-focus">
         <div class="forecast-day">Thu</div>
         <hr class="forecast-hr" />
         <div class="forecast-count"><span class="forecast-count-num">40</span><span class="forecast-count-label">films</span></div>
