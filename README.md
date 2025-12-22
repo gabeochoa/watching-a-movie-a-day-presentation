@@ -20,7 +20,54 @@ npm run make:presentation
 
 Output:
 
-- The presentation is **manually edited and frozen** in: `build/presentation/index.html`
+- The presentation is in: `build/presentation/index.html`
+- Individual slides are in: `build/presentation/slides/slide-XXX.html`
+- Grid view for editing: `build/presentation/grid-view.html`
+
+## Slide Management
+
+The presentation uses a **slide-files-first** architecture where individual slide HTML files are the source of truth.
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              build/presentation/slides/                      │
+│         slide-001.html, slide-002.html, ...                  │
+│            (Individual slide files - SOURCE OF TRUTH)        │
+└─────────────────────────────────────────────────────────────┘
+                          │
+          ┌───────────────┴───────────────┐
+          ▼                               ▼
+┌─────────────────────┐       ┌─────────────────────┐
+│   grid-view.html    │       │     index.html      │
+│  (iframes to slides)│       │   (synced sections) │
+│  For visual editing │       │   For presenting    │
+└─────────────────────┘       └─────────────────────┘
+```
+
+### Editing Slides
+
+1. **Edit individual slide files** in `build/presentation/slides/slide-XXX.html`
+2. **Preview in grid view**: Open `build/presentation/grid-view.html` to see all slides
+3. **Sync to main deck**: Run `npm run sync:deck` to update `index.html`
+
+### Available Scripts
+
+```bash
+# Sync the main deck from individual slide files
+npm run sync:deck
+
+# Normalize all slide files to use the same CSS
+node scripts/normalize_slide_css.js
+```
+
+### CSS Architecture
+
+All slide files share the same CSS (defined in `scripts/normalize_slide_css.js`):
+- **Slide files** include "thumbnail-only tweaks" for proper iframe rendering
+- **index.html** has the same CSS but without thumbnail tweaks
+- This ensures slides look **identical** in both grid view and presentation mode
 
 ## Alternative: run steps manually
 
@@ -96,10 +143,22 @@ npm run generate -- --help
 
 ```
 wrapboxd/
-├── scripts/generate.js    # Main generator script
-├── dist/                 # Generated site (created)
-├── package.json          # Dependencies and scripts
-└── README.md            # This file
+├── build/
+│   └── presentation/
+│       ├── index.html           # Main Reveal.js presentation
+│       ├── grid-view.html       # Grid view for editing slides
+│       └── slides/              # Individual slide files (source of truth)
+│           ├── slide-001.html
+│           ├── slide-002.html
+│           └── ...
+├── scripts/
+│   ├── generate.js              # Main generator script
+│   ├── sync_deck_from_grid.js   # Syncs index.html from slide files
+│   ├── normalize_slide_css.js   # Normalizes CSS across all slides
+│   └── lib/                     # Shared utilities
+├── templates/reveal/            # Base templates
+├── package.json                 # Dependencies and scripts
+└── README.md                    # This file
 ```
 
 ## What’s included in the generated report
