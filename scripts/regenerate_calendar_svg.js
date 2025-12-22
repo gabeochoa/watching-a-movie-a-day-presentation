@@ -99,7 +99,7 @@ async function main() {
   const YEAR = 2025;
   const diary2025 = parsed.diary.filter(entry => {
     const dateStr = entry['Watched Date'] || entry.Date;
-    return dateStr && new Date(dateStr).getFullYear() === YEAR;
+    return dateStr && dateStr.startsWith(String(YEAR));
   });
   
   console.log(`   Found ${diary2025.length} diary entries in ${YEAR}`);
