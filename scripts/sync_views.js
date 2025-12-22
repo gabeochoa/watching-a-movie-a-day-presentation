@@ -49,21 +49,50 @@ function extractSection(html, filename) {
 }
 
 async function generateDeckHtml(slideFiles, slidesDir) {
-  // Read the first slide to get the shared CSS
-  const firstSlideHtml = await readFile(path.join(slidesDir, slideFiles[0]), "utf8");
-  const sharedCss = extractFullStyleBlock(firstSlideHtml);
-
-  // Extract sections from all slides
+  // Collect CSS from all slides and merge unique rules
+  const allCssBlocks = [];
   const sections = [];
+  
   for (const file of slideFiles) {
     const html = await readFile(path.join(slidesDir, file), "utf8");
+    allCssBlocks.push(extractFullStyleBlock(html));
     sections.push(extractSection(html, file));
   }
+
+  // Use the first slide as the base CSS, then append any unique CSS from other slides
+  const baseCss = allCssBlocks[0] || "";
+  const seenSelectors = new Set();
+  
+  // Extract all selectors from base CSS
+  const baseSelectorMatches = baseCss.matchAll(/([.#][\w-]+(?:\.[^\s{,]+)*)\s*\{/g);
+  for (const match of baseSelectorMatches) {
+    seenSelectors.add(match[1].trim());
+  }
+  
+  const additionalCss = [];
+  
+  for (let i = 1; i < allCssBlocks.length; i++) {
+    const css = allCssBlocks[i];
+    if (!css) continue;
+    
+    // Find CSS rule blocks (selector { ... })
+    const ruleMatches = css.matchAll(/(\/\*[^*]*\*\/\s*)?(([.#][\w-]+(?:\.[^\s{,]+)*)\s*\{[^}]+\})/g);
+    for (const match of ruleMatches) {
+      const fullRule = (match[1] || "") + match[2];
+      const selector = match[3]?.trim();
+      if (selector && !seenSelectors.has(selector)) {
+        seenSelectors.add(selector);
+        additionalCss.push(fullRule);
+      }
+    }
+  }
+
+  const mergedCss = baseCss + (additionalCss.length ? "\n\n    /* Additional styles from other slides */\n    " + additionalCss.join("\n\n    ") : "");
 
   const sectionsHtml = sections.map(s => `      ${s}`).join("\n\n");
 
   // Remove thumbnail-only tweaks from CSS (they break the deck layout)
-  const deckCss = sharedCss.replace(
+  const deckCss = mergedCss.replace(
     /\/\* Thumbnail-only tweaks \*\/[\s\S]*?#section-indicator \{ display: none !important; \}/,
     "/* Thumbnail-only tweaks removed for deck */"
   );

@@ -237,6 +237,22 @@
       border-bottom: 0;
       padding-top: 0.9em;
     }
+
+    /* Four-column film list variant */
+    .film-list.four-col {
+      max-width: 1700px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      column-gap: 30px;
+      font-size: 0.5em;
+    }
+
+    .film-list.four-col li.more {
+      grid-column: 1 / -1;
+      justify-content: center;
+      border-bottom: 0;
+      padding-top: 0.9em;
+    }
     
     .film-list li, .ranked-list li, .controversy-list li, .summary-list li, .pattern-list li {
       padding: 0.5em 0;
@@ -808,7 +824,7 @@
       
     <section class="theme-rate" style="background: #0F2847;">
       <h3>My 37 five-star films:</h3>
-      <ul class="film-list two-col">
+      <ul class="film-list four-col">
         <li>One Week <span class="year">(1920)</span></li>
         <li>Grease <span class="year">(1978)</span></li>
         <li>Burden of Dreams <span class="year">(1982)</span></li>
