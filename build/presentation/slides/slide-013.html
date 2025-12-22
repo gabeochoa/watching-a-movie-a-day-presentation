@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1920, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My 2025 in Film — Slide 13</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
@@ -795,7 +795,8 @@
     }
 
     /* Thumbnail-only tweaks */
-    html, body { width: 1920px; height: 1080px; overflow: hidden; }
+    html, body, .reveal, .reveal-viewport, .reveal .slides, .reveal .slides section { width: 100% !important; height: 100vh !important; min-height: 100vh !important; overflow: hidden; margin: 0 !important; padding: 0; box-sizing: border-box; }
+    .reveal .slides section { padding: 40px 60px !important; }
     body { margin: 0; }
     #section-indicator { display: none !important; }
 
@@ -840,5 +841,6 @@
   
     </div>
   </div>
+<script>var bg = document.querySelector("section").style.background; document.body.style.background = bg; document.querySelector(".reveal").style.background = bg; var rv = document.querySelector(".reveal-viewport"); if(rv) rv.style.background = bg;</script>
 </body>
 </html>
