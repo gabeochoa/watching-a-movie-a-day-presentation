@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My 2025 in Film — Slide 10</title>
+  <title>My 2025 in Film — Slide 13</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
   <style>
@@ -200,7 +200,7 @@
     }
     
     .rating-chart .bar {
-      height: 35px;
+      height: 50px;
       background: var(--accent);
       min-width: 10px;
       border-radius: 3px;
@@ -628,20 +628,6 @@
       font-size: 1.65em;
     }
 
-    .forecast-card.is-warning {
-      border-color: rgba(255,59,48,0.45);
-      background: rgba(255,59,48,0.08);
-    }
-
-    .forecast-card.is-warning .forecast-count-num {
-      opacity: 0.45;
-    }
-
-    .forecast-card.is-warning .forecast-rating {
-      font-size: 1.65em;
-      color: rgba(255,59,48,0.9);
-    }
-
     .forecast-card.is-spotlight {
       transform: translateY(-6px);
       border-color: rgba(48,209,88,0.65);
@@ -820,62 +806,36 @@
   <div class="reveal">
     <div class="slides">
       
-    <section class="theme-numbers" style="background: #000000;">
-      <div class="forecast-panel">
-        <div class="weekday-forecast">
-          
-      <div class="forecast-card is-spotlight">
-        <div class="forecast-day" style="color: #fff;">Sun</div>
-        <hr class="forecast-hr" />
-        <div class="forecast-count"><span class="forecast-count-num">95</span><span class="forecast-count-label">films</span></div>
-        <div class="forecast-rating">3.30★</div>
+    <section class="theme-rate" style="background: #0F2847;">
+      <table class="rating-chart" style="transform: translateX(-300px);">
+        <tbody>
+          <tr class="rating-row">
+        <td class="stars">★☆☆☆☆</td>
+        <td class="bar-cell"><div class="bar" style="width: 22px"></div></td>
+        <td class="count">8</td>
+      </tr><tr class="rating-row">
+        <td class="stars">★★☆☆☆</td>
+        <td class="bar-cell"><div class="bar" style="width: 118px"></div></td>
+        <td class="count">43</td>
+      </tr><tr class="rating-row">
+        <td class="stars">★★★☆☆</td>
+        <td class="bar-cell"><div class="bar" style="width: 420px"></div></td>
+        <td class="count">153</td>
+      </tr><tr class="rating-row">
+        <td class="stars">★★★★☆</td>
+        <td class="bar-cell"><div class="bar" style="width: 346px"></div></td>
+        <td class="count">126</td>
+      </tr><tr class="rating-row">
+        <td class="stars">★★★★★</td>
+        <td class="bar-cell"><div class="bar" style="width: 102px"></div></td>
+        <td class="count">37</td>
+      </tr>
+        </tbody>
+      </table>
+      <div style="position: absolute; right: 300px; top: 50%; transform: translateY(-50%); text-align: center;">
+        <div style="font-family: 'Anton', sans-serif; font-size: 4.1em; color: var(--gold); line-height: 1;">3.38</div>
+        <div style="font-size: 1.35em; color: rgba(255,255,255,0.6); margin-top: 0.3em;">avg rating</div>
       </div>
-    
-      <div class="forecast-card is-dim">
-        <div class="forecast-day">Mon</div>
-        <hr class="forecast-hr" />
-        <div class="forecast-count"><span class="forecast-count-num">49</span><span class="forecast-count-label">films</span></div>
-        <div class="forecast-rating">3.47★</div>
-      </div>
-    
-      <div class="forecast-card is-dim">
-        <div class="forecast-day">Tue</div>
-        <hr class="forecast-hr" />
-        <div class="forecast-count"><span class="forecast-count-num">36</span><span class="forecast-count-label">films</span></div>
-        <div class="forecast-rating">3.44★</div>
-      </div>
-    
-      <div class="forecast-card is-warning">
-        <div class="forecast-day">Wed</div>
-        <hr class="forecast-hr" />
-        <div class="forecast-count"><span class="forecast-count-num">37</span><span class="forecast-count-label">films</span></div>
-        <div class="forecast-rating">3.27★</div>
-      </div>
-    
-      <div class="forecast-card is-focus">
-        <div class="forecast-day">Thu</div>
-        <hr class="forecast-hr" />
-        <div class="forecast-count"><span class="forecast-count-num">40</span><span class="forecast-count-label">films</span></div>
-        <div class="forecast-rating">3.48★</div>
-      </div>
-    
-      <div class="forecast-card is-dim">
-        <div class="forecast-day">Fri</div>
-        <hr class="forecast-hr" />
-        <div class="forecast-count"><span class="forecast-count-num">41</span><span class="forecast-count-label">films</span></div>
-        <div class="forecast-rating">3.37★</div>
-      </div>
-    
-      <div class="forecast-card is-dim">
-        <div class="forecast-day">Sat</div>
-        <hr class="forecast-hr" />
-        <div class="forecast-count"><span class="forecast-count-num">73</span><span class="forecast-count-label">films</span></div>
-        <div class="forecast-rating">3.43★</div>
-      </div>
-    
-        </div>
-      </div>
-      <p class="annotation forecast-caption">dont let me watch your fav movie on a wed</p>
     </section>
   
     </div>

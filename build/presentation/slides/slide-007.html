@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My 2025 in Film — Slide 7</title>
+  <title>My 2025 in Film — Slide 10</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
   <style>
@@ -628,6 +628,20 @@
       font-size: 1.65em;
     }
 
+    .forecast-card.is-warning {
+      border-color: rgba(255,59,48,0.45);
+      background: rgba(255,59,48,0.08);
+    }
+
+    .forecast-card.is-warning .forecast-count-num {
+      opacity: 0.45;
+    }
+
+    .forecast-card.is-warning .forecast-rating {
+      font-size: 1.65em;
+      color: rgba(255,59,48,0.9);
+    }
+
     .forecast-card.is-spotlight {
       transform: translateY(-6px);
       border-color: rgba(48,209,88,0.65);
@@ -806,69 +820,62 @@
   <div class="reveal">
     <div class="slides">
       
-    <section class="theme-numbers" style="background: #000000;"><h2 style="margin-bottom: 0.5em; position: relative; z-index: 1;">Films by Month</h2>
-      <div class="monthly-bar-chart">
-        <div class="month-bar">
-          <span class="count dim">15</span>
-          <div class="bar dim" style="height: 104px;"></div>
-          <span class="month-label">Jan</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">20</span>
-          <div class="bar dim" style="height: 138px;"></div>
-          <span class="month-label">Feb</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">29</span>
-          <div class="bar dim" style="height: 200px;"></div>
-          <span class="month-label">Mar</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">23</span>
-          <div class="bar dim" style="height: 159px;"></div>
-          <span class="month-label">Apr</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">25</span>
-          <div class="bar dim" style="height: 173px;"></div>
-          <span class="month-label">May</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">39</span>
-          <div class="bar dim" style="height: 270px;"></div>
-          <span class="month-label">Jun</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">31</span>
-          <div class="bar dim" style="height: 214px;"></div>
-          <span class="month-label">Jul</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">32</span>
-          <div class="bar dim" style="height: 221px;"></div>
-          <span class="month-label">Aug</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">24</span>
-          <div class="bar dim" style="height: 166px;"></div>
-          <span class="month-label">Sep</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">28</span>
-          <div class="bar dim" style="height: 193px;"></div>
-          <span class="month-label">Oct</span>
-        </div>
-        <div class="month-bar">
-          <span class="count highlight">65</span>
-          <div class="bar highlight" style="height: 450px;"></div>
-          <span class="month-label">Nov</span>
-        </div>
-        <div class="month-bar">
-          <span class="count dim">39</span>
-          <div class="bar dim" style="height: 270px;"></div>
-          <span class="month-label">Dec</span>
+    <section class="theme-numbers" style="background: #000000;">
+      <div class="forecast-panel">
+        <div class="weekday-forecast">
+          
+      <div class="forecast-card is-spotlight">
+        <div class="forecast-day" style="color: #fff;">Sun</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">95</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.30★</div>
+      </div>
+    
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Mon</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">49</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.47★</div>
+      </div>
+    
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Tue</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">36</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.44★</div>
+      </div>
+    
+      <div class="forecast-card is-warning">
+        <div class="forecast-day">Wed</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">37</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.27★</div>
+      </div>
+    
+      <div class="forecast-card is-focus">
+        <div class="forecast-day">Thu</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">40</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.48★</div>
+      </div>
+    
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Fri</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">41</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.37★</div>
+      </div>
+    
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Sat</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">73</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.43★</div>
+      </div>
+    
         </div>
       </div>
+      <p class="annotation forecast-caption">dont let me watch your fav movie on a wed</p>
     </section>
   
     </div>
