@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My 2025 in Film — Slide 35</title>
+  <title>My 2025 in Film — Slide 36</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/black.css">
   <style>
@@ -11,10 +11,8 @@
     
     :root {
       --bg-dark: #0a0a0a;
-      --ocean-navy: #0F2847;
       --accent: #B91C1C;
       --gold: #FFD60A;
-      --green: #30D158;
     }
     
     html, body {
@@ -38,8 +36,8 @@
       width: 100%;
       display: flex !important;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-end;
+      align-items: flex-start;
       overflow: hidden;
     }
     
@@ -47,19 +45,35 @@
       font-family: 'Anton', sans-serif;
       text-transform: uppercase;
       letter-spacing: 0.02em;
-      margin: 0.2em 0;
+      margin: 0;
     }
     
-    .section-title {
-      font-size: 5em !important;
+    .category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.4em;
       color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.3em;
+    }
+    
+    .film-title {
+      font-size: 4.5em !important;
+      line-height: 1.1;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.8);
+    }
+    
+    .year {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.8em;
+      opacity: 0.8;
+      margin-top: 0.3em;
     }
 
     /* Thumbnail-only tweaks */
     html, body, .reveal, .reveal-viewport, .reveal .slides, .reveal .slides section { width: 100% !important; height: 100vh !important; min-height: 100vh !important; overflow: hidden; margin: 0 !important; padding: 0; box-sizing: border-box; }
     .reveal .slides section { padding: 40px 60px !important; }
     body { margin: 0; }
-    #section-indicator { display: none !important; }
 
   </style>
 </head>
@@ -67,8 +81,10 @@
   <div class="reveal">
     <div class="slides">
       
-    <section style="background: #0a0a0a;">
-      <h2 class="section-title">YOU SHOULD WATCH</h2>
+    <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/fv/a5/cl/eu/oneweek-1200-1200-675-675-crop-000000.jpg?v=ce21fca8ec') center/cover no-repeat;">
+      <p class="category">Origins of Cinema</p>
+      <h1 class="film-title">One Week</h1>
+      <p class="year">1920</p>
     </section>
   
     </div>
@@ -76,3 +92,4 @@
 <script>var bg = document.querySelector("section").style.background; document.body.style.background = bg; document.querySelector(".reveal").style.background = bg; var rv = document.querySelector(".reveal-viewport"); if(rv) rv.style.background = bg;</script>
 </body>
 </html>
+
