@@ -1167,6 +1167,22 @@
     }
   ],
   [
+    "Can't Buy Me Love (1987)",
+    {
+      "tmdbId": "12919",
+      "runtime": 94,
+      "releaseYear": 1987,
+      "genres": [
+        "Drama",
+        "Comedy",
+        "Romance"
+      ],
+      "directors": [
+        "Steve Rash"
+      ]
+    }
+  ],
+  [
     "Can't Hardly Wait (1998)",
     {
       "tmdbId": "15037",
@@ -1272,6 +1288,21 @@
       ],
       "directors": [
         "Peter Benson"
+      ]
+    }
+  ],
+  [
+    "Christmas with the Kranks (2004)",
+    {
+      "tmdbId": "13673",
+      "runtime": 99,
+      "releaseYear": 2004,
+      "genres": [
+        "Comedy",
+        "Family"
+      ],
+      "directors": [
+        "Joe Roth"
       ]
     }
   ],
@@ -1698,6 +1729,22 @@
       ],
       "directors": [
         "Alexander Payne"
+      ]
+    }
+  ],
+  [
+    "Elf (2003)",
+    {
+      "tmdbId": "10719",
+      "runtime": 97,
+      "releaseYear": 2003,
+      "genres": [
+        "Comedy",
+        "Family",
+        "Fantasy"
+      ],
+      "directors": [
+        "Jon Favreau"
       ]
     }
   ],
@@ -2353,6 +2400,23 @@
     }
   ],
   [
+    "Haul Out the Holly (2022)",
+    {
+      "tmdbId": "1028556",
+      "runtime": 84,
+      "releaseYear": 2022,
+      "genres": [
+        "TV Movie",
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "directors": [
+        "Maclain Nelson"
+      ]
+    }
+  ],
+  [
     "Hayao Miyazaki and the Heron (2024)",
     {
       "tmdbId": "1292585",
@@ -2363,6 +2427,37 @@
       ],
       "directors": [
         "Kaku Arakawa"
+      ]
+    }
+  ],
+  [
+    "Heathers (1989)",
+    {
+      "tmdbId": "2640",
+      "runtime": 103,
+      "releaseYear": 1989,
+      "genres": [
+        "Comedy",
+        "Crime"
+      ],
+      "directors": [
+        "Michael Lehmann"
+      ]
+    }
+  ],
+  [
+    "Heathers: The Musical (2022)",
+    {
+      "tmdbId": "941605",
+      "runtime": 136,
+      "releaseYear": 2022,
+      "genres": [
+        "Music",
+        "Comedy",
+        "Thriller"
+      ],
+      "directors": [
+        "Andy Fickman"
       ]
     }
   ],
@@ -2737,6 +2832,55 @@
     }
   ],
   [
+    "Iron Man 2 (2010)",
+    {
+      "tmdbId": "10138",
+      "runtime": 124,
+      "releaseYear": 2010,
+      "genres": [
+        "Adventure",
+        "Action",
+        "Science Fiction"
+      ],
+      "directors": [
+        "Jon Favreau"
+      ]
+    }
+  ],
+  [
+    "Iron Man 3 (2013)",
+    {
+      "tmdbId": "68721",
+      "runtime": 130,
+      "releaseYear": 2013,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Science Fiction"
+      ],
+      "directors": [
+        "Shane Black"
+      ]
+    }
+  ],
+  [
+    "It's Christmastime Again, Charlie Brown (1992)",
+    {
+      "tmdbId": "23998",
+      "runtime": 22,
+      "releaseYear": 1992,
+      "genres": [
+        "Animation",
+        "TV Movie",
+        "Family",
+        "Comedy"
+      ],
+      "directors": [
+        "Bill Melendez"
+      ]
+    }
+  ],
+  [
     "It's the Great Pumpkin, Charlie Brown (1966)",
     {
       "tmdbId": "13353",
@@ -2812,6 +2956,22 @@
       ],
       "directors": [
         "Ron Howard"
+      ]
+    }
+  ],
+  [
+    "Jingle All the Way (1996)",
+    {
+      "tmdbId": "9279",
+      "runtime": 89,
+      "releaseYear": 1996,
+      "genres": [
+        "Family",
+        "Comedy",
+        "Adventure"
+      ],
+      "directors": [
+        "Brian Levant"
       ]
     }
   ],
@@ -3217,6 +3377,21 @@
     }
   ],
   [
+    "Made of Honor (2008)",
+    {
+      "tmdbId": "10761",
+      "runtime": 101,
+      "releaseYear": 2008,
+      "genres": [
+        "Comedy",
+        "Romance"
+      ],
+      "directors": [
+        "Paul Weiland"
+      ]
+    }
+  ],
+  [
     "Magnolia (1999)",
     {
       "tmdbId": "334",
@@ -3348,6 +3523,23 @@
       ],
       "directors": [
         "Martin Brest"
+      ]
+    }
+  ],
+  [
+    "Meet Me in St. Louis (1944)",
+    {
+      "tmdbId": "909",
+      "runtime": 114,
+      "releaseYear": 1944,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance",
+        "Family"
+      ],
+      "directors": [
+        "Vincente Minnelli"
       ]
     }
   ],
@@ -5452,6 +5644,21 @@
     }
   ],
   [
+    "The Assassination of Jesse James by the Coward Robert Ford (2007)",
+    {
+      "tmdbId": "4512",
+      "runtime": 160,
+      "releaseYear": 2007,
+      "genres": [
+        "Drama",
+        "Western"
+      ],
+      "directors": [
+        "Andrew Dominik"
+      ]
+    }
+  ],
+  [
     "The Ballad of Wallis Island (2025)",
     {
       "tmdbId": "1122099",
@@ -5509,6 +5716,21 @@
       ],
       "directors": [
         "Mike Nichols"
+      ]
+    }
+  ],
+  [
+    "The Boat That Rocked (2009)",
+    {
+      "tmdbId": "18947",
+      "runtime": 135,
+      "releaseYear": 2009,
+      "genres": [
+        "Drama",
+        "Comedy"
+      ],
+      "directors": [
+        "Richard Curtis"
       ]
     }
   ],
@@ -5698,6 +5920,22 @@
       ],
       "directors": [
         "Steven Spielberg"
+      ]
+    }
+  ],
+  [
+    "The Family Stone (2005)",
+    {
+      "tmdbId": "9043",
+      "runtime": 103,
+      "releaseYear": 2005,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "directors": [
+        "Thomas Bezucha"
       ]
     }
   ],
@@ -5915,6 +6153,21 @@
       ],
       "directors": [
         "Nancy Meyers"
+      ]
+    }
+  ],
+  [
+    "The Housemaid (2025)",
+    {
+      "tmdbId": "1368166",
+      "runtime": 131,
+      "releaseYear": 2025,
+      "genres": [
+        "Mystery",
+        "Thriller"
+      ],
+      "directors": [
+        "Paul Feig"
       ]
     }
   ],
@@ -6185,6 +6438,24 @@
     }
   ],
   [
+    "The Muppet Christmas Carol (1992)",
+    {
+      "tmdbId": "10437",
+      "runtime": 86,
+      "releaseYear": 1992,
+      "genres": [
+        "Music",
+        "Comedy",
+        "Family",
+        "Fantasy",
+        "Drama"
+      ],
+      "directors": [
+        "Brian Henson"
+      ]
+    }
+  ],
+  [
     "The Muppet Movie (1979)",
     {
       "tmdbId": "11176",
@@ -6400,6 +6671,24 @@
       ],
       "directors": [
         "Christopher Nolan"
+      ]
+    }
+  ],
+  [
+    "The Princess Bride (1987)",
+    {
+      "tmdbId": "2493",
+      "runtime": 99,
+      "releaseYear": 1987,
+      "genres": [
+        "Adventure",
+        "Family",
+        "Fantasy",
+        "Comedy",
+        "Romance"
+      ],
+      "directors": [
+        "Rob Reiner"
       ]
     }
   ],
@@ -6714,6 +7003,21 @@
     }
   ],
   [
+    "The Wedding Singer (1998)",
+    {
+      "tmdbId": "11003",
+      "runtime": 97,
+      "releaseYear": 1998,
+      "genres": [
+        "Romance",
+        "Comedy"
+      ],
+      "directors": [
+        "Frank Coraci"
+      ]
+    }
+  ],
+  [
     "The Wild Robot (2024)",
     {
       "tmdbId": "1184918",
@@ -6993,6 +7297,22 @@
     }
   ],
   [
+    "TRON: Ares (2025)",
+    {
+      "tmdbId": "533533",
+      "runtime": 119,
+      "releaseYear": 2025,
+      "genres": [
+        "Science Fiction",
+        "Adventure",
+        "Action"
+      ],
+      "directors": [
+        "Joachim Rønning"
+      ]
+    }
+  ],
+  [
     "TRON: Legacy (2010)",
     {
       "tmdbId": "20526",
@@ -7037,6 +7357,21 @@
       ],
       "directors": [
         "Hannah Marks"
+      ]
+    }
+  ],
+  [
+    "Twinless (2025)",
+    {
+      "tmdbId": "1245347",
+      "runtime": 100,
+      "releaseYear": 2025,
+      "genres": [
+        "Comedy",
+        "Drama"
+      ],
+      "directors": [
+        "James Sweeney"
       ]
     }
   ],

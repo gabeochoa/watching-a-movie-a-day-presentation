@@ -21,6 +21,10 @@
       "count": 5
     },
     {
+      "name": "Bill Melendez",
+      "count": 5
+    },
+    {
       "name": "Ron Howard",
       "count": 5
     },
@@ -38,10 +42,6 @@
     },
     {
       "name": "Doug Liman",
-      "count": 4
-    },
-    {
-      "name": "Bill Melendez",
       "count": 4
     },
     {
@@ -66,6 +66,10 @@
     },
     {
       "name": "Joseph Kosinski",
+      "count": 3
+    },
+    {
+      "name": "Rob Reiner",
       "count": 3
     },
     {
@@ -94,6 +98,10 @@
     },
     {
       "name": "Kathryn Bigelow",
+      "count": 3
+    },
+    {
+      "name": "Richard Curtis",
       "count": 3
     },
     {
@@ -134,10 +142,6 @@
     },
     {
       "name": "Clint Eastwood",
-      "count": 2
-    },
-    {
-      "name": "Rob Reiner",
       "count": 2
     },
     {
@@ -198,10 +202,6 @@
     },
     {
       "name": "Richard Ayoade",
-      "count": 2
-    },
-    {
-      "name": "Richard Curtis",
       "count": 2
     },
     {
@@ -318,6 +318,14 @@
     },
     {
       "name": "Vicky Jenson",
+      "count": 2
+    },
+    {
+      "name": "Paul Feig",
+      "count": 2
+    },
+    {
+      "name": "Jon Favreau",
       "count": 2
     },
     {
@@ -1377,10 +1385,6 @@
       "count": 1
     },
     {
-      "name": "Paul Feig",
-      "count": 1
-    },
-    {
       "name": "Savage Steve Holland",
       "count": 1
     },
@@ -1463,52 +1467,112 @@
     {
       "name": "Stefano Sollima",
       "count": 1
+    },
+    {
+      "name": "James Sweeney",
+      "count": 1
+    },
+    {
+      "name": "Steve Rash",
+      "count": 1
+    },
+    {
+      "name": "Andrew Dominik",
+      "count": 1
+    },
+    {
+      "name": "Frank Coraci",
+      "count": 1
+    },
+    {
+      "name": "Paul Weiland",
+      "count": 1
+    },
+    {
+      "name": "Shane Black",
+      "count": 1
+    },
+    {
+      "name": "Joachim Rønning",
+      "count": 1
+    },
+    {
+      "name": "Michael Lehmann",
+      "count": 1
+    },
+    {
+      "name": "Andy Fickman",
+      "count": 1
+    },
+    {
+      "name": "Brian Henson",
+      "count": 1
+    },
+    {
+      "name": "Brian Levant",
+      "count": 1
+    },
+    {
+      "name": "Thomas Bezucha",
+      "count": 1
+    },
+    {
+      "name": "Vincente Minnelli",
+      "count": 1
+    },
+    {
+      "name": "Maclain Nelson",
+      "count": 1
+    },
+    {
+      "name": "Joe Roth",
+      "count": 1
     }
   ],
   "topGenres": [
     {
       "name": "Drama",
-      "count": 239
+      "count": 247
     },
     {
       "name": "Comedy",
-      "count": 224
+      "count": 240
     },
     {
       "name": "Romance",
-      "count": 125
+      "count": 132
     },
     {
       "name": "Thriller",
-      "count": 93
+      "count": 95
     },
     {
       "name": "Action",
-      "count": 77
+      "count": 80
     },
     {
       "name": "Crime",
-      "count": 63
+      "count": 64
     },
     {
       "name": "Adventure",
-      "count": 53
+      "count": 58
     },
     {
       "name": "Family",
-      "count": 38
+      "count": 45
     },
     {
       "name": "Science Fiction",
-      "count": 37
-    },
-    {
-      "name": "Mystery",
-      "count": 33
+      "count": 40
     },
     {
       "name": "Fantasy",
-      "count": 33
+      "count": 36
+    },
+    {
+      "name": "Mystery",
+      "count": 34
     },
     {
       "name": "History",
@@ -1516,15 +1580,15 @@
     },
     {
       "name": "Animation",
-      "count": 29
+      "count": 30
     },
     {
       "name": "Music",
-      "count": 22
+      "count": 24
     },
     {
       "name": "TV Movie",
-      "count": 18
+      "count": 20
     },
     {
       "name": "War",
@@ -1540,7 +1604,7 @@
     },
     {
       "name": "Western",
-      "count": 1
+      "count": 2
     }
   ],
   "runtimeBins": [
@@ -1548,31 +1612,31 @@
       "bin": "0-59",
       "min": 0,
       "max": 59,
-      "count": 20
+      "count": 21
     },
     {
       "bin": "60-89",
       "min": 60,
       "max": 89,
-      "count": 38
+      "count": 41
     },
     {
       "bin": "90-119",
       "min": 90,
       "max": 119,
-      "count": 254
+      "count": 265
     },
     {
       "bin": "120-149",
       "min": 120,
       "max": 149,
-      "count": 134
+      "count": 139
     },
     {
       "bin": "150-179",
       "min": 150,
       "max": 179,
-      "count": 26
+      "count": 27
     },
     {
       "bin": "180+",
@@ -2032,7 +2096,7 @@
     },
     {
       "runtime": 135,
-      "rating": 4
+      "rating": 4.5
     },
     {
       "runtime": 25,
@@ -3465,6 +3529,86 @@
     {
       "runtime": 110,
       "rating": 3
+    },
+    {
+      "runtime": 100,
+      "rating": 4
+    },
+    {
+      "runtime": 94,
+      "rating": 4
+    },
+    {
+      "runtime": 124,
+      "rating": 2
+    },
+    {
+      "runtime": 160,
+      "rating": 1
+    },
+    {
+      "runtime": 97,
+      "rating": 3
+    },
+    {
+      "runtime": 101,
+      "rating": 2
+    },
+    {
+      "runtime": 130,
+      "rating": 3
+    },
+    {
+      "runtime": 99,
+      "rating": 3
+    },
+    {
+      "runtime": 119,
+      "rating": 2
+    },
+    {
+      "runtime": 103,
+      "rating": 2
+    },
+    {
+      "runtime": 136,
+      "rating": 4
+    },
+    {
+      "runtime": 135,
+      "rating": 3
+    },
+    {
+      "runtime": 22,
+      "rating": 3
+    },
+    {
+      "runtime": 86,
+      "rating": 3
+    },
+    {
+      "runtime": 89,
+      "rating": 4
+    },
+    {
+      "runtime": 103,
+      "rating": 3
+    },
+    {
+      "runtime": 114,
+      "rating": 4
+    },
+    {
+      "runtime": 97,
+      "rating": 3
+    },
+    {
+      "runtime": 99,
+      "rating": 1
+    },
+    {
+      "runtime": 131,
+      "rating": 3
     }
   ],
   "ratingReleaseYearPoints": [
@@ -3918,7 +4062,7 @@
     },
     {
       "year": 2003,
-      "rating": 4
+      "rating": 4.5
     },
     {
       "year": 1965,
@@ -5351,8 +5495,88 @@
     {
       "year": 2021,
       "rating": 3
+    },
+    {
+      "year": 2025,
+      "rating": 4
+    },
+    {
+      "year": 1987,
+      "rating": 4
+    },
+    {
+      "year": 2010,
+      "rating": 2
+    },
+    {
+      "year": 2007,
+      "rating": 1
+    },
+    {
+      "year": 1998,
+      "rating": 3
+    },
+    {
+      "year": 2008,
+      "rating": 2
+    },
+    {
+      "year": 2013,
+      "rating": 3
+    },
+    {
+      "year": 1987,
+      "rating": 3
+    },
+    {
+      "year": 2025,
+      "rating": 2
+    },
+    {
+      "year": 1989,
+      "rating": 2
+    },
+    {
+      "year": 2022,
+      "rating": 4
+    },
+    {
+      "year": 2009,
+      "rating": 3
+    },
+    {
+      "year": 1992,
+      "rating": 3
+    },
+    {
+      "year": 1992,
+      "rating": 3
+    },
+    {
+      "year": 1996,
+      "rating": 4
+    },
+    {
+      "year": 2005,
+      "rating": 3
+    },
+    {
+      "year": 1944,
+      "rating": 4
+    },
+    {
+      "year": 2003,
+      "rating": 3
+    },
+    {
+      "year": 2004,
+      "rating": 1
+    },
+    {
+      "year": 2025,
+      "rating": 3
     }
   ],
-  "mapped": 477,
+  "mapped": 498,
   "failed": 0
 }
