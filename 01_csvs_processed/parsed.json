@@ -5114,6 +5114,46 @@
       "Rewatch": "",
       "Tags": "",
       "Watched Date": "2025-12-29"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Happy New Year, Charlie Brown",
+      "Year": "1986",
+      "Letterboxd URI": "https://boxd.it/clZztJ",
+      "Rating": "4",
+      "Rewatch": "",
+      "Tags": "",
+      "Watched Date": "2025-12-31"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Last Holiday",
+      "Year": "2006",
+      "Letterboxd URI": "https://boxd.it/cm3eSh",
+      "Rating": "4",
+      "Rewatch": "",
+      "Tags": "",
+      "Watched Date": "2025-12-31"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Snoopy Presents: For Auld Lang Syne",
+      "Year": "2021",
+      "Letterboxd URI": "https://boxd.it/cm5OK3",
+      "Rating": "1",
+      "Rewatch": "",
+      "Tags": "",
+      "Watched Date": "2026-01-01"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "The Apartment",
+      "Year": "1960",
+      "Letterboxd URI": "https://boxd.it/cmatt1",
+      "Rating": "4",
+      "Rewatch": "",
+      "Tags": "",
+      "Watched Date": "2026-01-01"
     }
   ],
   "films": [],
@@ -8561,6 +8601,34 @@
       "Year": "2025",
       "Letterboxd URI": "https://boxd.it/QFEO",
       "Rating": "3"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Happy New Year, Charlie Brown",
+      "Year": "1986",
+      "Letterboxd URI": "https://boxd.it/Ad0",
+      "Rating": "4"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Last Holiday",
+      "Year": "2006",
+      "Letterboxd URI": "https://boxd.it/1IKI",
+      "Rating": "4"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Snoopy Presents: For Auld Lang Syne",
+      "Year": "2021",
+      "Letterboxd URI": "https://boxd.it/xg6u",
+      "Rating": "1"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "The Apartment",
+      "Year": "1960",
+      "Letterboxd URI": "https://boxd.it/2aGE",
+      "Rating": "4"
     }
   ],
   "watched": [
@@ -13099,6 +13167,30 @@
       "Name": "The Housemaid",
       "Year": "2025",
       "Letterboxd URI": "https://boxd.it/QFEO"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Happy New Year, Charlie Brown",
+      "Year": "1986",
+      "Letterboxd URI": "https://boxd.it/Ad0"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Last Holiday",
+      "Year": "2006",
+      "Letterboxd URI": "https://boxd.it/1IKI"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "Snoopy Presents: For Auld Lang Syne",
+      "Year": "2021",
+      "Letterboxd URI": "https://boxd.it/xg6u"
+    },
+    {
+      "Date": "2026-01-01",
+      "Name": "The Apartment",
+      "Year": "1960",
+      "Letterboxd URI": "https://boxd.it/2aGE"
     }
   ]
 }

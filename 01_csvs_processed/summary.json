@@ -1,5 +1,5 @@
 {
-  "zip": "letterboxd-choicehoney-2025-12-31.zip",
+  "zip": "letterboxd-choicehoney-2026-01-02.zip",
   "filesFound": {
     "diary": "diary.csv",
     "films": null,
@@ -7,10 +7,10 @@
     "watched": "watched.csv"
   },
   "counts": {
-    "diary": 509,
+    "diary": 513,
     "films": 0,
-    "ratings": 492,
-    "watched": 756,
-    "uniqueDiaryFilms": 498
+    "ratings": 496,
+    "watched": 760,
+    "uniqueDiaryFilms": 502
   }
 }
