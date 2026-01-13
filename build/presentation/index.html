@@ -840,7 +840,33 @@
       gap: 10px;
     }
 
-    .decade-label {
+    .decade-bar .bar {
+      width: 70px;
+      background: var(--green);
+      border-radius: 6px 6px 0 0;
+      transition: all 0.3s ease;
+    }
+
+    .decade-bar .bar.highlight {
+      background: #4ADE80;
+      box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+    }
+
+    .decade-bar .bar.dim {
+      background: rgba(48, 209, 88, 0.4);
+    }
+
+    .decade-bar .count {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.6em;
+      color: var(--green);
+    }
+
+    .decade-bar .count.highlight {
+      color: #4ADE80;
+    }
+
+    .decade-bar .decade-label {
       font-family: 'Inter', sans-serif;
       font-size: 1em;
       color: rgba(255,255,255,0.6);
@@ -869,6 +895,47 @@
       gap: 4px;
       flex: 1;
       min-width: 0;
+    }
+
+    .year-bar .bar {
+      width: 100%;
+      max-width: 36px;
+      background: var(--green);
+      border-radius: 4px 4px 0 0;
+      transition: all 0.3s ease;
+    }
+
+    .year-bar .bar.highlight {
+      background: #4ADE80;
+      box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+    }
+
+    .year-bar .bar.dim {
+      background: rgba(48, 209, 88, 0.35);
+    }
+
+    .year-bar .count {
+      font-family: 'Anton', sans-serif;
+      font-size: 1em;
+      color: var(--green);
+    }
+
+    .year-bar .count.highlight {
+      color: #4ADE80;
+    }
+
+    .year-bar .year-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7em;
+      color: rgba(255,255,255,0.5);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      height: 40px;
+    }
+
+    .year-bar .year-label.show {
+      color: rgba(255,255,255,0.8);
     }
 
     .year-label {
@@ -1175,95 +1242,6 @@
       </div>
     </section>
 
-      <section class="theme-numbers" style="background: #000000;"><h2 style="margin-bottom: 0.5em; position: relative; z-index: 1;">My Movie Eras</h2>
-      <div class="decade-bar-chart">
-        <div class="decade-bar">
-          <span class="count dim">5</span>
-          <div class="bar dim" style="height: 17px;"></div>
-          <span class="decade-label">1920s</span>
-        </div>
-        <div class="decade-bar">
-          <span class="count dim">2</span>
-          <div class="bar dim" style="height: 7px;"></div>
-          <span class="decade-label">1950s</span>
-        </div>
-        <div class="decade-bar">
-          <span class="count dim">3</span>
-          <div class="bar dim" style="height: 10px;"></div>
-          <span class="decade-label">1960s</span>
-        </div>
-        <div class="decade-bar">
-          <span class="count dim">7</span>
-          <div class="bar dim" style="height: 24px;"></div>
-          <span class="decade-label">1970s</span>
-        </div>
-        <div class="decade-bar">
-          <span class="count dim">17</span>
-          <div class="bar dim" style="height: 59px;"></div>
-          <span class="decade-label">1980s</span>
-        </div>
-        <div class="decade-bar">
-          <span class="count dim">44</span>
-          <div class="bar dim" style="height: 151px;"></div>
-          <span class="decade-label">1990s</span>
-        </div>
-        <div class="decade-bar">
-          <span class="count dim">95</span>
-          <div class="bar dim" style="height: 327px;"></div>
-          <span class="decade-label">2000s</span>
-        </div>
-        <div class="decade-bar">
-          <span class="count dim">66</span>
-          <div class="bar dim" style="height: 227px;"></div>
-          <span class="decade-label">2010s</span>
-        </div>
-        <div class="decade-bar">
-          <span class="count highlight">122</span>
-          <div class="bar highlight" style="height: 420px;"></div>
-          <span class="decade-label">2020s</span>
-        </div>
-      </div>
-      <p class="annotation" style="color: rgba(255,255,255,0.7);">the 2020s are my era</p>
-    </section>
-
-      <section class="theme-numbers" style="background: #000000;"><h2 style="margin-bottom: 0.4em; position: relative; z-index: 1;">Films by Release Year</h2>
-      <div class="year-bar-chart">
-        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label show">1994</span></div>
-        <div class="year-bar"><span class="count">1</span><div class="bar dim" style="height: 10px;"></div><span class="year-label">1995</span></div>
-        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label">1996</span></div>
-        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label">1997</span></div>
-        <div class="year-bar"><span class="count">10</span><div class="bar dim" style="height: 95px;"></div><span class="year-label">1998</span></div>
-        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">1999</span></div>
-        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label show">2000</span></div>
-        <div class="year-bar"><span class="count">10</span><div class="bar dim" style="height: 95px;"></div><span class="year-label">2001</span></div>
-        <div class="year-bar"><span class="count">9</span><div class="bar dim" style="height: 86px;"></div><span class="year-label">2002</span></div>
-        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2003</span></div>
-        <div class="year-bar"><span class="count">16</span><div class="bar dim" style="height: 152px;"></div><span class="year-label">2004</span></div>
-        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label show">2005</span></div>
-        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2006</span></div>
-        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2007</span></div>
-        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2008</span></div>
-        <div class="year-bar"><span class="count">3</span><div class="bar dim" style="height: 29px;"></div><span class="year-label">2009</span></div>
-        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label show">2010</span></div>
-        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label">2011</span></div>
-        <div class="year-bar"><span class="count">8</span><div class="bar dim" style="height: 76px;"></div><span class="year-label">2012</span></div>
-        <div class="year-bar"><span class="count">5</span><div class="bar dim" style="height: 48px;"></div><span class="year-label">2013</span></div>
-        <div class="year-bar"><span class="count">1</span><div class="bar dim" style="height: 10px;"></div><span class="year-label">2014</span></div>
-        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label show">2015</span></div>
-        <div class="year-bar"><span class="count">8</span><div class="bar dim" style="height: 76px;"></div><span class="year-label">2016</span></div>
-        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2017</span></div>
-        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2018</span></div>
-        <div class="year-bar"><span class="count">11</span><div class="bar dim" style="height: 105px;"></div><span class="year-label">2019</span></div>
-        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label show">2020</span></div>
-        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2021</span></div>
-        <div class="year-bar"><span class="count">13</span><div class="bar dim" style="height: 124px;"></div><span class="year-label">2022</span></div>
-        <div class="year-bar"><span class="count">17</span><div class="bar dim" style="height: 162px;"></div><span class="year-label">2023</span></div>
-        <div class="year-bar"><span class="count highlight">40</span><div class="bar highlight" style="height: 380px;"></div><span class="year-label show">2024</span></div>
-        <div class="year-bar"><span class="count">38</span><div class="bar" style="height: 361px; background: #4ADE80;"></div><span class="year-label show">2025</span></div>
-      </div>
-      <p class="annotation" style="color: rgba(255,255,255,0.7);">2024 releases were my jam</p>
-    </section>
-
       <section class="section-title-slide theme-rate" style="background: #0F2847;">
       <h2 class="section-title">HOW I RATE</h2>
     </section>
@@ -1392,7 +1370,55 @@
       </ul>
     </section>
 
-      <section class="theme-rate" style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('../../../dune.jpeg') center/cover no-repeat;">
+      <section class="theme-rate" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);">
+      <h3>2025 releases I watched</h3>
+      <p class="subtitle">41 films released this year</p>
+      <ul class="film-list four-col">
+        <li>The Ballad of Wallis Island <span class="stars">★★★★★</span></li>
+        <li>Companion <span class="stars">★★★★</span></li>
+        <li>Den of Thieves 2: Pantera <span class="stars">★★★★</span></li>
+        <li>Warfare <span class="stars">★★★★</span></li>
+        <li>The Phoenician Scheme <span class="stars">★★★★</span></li>
+        <li>Weapons <span class="stars">★★★★</span></li>
+        <li>Deep Cover <span class="stars">★★★★</span></li>
+        <li>The Thursday Murder Club <span class="stars">★★★★</span></li>
+        <li>A House of Dynamite <span class="stars">★★★★</span></li>
+        <li>Neighborhood Watch <span class="stars">★★★★</span></li>
+        <li>The Baltimorons <span class="stars">★★★★</span></li>
+        <li>Wake Up Dead Man <span class="stars">★★★★</span></li>
+        <li>Avatar: Fire and Ash <span class="stars">★★★★</span></li>
+        <li>Twinless <span class="stars">★★★★</span></li>
+        <li>Black Bag <span class="stars">★★★</span></li>
+        <li>Mickey 17 <span class="stars">★★★</span></li>
+        <li>Mission: Impossible – The Final Reckoning <span class="stars">★★★</span></li>
+        <li>The Amateur <span class="stars">★★★</span></li>
+        <li>Sinners <span class="stars">★★★</span></li>
+        <li>Flight Risk <span class="stars">★★★</span></li>
+        <li>Superman <span class="stars">★★★</span></li>
+        <li>The Fantastic 4: First Steps <span class="stars">★★★</span></li>
+        <li>Materialists <span class="stars">★★★</span></li>
+        <li>KPop Demon Hunters <span class="stars">★★★</span></li>
+        <li>Code 3 <span class="stars">★★★</span></li>
+        <li>Steve <span class="stars">★★★</span></li>
+        <li>The Long Walk <span class="stars">★★★</span></li>
+        <li>Roofman <span class="stars">★★★</span></li>
+        <li>Oh, Hi! <span class="stars">★★★</span></li>
+        <li>Oy to the World <span class="stars">★★★</span></li>
+        <li>The Housemaid <span class="stars">★★★</span></li>
+        <li>The Gorge <span class="stars">★★</span></li>
+        <li>The Accountant² <span class="stars">★★</span></li>
+        <li>Mountainhead <span class="stars">★★</span></li>
+        <li>Prisoner of War <span class="stars">★★</span></li>
+        <li>Highest 2 Lowest <span class="stars">★★</span></li>
+        <li>The Woman in Cabin 10 <span class="stars">★★</span></li>
+        <li>A Suite Holiday Romance <span class="stars">★★</span></li>
+        <li>Christmas Above the Clouds <span class="stars">★★</span></li>
+        <li>TRON: Ares <span class="stars">★★</span></li>
+        <li>Ballerina <span class="stars" style="opacity: 0.4;">—</span></li>
+      </ul>
+    </section>
+
+      <section class="theme-rate" style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('images/dune.jpeg') center/cover no-repeat;">
         <h2 class="impact">Denis Villeneuve</h2>
         <p class="subtitle">2 five-star films</p>
         <p class="annotation">my most reliable director</p>
@@ -1438,10 +1464,6 @@
               </ul>
             </div>
           </div>
-        </section>
-
-      <section class="section-title-slide" style="background: #0a1a1a;">
-      <h2 class="section-title" style="color: #22D3D3;">WHEN I WATCH</h2>
     </section>
 
       <section style="background: #000; position: relative; padding: 0 !important; overflow: hidden;">
@@ -1450,7 +1472,7 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: 100%; height: 100%;">
         
         <!-- Quadrant 1: First Film - Green (from slide 8 SAT) + Nosferatu poster -->
-        <div style="background: linear-gradient(135deg, rgba(26,58,42,0.88) 0%, rgba(31,64,48,0.88) 100%), url('../../../nosferatu.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 3px solid rgba(255,255,255,0.1); border-bottom: 3px solid rgba(255,255,255,0.1);">
+        <div style="background: linear-gradient(135deg, rgba(26,58,42,0.88) 0%, rgba(31,64,48,0.88) 100%), url('images/nosferatu.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 3px solid rgba(255,255,255,0.1); border-bottom: 3px solid rgba(255,255,255,0.1);">
           <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #4ADE80; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">First Film</div>
           <div style="font-family: 'Anton', sans-serif; font-size: 4.5em; color: #fff; line-height: 0.95; text-transform: uppercase;">Nosferatu</div>
           <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">JAN 1 →</div>
@@ -1458,7 +1480,7 @@
         </div>
         
         <!-- Quadrant 2: Last Film - Blue (from slide 8 FRI) + Last Holiday poster -->
-        <div style="background: linear-gradient(135deg, rgba(26,42,58,0.88) 0%, rgba(32,53,69,0.88) 100%), url('../../../lastholiday.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-bottom: 3px solid rgba(255,255,255,0.1);">
+        <div style="background: linear-gradient(135deg, rgba(26,42,58,0.88) 0%, rgba(32,53,69,0.88) 100%), url('images/lastholiday.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-bottom: 3px solid rgba(255,255,255,0.1);">
           <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #6B9DC9; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">Last Film</div>
           <div style="font-family: 'Anton', sans-serif; font-size: 4em; color: #fff; line-height: 0.95; text-transform: uppercase;">Last Holiday</div>
           <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">← DEC 31</div>
@@ -1474,7 +1496,7 @@
         </div>
         
         <!-- Quadrant 4: Longest - Purple (from slide 8 MON) + Avatar poster -->
-        <div style="background: linear-gradient(135deg, rgba(42,26,58,0.88) 0%, rgba(53,32,64,0.88) 100%), url('../../../avatar.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+        <div style="background: linear-gradient(135deg, rgba(42,26,58,0.88) 0%, rgba(53,32,64,0.88) 100%), url('images/avatar.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative;">
           <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #9B7DB8; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">Longest Sit</div>
           <div style="font-family: 'Anton', sans-serif; font-size: 3em; color: #fff; line-height: 0.95; text-transform: uppercase;">Avatar:<br>Fire and Ash</div>
           <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">3H 18M</div>
@@ -1539,6 +1561,95 @@
     </section>
 
       <section style="background: #000000;"></section>
+
+      <section class="theme-numbers" style="background: #000000;"><h2 style="margin-bottom: 0.5em; position: relative; z-index: 1;">My Movie Eras</h2>
+      <div class="decade-bar-chart">
+        <div class="decade-bar">
+          <span class="count dim">5</span>
+          <div class="bar dim" style="height: 17px;"></div>
+          <span class="decade-label">1920s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">2</span>
+          <div class="bar dim" style="height: 7px;"></div>
+          <span class="decade-label">1950s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">3</span>
+          <div class="bar dim" style="height: 10px;"></div>
+          <span class="decade-label">1960s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">7</span>
+          <div class="bar dim" style="height: 24px;"></div>
+          <span class="decade-label">1970s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">17</span>
+          <div class="bar dim" style="height: 59px;"></div>
+          <span class="decade-label">1980s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">44</span>
+          <div class="bar dim" style="height: 151px;"></div>
+          <span class="decade-label">1990s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">95</span>
+          <div class="bar dim" style="height: 327px;"></div>
+          <span class="decade-label">2000s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">66</span>
+          <div class="bar dim" style="height: 227px;"></div>
+          <span class="decade-label">2010s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count highlight">122</span>
+          <div class="bar highlight" style="height: 420px;"></div>
+          <span class="decade-label">2020s</span>
+        </div>
+      </div>
+      <p class="annotation" style="color: rgba(255,255,255,0.7);">the 2020s are my era</p>
+    </section>
+
+      <section class="theme-numbers" style="background: #000000;"><h2 style="margin-bottom: 0.4em; position: relative; z-index: 1;">Films by Release Year</h2>
+      <div class="year-bar-chart">
+        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label show">1994</span></div>
+        <div class="year-bar"><span class="count">1</span><div class="bar dim" style="height: 10px;"></div><span class="year-label">1995</span></div>
+        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label">1996</span></div>
+        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label">1997</span></div>
+        <div class="year-bar"><span class="count">10</span><div class="bar dim" style="height: 95px;"></div><span class="year-label">1998</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">1999</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label show">2000</span></div>
+        <div class="year-bar"><span class="count">10</span><div class="bar dim" style="height: 95px;"></div><span class="year-label">2001</span></div>
+        <div class="year-bar"><span class="count">9</span><div class="bar dim" style="height: 86px;"></div><span class="year-label">2002</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2003</span></div>
+        <div class="year-bar"><span class="count">16</span><div class="bar dim" style="height: 152px;"></div><span class="year-label">2004</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label show">2005</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2006</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2007</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2008</span></div>
+        <div class="year-bar"><span class="count">3</span><div class="bar dim" style="height: 29px;"></div><span class="year-label">2009</span></div>
+        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label show">2010</span></div>
+        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label">2011</span></div>
+        <div class="year-bar"><span class="count">8</span><div class="bar dim" style="height: 76px;"></div><span class="year-label">2012</span></div>
+        <div class="year-bar"><span class="count">5</span><div class="bar dim" style="height: 48px;"></div><span class="year-label">2013</span></div>
+        <div class="year-bar"><span class="count">1</span><div class="bar dim" style="height: 10px;"></div><span class="year-label">2014</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label show">2015</span></div>
+        <div class="year-bar"><span class="count">8</span><div class="bar dim" style="height: 76px;"></div><span class="year-label">2016</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2017</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2018</span></div>
+        <div class="year-bar"><span class="count">11</span><div class="bar dim" style="height: 105px;"></div><span class="year-label">2019</span></div>
+        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label show">2020</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2021</span></div>
+        <div class="year-bar"><span class="count">13</span><div class="bar dim" style="height: 124px;"></div><span class="year-label">2022</span></div>
+        <div class="year-bar"><span class="count">17</span><div class="bar dim" style="height: 162px;"></div><span class="year-label">2023</span></div>
+        <div class="year-bar"><span class="count highlight">40</span><div class="bar highlight" style="height: 380px;"></div><span class="year-label show">2024</span></div>
+        <div class="year-bar"><span class="count">38</span><div class="bar" style="height: 361px; background: #4ADE80;"></div><span class="year-label show">2025</span></div>
+      </div>
+      <p class="annotation" style="color: rgba(255,255,255,0.7);">2024 releases were my jam</p>
+    </section>
 
       <section class="theme-numbers" style="background: #000000;">
       <h2 style="margin-bottom: 0.4em;">How I Rate Each Era</h2>
