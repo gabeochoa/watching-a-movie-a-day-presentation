@@ -1,0 +1,290 @@
+{
+  "partialSeries": [
+    {
+      "name": "Avatar",
+      "watched": 1,
+      "total": 2,
+      "movies": [
+        {
+          "title": "Avatar: The Way of Water",
+          "year": 2022,
+          "watched": false,
+          "rating": null
+        },
+        {
+          "title": "Avatar: Fire and Ash",
+          "year": 2025,
+          "watched": true,
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "name": "Paddington",
+      "watched": 1,
+      "total": 2,
+      "movies": [
+        {
+          "title": "Paddington",
+          "year": 2014,
+          "watched": false,
+          "rating": null
+        },
+        {
+          "title": "Paddington 2",
+          "year": 2017,
+          "watched": true,
+          "rating": 4
+        }
+      ]
+    }
+  ],
+  "completeSeries": [
+    {
+      "name": "Meet the Parents",
+      "watched": 3,
+      "total": 3,
+      "movies": [
+        {
+          "title": "Meet the Parents",
+          "year": 2000,
+          "watched": true,
+          "rating": 3
+        },
+        {
+          "title": "Meet the Fockers",
+          "year": 2004,
+          "watched": true,
+          "rating": 3
+        },
+        {
+          "title": "Little Fockers",
+          "year": 2010,
+          "watched": true,
+          "rating": 2
+        }
+      ]
+    },
+    {
+      "name": "Rush Hour",
+      "watched": 3,
+      "total": 3,
+      "movies": [
+        {
+          "title": "Rush Hour",
+          "year": 1998,
+          "watched": true,
+          "rating": 4
+        },
+        {
+          "title": "Rush Hour 2",
+          "year": 2001,
+          "watched": true,
+          "rating": 3
+        },
+        {
+          "title": "Rush Hour 3",
+          "year": 2007,
+          "watched": true,
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "name": "The Bourne",
+      "watched": 3,
+      "total": 3,
+      "movies": [
+        {
+          "title": "The Bourne Identity",
+          "year": 2002,
+          "watched": true,
+          "rating": 5
+        },
+        {
+          "title": "The Bourne Supremacy",
+          "year": 2004,
+          "watched": true,
+          "rating": 3
+        },
+        {
+          "title": "The Bourne Ultimatum",
+          "year": 2007,
+          "watched": true,
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "name": "Austin Powers",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "Austin Powers: International Man of Mystery",
+          "year": 1997,
+          "watched": true,
+          "rating": 4
+        },
+        {
+          "title": "Austin Powers: The Spy Who Shagged Me",
+          "year": 1999,
+          "watched": true,
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "name": "Clerks",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "Clerks",
+          "year": 1994,
+          "watched": true,
+          "rating": 3
+        },
+        {
+          "title": "Clerks II",
+          "year": 2006,
+          "watched": true,
+          "rating": 2
+        }
+      ]
+    },
+    {
+      "name": "Dune",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "Dune",
+          "year": 2021,
+          "watched": true,
+          "rating": 4
+        },
+        {
+          "title": "Dune: Part Two",
+          "year": 2024,
+          "watched": true,
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "name": "Mamma Mia!",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "Mamma Mia!",
+          "year": 2008,
+          "watched": true,
+          "rating": 4
+        },
+        {
+          "title": "Mamma Mia! Here We Go Again",
+          "year": 2018,
+          "watched": true,
+          "rating": 2
+        }
+      ]
+    },
+    {
+      "name": "Mission: Impossible",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "Mission: Impossible II",
+          "year": 2000,
+          "watched": true,
+          "rating": 3
+        },
+        {
+          "title": "Mission: Impossible - The Final Reckoning",
+          "year": 2025,
+          "watched": true,
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "name": "Ocean's",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "Ocean's Eleven",
+          "year": 2001,
+          "watched": true,
+          "rating": 5
+        },
+        {
+          "title": "Ocean's Twelve",
+          "year": 2004,
+          "watched": true,
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "name": "Robert Langdon",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "The Da Vinci Code",
+          "year": 2006,
+          "watched": true,
+          "rating": 3
+        },
+        {
+          "title": "Angels & Demons",
+          "year": 2009,
+          "watched": true,
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "name": "The Accountant",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "The Accountant",
+          "year": 2016,
+          "watched": true,
+          "rating": 4
+        },
+        {
+          "title": "The Accountant²",
+          "year": 2025,
+          "watched": true,
+          "rating": 2
+        }
+      ]
+    },
+    {
+      "name": "The Incredibles",
+      "watched": 2,
+      "total": 2,
+      "movies": [
+        {
+          "title": "The Incredibles",
+          "year": 2004,
+          "watched": true,
+          "rating": 5
+        },
+        {
+          "title": "Incredibles 2",
+          "year": 2018,
+          "watched": true,
+          "rating": 3
+        }
+      ]
+    }
+  ]
+}
