@@ -19,7 +19,7 @@ const SLIDES_DIR = path.join(ROOT, "build", "presentation", "slides");
 
 function extractSlideFileListFromGrid(gridHtml) {
   const out = [];
-  const re = /data-src="\.\/slides\/(slide-\d+\.html)"/g;
+  const re = /data-src="\.\/slides\/(slide-[\da-zA-Z]+\.html)"/g;
   for (const m of gridHtml.matchAll(re)) out.push(m[1]);
   // Preserve order, de-dupe just in case.
   return out.filter((x, i) => out.indexOf(x) === i);
