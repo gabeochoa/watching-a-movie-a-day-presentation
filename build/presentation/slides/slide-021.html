@@ -797,6 +797,7 @@
     /* Thumbnail-only tweaks */
     html, body, .reveal, .reveal-viewport, .reveal .slides, .reveal .slides section { width: 100% !important; height: 100vh !important; min-height: 100vh !important; overflow: hidden; margin: 0 !important; padding: 0; box-sizing: border-box; }
     .reveal .slides section { padding: 40px 60px !important; }
+    .reveal .slides section.full-bleed-slide { padding: 0 !important; display: block !important; }
     body { margin: 0; }
     #section-indicator { display: none !important; }
 
@@ -807,10 +808,10 @@
     <div class="slides">
       
     <!-- Bold Editorial Grid with Slide 8 Colors + Movie Posters -->
-    <section style="background: #000; position: relative; padding: 0 !important; overflow: hidden;">
+    <section class="full-bleed-slide" style="background: #000; position: relative; padding: 0 !important; overflow: hidden; display: block !important;">
       
       <!-- 2x2 Full-bleed Grid -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: 100%; height: 100%;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; position: absolute; inset: 0;">
         
         <!-- Quadrant 1: First Film - Green (from slide 8 SAT) + Nosferatu poster -->
         <div style="background: linear-gradient(135deg, rgba(26,58,42,0.88) 0%, rgba(31,64,48,0.88) 100%), url('../images/nosferatu.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 3px solid rgba(255,255,255,0.1); border-bottom: 3px solid rgba(255,255,255,0.1);">
