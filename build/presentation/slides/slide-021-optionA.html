@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slide 21 — Option A: Library Cards</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&family=Caveat:wght@500&display=swap');
+    
+    html, body { margin: 0; padding: 0; overflow: hidden; width: 100%; height: 100vh; }
+    .reveal, .reveal .slides, .reveal .slides section { 
+      width: 100% !important; height: 100vh !important; margin: 0; padding: 0; 
+    }
+    
+    .reveal .slides section {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+    <!-- OPTION A: Library Cards / Vintage Filing System -->
+    <section style="background: #C4A77D; position: relative; padding: 40px !important;">
+      <!-- Paper texture overlay -->
+      <div style="position: absolute; inset: 0; background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E'); opacity: 0.08; pointer-events: none;"></div>
+      
+      <!-- Title -->
+      <h2 style="position: absolute; top: 30px; left: 50%; transform: translateX(-50%); font-family: 'Anton', sans-serif; font-size: 2.2em; color: #5C4033; letter-spacing: 0.1em; text-transform: uppercase;">Film Extremes</h2>
+      
+      <!-- 2x2 Grid of Library Cards -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1100px; margin-top: 40px;">
+        
+        <!-- Card 1: First Film -->
+        <div style="background: #FFF8E7; border: 2px solid #D4A574; padding: 28px; font-family: 'Special Elite', monospace; position: relative; box-shadow: 4px 4px 0 rgba(0,0,0,0.1); transform: rotate(-1deg);">
+          <!-- Stamp -->
+          <div style="position: absolute; top: 12px; right: 12px; width: 50px; height: 50px; border: 3px solid #8B0000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #8B0000; transform: rotate(-15deg); opacity: 0.7; text-align: center; line-height: 1.2;">JAN<br>2025</div>
+          <div style="font-size: 11px; text-transform: uppercase; color: #666; letter-spacing: 0.15em; border-bottom: 1px solid #D4A574; padding-bottom: 8px; margin-bottom: 12px;">First Film of the Year</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 2.8em; color: #1A1A1A; line-height: 1;">Nosferatu</div>
+          <div style="font-family: 'Caveat', cursive; font-size: 1.4em; color: #8B0000; margin-top: 8px; transform: rotate(-2deg);">→ started strong!</div>
+        </div>
+        
+        <!-- Card 2: Last Film -->
+        <div style="background: #FFF8E7; border: 2px solid #D4A574; padding: 28px; font-family: 'Special Elite', monospace; position: relative; box-shadow: 4px 4px 0 rgba(0,0,0,0.1); transform: rotate(1.5deg);">
+          <div style="position: absolute; top: 12px; right: 12px; width: 50px; height: 50px; border: 3px solid #8B0000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #8B0000; transform: rotate(10deg); opacity: 0.7; text-align: center; line-height: 1.2;">DEC<br>2025</div>
+          <div style="font-size: 11px; text-transform: uppercase; color: #666; letter-spacing: 0.15em; border-bottom: 1px solid #D4A574; padding-bottom: 8px; margin-bottom: 12px;">Last Film of the Year</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 2.8em; color: #1A1A1A; line-height: 1;">Last Holiday</div>
+          <div style="font-family: 'Caveat', cursive; font-size: 1.4em; color: #8B0000; margin-top: 8px; transform: rotate(2deg);">perfect ending ✓</div>
+        </div>
+        
+        <!-- Card 3: Oldest -->
+        <div style="background: #FFF8E7; border: 2px solid #D4A574; padding: 28px; font-family: 'Special Elite', monospace; position: relative; box-shadow: 4px 4px 0 rgba(0,0,0,0.1); transform: rotate(0.5deg);">
+          <div style="position: absolute; top: 12px; right: 12px; width: 50px; height: 50px; border: 3px solid #1E3A5F; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #1E3A5F; transform: rotate(-8deg); opacity: 0.7; font-weight: bold;">105<br>YRS</div>
+          <div style="font-size: 11px; text-transform: uppercase; color: #666; letter-spacing: 0.15em; border-bottom: 1px solid #D4A574; padding-bottom: 8px; margin-bottom: 12px;">Oldest Film Watched</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 2.8em; color: #1A1A1A; line-height: 1;">One Week</div>
+          <div style="font-family: 'Caveat', cursive; font-size: 1.4em; color: #1E3A5F; margin-top: 8px; transform: rotate(-1deg);">silent era magic ★</div>
+        </div>
+        
+        <!-- Card 4: Longest -->
+        <div style="background: #FFF8E7; border: 2px solid #D4A574; padding: 28px; font-family: 'Special Elite', monospace; position: relative; box-shadow: 4px 4px 0 rgba(0,0,0,0.1); transform: rotate(-0.8deg);">
+          <div style="position: absolute; top: 12px; right: 12px; width: 50px; height: 50px; border: 3px solid #4A6741; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #4A6741; transform: rotate(5deg); opacity: 0.7; font-weight: bold; text-align: center; line-height: 1.2;">198<br>MIN</div>
+          <div style="font-size: 11px; text-transform: uppercase; color: #666; letter-spacing: 0.15em; border-bottom: 1px solid #D4A574; padding-bottom: 8px; margin-bottom: 12px;">Longest Sit</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 2.2em; color: #1A1A1A; line-height: 1;">Avatar: Fire and Ash</div>
+          <div style="font-family: 'Caveat', cursive; font-size: 1.4em; color: #4A6741; margin-top: 8px; transform: rotate(1deg);">worth every minute</div>
+        </div>
+        
+      </div>
+    </section>
+  
+    </div>
+  </div>
+<script>var bg = document.querySelector("section").style.background; document.body.style.background = bg; document.querySelector(".reveal").style.background = bg;</script>
+</body>
+</html>
+

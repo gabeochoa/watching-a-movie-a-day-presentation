@@ -821,6 +821,70 @@
       background: rgba(255,59,48,0.08);
     }
 
+    /* Decade bar chart */
+    .decade-bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 16px;
+      height: 420px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .decade-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .decade-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 1em;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* Year bar chart - compact version */
+    .year-bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+      height: 380px;
+      padding: 0 10px;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1500px;
+    }
+
+    .year-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .year-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7em;
+      color: rgba(255,255,255,0.5);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      height: 40px;
+    }
+
+    .year-label.show {
+      color: rgba(255,255,255,0.8);
+    }
+
     .film-list {
       list-style: none;
       padding: 0;
@@ -838,527 +902,731 @@
       letter-spacing: 0.15em;
       margin-bottom: 0.3em;
     }
+
+    /* Decade ratings grid */
+    .decade-ratings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px 40px;
+      margin-top: 20px;
+      max-width: 1200px;
+    }
+
+    .decade-rating-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .decade-rating-item.top {
+      background: rgba(255,214,10,0.12);
+      border-color: rgba(255,214,10,0.3);
+    }
+
+    .decade-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 2em;
+      color: #fff;
+      min-width: 100px;
+    }
+
+    .rating-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6em;
+      color: var(--gold);
+    }
+
+    .film-count {
+      font-size: 0.7em;
+      color: rgba(255,255,255,0.35);
+      margin-left: auto;
+    }
   </style>
 </head>
 <body>
   <div class="reveal">
     <div class="slides">
+      <section class="theme-opening" style="background: #000000;">
+      <h1 class="mega">MY 2025<br>IN FILM</h1>
+      <p class="subtitle">387 movies. 695 hours. One year.</p>
+    </section>
+
+      <section class="theme-opening" style="background: #000000;">
+      <h2 class="impact">I watched more movies than there are days in a year</h2>
+      <p class="annotation">yes, really</p>
+    </section>
+
+      <section class="theme-opening opening-numbers-white" style="background: #000000;">
+      <svg class="bg-chart" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+        <polyline points="60.00,848.32 64.95,848.32 69.89,848.32 74.84,846.65 79.78,843.30 84.73,843.30 89.67,841.62 94.62,841.62 99.56,841.62 104.51,838.27 109.45,838.27 114.40,838.27 119.34,836.60 124.29,836.60 129.23,836.60 134.18,834.92 139.12,834.92 144.07,831.57 149.01,831.57 153.96,829.90 158.90,829.90 163.85,829.90 168.79,829.90 173.74,828.22 178.68,828.22 183.63,828.22 188.57,828.22 193.52,828.22 198.46,826.55 203.41,826.55 208.35,824.87 213.30,823.20 218.24,823.20 223.19,821.52 228.13,819.85 233.08,818.17 238.02,816.49 242.97,816.49 247.91,814.82 252.86,813.14 257.80,811.47 262.75,809.79 267.69,808.12 272.64,806.44 277.58,804.77 282.53,799.74 287.47,798.07 292.42,796.39 297.36,796.39 302.31,796.39 307.25,796.39 312.20,794.72 317.14,794.72 322.09,794.72 327.03,794.72 331.98,794.72 336.92,794.72 341.87,794.72 346.81,794.72 351.76,789.69 356.70,789.69 361.65,789.69 366.59,789.69 371.54,789.69 376.48,789.69 381.43,788.02 386.37,786.34 391.32,784.66 396.26,784.66 401.21,784.66 406.15,781.31 411.10,781.31 416.04,781.31 420.99,777.96 425.93,772.94 430.88,769.59 435.82,769.59 440.77,766.24 445.71,762.89 450.66,762.89 455.60,759.54 460.55,757.86 465.49,757.86 470.44,756.19 475.38,754.51 480.33,754.51 485.27,749.48 490.22,749.48 495.16,746.13 500.11,744.46 505.05,741.11 510.00,741.11 514.95,739.43 519.89,739.43 524.84,737.76 529.78,736.08 534.73,734.41 539.67,732.73 544.62,731.06 549.56,729.38 554.51,727.71 559.45,726.03 564.40,724.36 569.34,724.36 574.29,724.36 579.23,722.68 584.18,719.33 589.12,717.65 594.07,717.65 599.01,715.98 603.96,715.98 608.90,715.98 613.85,715.98 618.79,712.63 623.74,712.63 628.68,712.63 633.63,705.93 638.57,705.93 643.52,702.58 648.46,702.58 653.41,702.58 658.35,700.90 663.30,700.90 668.24,700.90 673.19,700.90 678.13,700.90 683.08,699.23 688.02,699.23 692.97,697.55 697.91,690.85 702.86,687.50 707.80,685.82 712.75,685.82 717.69,684.15 722.64,684.15 727.58,684.15 732.53,684.15 737.47,682.47 742.42,680.80 747.36,680.80 752.31,680.80 757.25,679.12 762.20,677.45 767.14,675.77 772.09,674.10 777.03,670.75 781.98,669.07 786.92,667.40 791.87,665.72 796.81,662.37 801.76,660.70 806.70,660.70 811.65,653.99 816.59,653.99 821.54,648.97 826.48,648.97 831.43,648.97 836.37,643.94 841.32,640.59 846.26,640.59 851.21,637.24 856.15,637.24 861.10,637.24 866.04,633.89 870.99,628.87 875.93,628.87 880.88,625.52 885.82,623.84 890.77,623.84 895.71,618.81 900.66,617.14 905.60,615.46 910.55,610.44 915.49,608.76 920.44,605.41 925.38,603.74 930.33,603.74 935.27,602.06 940.22,600.39 945.16,597.04 950.11,595.36 955.05,595.36 960.00,593.69 964.95,592.01 969.89,590.34 974.84,585.31 979.78,581.96 984.73,580.28 989.67,580.28 994.62,578.61 999.56,576.93 1004.51,576.93 1009.45,573.58 1014.40,570.23 1019.34,566.88 1024.29,565.21 1029.23,563.53 1034.18,563.53 1039.12,561.86 1044.07,560.18 1049.01,560.18 1053.96,558.51 1058.90,558.51 1063.85,558.51 1068.79,556.83 1073.74,556.83 1078.68,553.48 1083.63,550.13 1088.57,548.45 1093.52,545.10 1098.46,545.10 1103.41,545.10 1108.35,543.43 1113.30,541.75 1118.24,541.75 1123.19,541.75 1128.13,541.75 1133.08,540.08 1138.02,536.73 1142.97,531.70 1147.91,525.00 1152.86,521.65 1157.80,519.97 1162.75,518.30 1167.69,518.30 1172.64,516.62 1177.58,516.62 1182.53,516.62 1187.47,513.27 1192.42,513.27 1197.36,513.27 1202.31,513.27 1207.25,511.60 1212.20,509.92 1217.14,508.25 1222.09,504.90 1227.03,503.22 1231.98,503.22 1236.92,503.22 1241.87,503.22 1246.81,501.55 1251.76,498.20 1256.70,498.20 1261.65,489.82 1266.59,489.82 1271.54,489.82 1276.48,489.82 1281.43,489.82 1286.37,489.82 1291.32,488.14 1296.26,484.79 1301.21,481.44 1306.15,481.44 1311.10,479.77 1316.04,479.77 1320.99,476.42 1325.93,471.39 1330.88,469.72 1335.82,468.04 1340.77,468.04 1345.71,468.04 1350.66,466.37 1355.60,463.02 1360.55,463.02 1365.49,459.66 1370.44,457.99 1375.38,457.99 1380.33,454.64 1385.27,452.96 1390.22,452.96 1395.16,452.96 1400.11,452.96 1405.05,452.96 1410.00,449.61 1414.95,449.61 1419.89,449.61 1424.84,449.61 1429.78,442.91 1434.73,442.91 1439.67,439.56 1444.62,437.89 1449.56,434.54 1454.51,434.54 1459.45,434.54 1464.40,427.84 1469.34,427.84 1474.29,427.84 1479.23,427.84 1484.18,427.84 1489.12,424.48 1494.07,422.81 1499.01,421.13 1503.96,416.11 1508.90,414.43 1513.85,414.43 1518.79,414.43 1523.74,414.43 1528.68,414.43 1533.63,414.43 1538.57,409.41 1543.52,409.41 1548.46,409.41 1553.41,406.06 1558.35,404.38 1563.30,402.71 1568.24,387.63 1573.19,387.63 1578.13,385.95 1583.08,382.60 1588.02,380.93 1592.97,379.25 1597.91,379.25 1602.86,374.23 1607.80,374.23 1612.75,370.88 1617.69,367.53 1622.64,365.85 1627.58,365.85 1632.53,359.15 1637.47,352.45 1642.42,347.42 1647.36,345.75 1652.31,339.05 1657.25,334.02 1662.20,332.35 1667.14,323.97 1672.09,317.27 1677.03,313.92 1681.98,308.89 1686.92,308.89 1691.87,302.19 1696.81,300.52 1701.76,295.49 1706.70,293.81 1711.65,293.81 1716.59,293.81 1721.54,290.46 1726.48,290.46 1731.43,288.79 1736.37,283.76 1741.32,272.04 1746.26,272.04 1751.21,272.04 1756.15,272.04 1761.10,272.04 1766.04,270.36 1770.99,265.34 1775.93,255.28 1780.88,255.28 1785.82,250.26 1790.77,246.91 1795.71,245.23 1800.66,241.88 1805.60,240.21 1810.55,228.48 1815.49,226.80 1820.44,225.13 1825.38,213.40 1830.33,205.03 1835.27,205.03 1840.22,205.03 1845.16,205.03 1850.11,203.35 1855.05,203.35 1860.00,200.00" fill="none" stroke="rgba(48, 209, 88, 0.22)" stroke-width="4"/>
+        <polygon points="60,850 60.00,848.32 64.95,848.32 69.89,848.32 74.84,846.65 79.78,843.30 84.73,843.30 89.67,841.62 94.62,841.62 99.56,841.62 104.51,838.27 109.45,838.27 114.40,838.27 119.34,836.60 124.29,836.60 129.23,836.60 134.18,834.92 139.12,834.92 144.07,831.57 149.01,831.57 153.96,829.90 158.90,829.90 163.85,829.90 168.79,829.90 173.74,828.22 178.68,828.22 183.63,828.22 188.57,828.22 193.52,828.22 198.46,826.55 203.41,826.55 208.35,824.87 213.30,823.20 218.24,823.20 223.19,821.52 228.13,819.85 233.08,818.17 238.02,816.49 242.97,816.49 247.91,814.82 252.86,813.14 257.80,811.47 262.75,809.79 267.69,808.12 272.64,806.44 277.58,804.77 282.53,799.74 287.47,798.07 292.42,796.39 297.36,796.39 302.31,796.39 307.25,796.39 312.20,794.72 317.14,794.72 322.09,794.72 327.03,794.72 331.98,794.72 336.92,794.72 341.87,794.72 346.81,794.72 351.76,789.69 356.70,789.69 361.65,789.69 366.59,789.69 371.54,789.69 376.48,789.69 381.43,788.02 386.37,786.34 391.32,784.66 396.26,784.66 401.21,784.66 406.15,781.31 411.10,781.31 416.04,781.31 420.99,777.96 425.93,772.94 430.88,769.59 435.82,769.59 440.77,766.24 445.71,762.89 450.66,762.89 455.60,759.54 460.55,757.86 465.49,757.86 470.44,756.19 475.38,754.51 480.33,754.51 485.27,749.48 490.22,749.48 495.16,746.13 500.11,744.46 505.05,741.11 510.00,741.11 514.95,739.43 519.89,739.43 524.84,737.76 529.78,736.08 534.73,734.41 539.67,732.73 544.62,731.06 549.56,729.38 554.51,727.71 559.45,726.03 564.40,724.36 569.34,724.36 574.29,724.36 579.23,722.68 584.18,719.33 589.12,717.65 594.07,717.65 599.01,715.98 603.96,715.98 608.90,715.98 613.85,715.98 618.79,712.63 623.74,712.63 628.68,712.63 633.63,705.93 638.57,705.93 643.52,702.58 648.46,702.58 653.41,702.58 658.35,700.90 663.30,700.90 668.24,700.90 673.19,700.90 678.13,700.90 683.08,699.23 688.02,699.23 692.97,697.55 697.91,690.85 702.86,687.50 707.80,685.82 712.75,685.82 717.69,684.15 722.64,684.15 727.58,684.15 732.53,684.15 737.47,682.47 742.42,680.80 747.36,680.80 752.31,680.80 757.25,679.12 762.20,677.45 767.14,675.77 772.09,674.10 777.03,670.75 781.98,669.07 786.92,667.40 791.87,665.72 796.81,662.37 801.76,660.70 806.70,660.70 811.65,653.99 816.59,653.99 821.54,648.97 826.48,648.97 831.43,648.97 836.37,643.94 841.32,640.59 846.26,640.59 851.21,637.24 856.15,637.24 861.10,637.24 866.04,633.89 870.99,628.87 875.93,628.87 880.88,625.52 885.82,623.84 890.77,623.84 895.71,618.81 900.66,617.14 905.60,615.46 910.55,610.44 915.49,608.76 920.44,605.41 925.38,603.74 930.33,603.74 935.27,602.06 940.22,600.39 945.16,597.04 950.11,595.36 955.05,595.36 960.00,593.69 964.95,592.01 969.89,590.34 974.84,585.31 979.78,581.96 984.73,580.28 989.67,580.28 994.62,578.61 999.56,576.93 1004.51,576.93 1009.45,573.58 1014.40,570.23 1019.34,566.88 1024.29,565.21 1029.23,563.53 1034.18,563.53 1039.12,561.86 1044.07,560.18 1049.01,560.18 1053.96,558.51 1058.90,558.51 1063.85,558.51 1068.79,556.83 1073.74,556.83 1078.68,553.48 1083.63,550.13 1088.57,548.45 1093.52,545.10 1098.46,545.10 1103.41,545.10 1108.35,543.43 1113.30,541.75 1118.24,541.75 1123.19,541.75 1128.13,541.75 1133.08,540.08 1138.02,536.73 1142.97,531.70 1147.91,525.00 1152.86,521.65 1157.80,519.97 1162.75,518.30 1167.69,518.30 1172.64,516.62 1177.58,516.62 1182.53,516.62 1187.47,513.27 1192.42,513.27 1197.36,513.27 1202.31,513.27 1207.25,511.60 1212.20,509.92 1217.14,508.25 1222.09,504.90 1227.03,503.22 1231.98,503.22 1236.92,503.22 1241.87,503.22 1246.81,501.55 1251.76,498.20 1256.70,498.20 1261.65,489.82 1266.59,489.82 1271.54,489.82 1276.48,489.82 1281.43,489.82 1286.37,489.82 1291.32,488.14 1296.26,484.79 1301.21,481.44 1306.15,481.44 1311.10,479.77 1316.04,479.77 1320.99,476.42 1325.93,471.39 1330.88,469.72 1335.82,468.04 1340.77,468.04 1345.71,468.04 1350.66,466.37 1355.60,463.02 1360.55,463.02 1365.49,459.66 1370.44,457.99 1375.38,457.99 1380.33,454.64 1385.27,452.96 1390.22,452.96 1395.16,452.96 1400.11,452.96 1405.05,452.96 1410.00,449.61 1414.95,449.61 1419.89,449.61 1424.84,449.61 1429.78,442.91 1434.73,442.91 1439.67,439.56 1444.62,437.89 1449.56,434.54 1454.51,434.54 1459.45,434.54 1464.40,427.84 1469.34,427.84 1474.29,427.84 1479.23,427.84 1484.18,427.84 1489.12,424.48 1494.07,422.81 1499.01,421.13 1503.96,416.11 1508.90,414.43 1513.85,414.43 1518.79,414.43 1523.74,414.43 1528.68,414.43 1533.63,414.43 1538.57,409.41 1543.52,409.41 1548.46,409.41 1553.41,406.06 1558.35,404.38 1563.30,402.71 1568.24,387.63 1573.19,387.63 1578.13,385.95 1583.08,382.60 1588.02,380.93 1592.97,379.25 1597.91,379.25 1602.86,374.23 1607.80,374.23 1612.75,370.88 1617.69,367.53 1622.64,365.85 1627.58,365.85 1632.53,359.15 1637.47,352.45 1642.42,347.42 1647.36,345.75 1652.31,339.05 1657.25,334.02 1662.20,332.35 1667.14,323.97 1672.09,317.27 1677.03,313.92 1681.98,308.89 1686.92,308.89 1691.87,302.19 1696.81,300.52 1701.76,295.49 1706.70,293.81 1711.65,293.81 1716.59,293.81 1721.54,290.46 1726.48,290.46 1731.43,288.79 1736.37,283.76 1741.32,272.04 1746.26,272.04 1751.21,272.04 1756.15,272.04 1761.10,272.04 1766.04,270.36 1770.99,265.34 1775.93,255.28 1780.88,255.28 1785.82,250.26 1790.77,246.91 1795.71,245.23 1800.66,241.88 1805.60,240.21 1810.55,228.48 1815.49,226.80 1820.44,225.13 1825.38,213.40 1830.33,205.03 1835.27,205.03 1840.22,205.03 1845.16,205.03 1850.11,203.35 1855.05,203.35 1860.00,200.00 1860,850" fill="rgba(48, 209, 88, 0.10)"/>
+        <text x="134.18" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Jan</text><text x="282.53" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Feb</text><text x="425.93" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Mar</text><text x="579.23" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Apr</text><text x="727.58" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">May</text><text x="880.88" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Jun</text><text x="1029.23" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Jul</text><text x="1182.53" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Aug</text><text x="1335.82" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Sep</text><text x="1484.18" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Oct</text><text x="1637.47" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Nov</text><text x="1785.82" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Dec</text>
+      </svg>
+      <div class="contrast-stats">
+        <div class="stat-block">
+          <span class="number">387</span>
+          <span class="label">unique films watched</span>
+        </div>
+      </div>
+    </section>
+
+      <section class="theme-opening opening-numbers-white" style="background: #000000;">
+      <div class="stat-pair">
+        <div class="stat">
+          <span class="number">695</span>
+          <span class="unit">hours</span>
+        </div>
+        <div class="equals">or</div>
+        <div class="stat">
+          <span class="number">29</span>
+          <span class="unit">days</span>
+        </div>
+      </div>
+      <p class="annotation">that's the same as flying to tokyo and back 23 times</p>
+    </section>
+
+      <section class="theme-numbers" style="background: #000000;"><h2 style="margin-bottom: 0.5em; position: relative; z-index: 1;">Films by Month</h2>
+      <div class="monthly-bar-chart">
+        <div class="month-bar">
+          <span class="count dim">15</span>
+          <div class="bar dim" style="height: 102px;"></div>
+          <span class="month-label">Jan</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">18</span>
+          <div class="bar dim" style="height: 123px;"></div>
+          <span class="month-label">Feb</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">30</span>
+          <div class="bar dim" style="height: 205px;"></div>
+          <span class="month-label">Mar</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">25</span>
+          <div class="bar dim" style="height: 170px;"></div>
+          <span class="month-label">Apr</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">25</span>
+          <div class="bar dim" style="height: 170px;"></div>
+          <span class="month-label">May</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">39</span>
+          <div class="bar dim" style="height: 266px;"></div>
+          <span class="month-label">Jun</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">30</span>
+          <div class="bar dim" style="height: 205px;"></div>
+          <span class="month-label">Jul</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">28</span>
+          <div class="bar dim" style="height: 191px;"></div>
+          <span class="month-label">Aug</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">27</span>
+          <div class="bar dim" style="height: 184px;"></div>
+          <span class="month-label">Sep</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">29</span>
+          <div class="bar dim" style="height: 198px;"></div>
+          <span class="month-label">Oct</span>
+        </div>
+        <div class="month-bar">
+          <span class="count highlight">66</span>
+          <div class="bar highlight" style="height: 450px;"></div>
+          <span class="month-label">Nov</span>
+        </div>
+        <div class="month-bar">
+          <span class="count dim">56</span>
+          <div class="bar dim" style="height: 382px;"></div>
+          <span class="month-label">Dec</span>
+        </div>
+      </div>
+    </section>
+
+      <section class="theme-numbers" style="background: #000000;">
+      <div class="calendar-top">
+        <svg viewBox="0 0 1150 400" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: auto;"><text x="40" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Jan</text><text x="50" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="72" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="94" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="116" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="138" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="160" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="182" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="106" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="172" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="62" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="84" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="106" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="172" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="40" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="62" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="150" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="172" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="62" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="172" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="40" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="62" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="84" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="225" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Feb</text><text x="235" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="257" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="279" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="301" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="323" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="345" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="367" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="357" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="247" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="291" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="313" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="357" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="291" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="313" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="335" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="225" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="247" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="269" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="335" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="410" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Mar</text><text x="420" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="442" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="464" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="486" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="508" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="530" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="552" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="542" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="432" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="454" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="476" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="542" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="454" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="476" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="498" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="542" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="476" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="498" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="520" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="542" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="454" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="476" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="498" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="542" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="410" y="178" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="178" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="595" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Apr</text><text x="605" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="627" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="649" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="671" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="693" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="715" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="737" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="639" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="595" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="639" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="683" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="727" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="595" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="661" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="683" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="727" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="661" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="780" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">May</text><text x="790" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="812" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="834" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="856" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="878" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="900" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="922" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="868" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="890" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="780" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="802" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="824" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="846" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="890" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="846" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="890" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="912" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="780" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="846" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="868" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="965" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Jun</text><text x="975" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="997" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="1019" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="1041" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="1063" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="1085" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="1107" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="965" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="987" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1031" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1097" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1009" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1053" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="987" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1053" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1075" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="40" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Jul</text><text x="50" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="72" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="94" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="116" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="138" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="160" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="182" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="84" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="150" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="172" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="62" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="150" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="172" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="62" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="106" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="172" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="62" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="150" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="172" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="62" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="106" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="225" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Aug</text><text x="235" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="257" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="279" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="301" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="323" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="345" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="367" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="335" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="247" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="269" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="313" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="291" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="357" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="225" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="269" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="335" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="358" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="410" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Sep</text><text x="420" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="442" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="464" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="486" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="508" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="530" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="552" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="432" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="476" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="542" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="410" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="476" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="520" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="542" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="476" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="542" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="432" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="476" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="520" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="542" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="410" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="432" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="454" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="595" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Oct</text><text x="605" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="627" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="649" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="671" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="693" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="715" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="737" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="661" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="683" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="705" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="683" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="661" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="705" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="727" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="595" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="639" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="705" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="617" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="639" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="661" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="780" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Nov</text><text x="790" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="812" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="834" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="856" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="878" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="900" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="922" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="912" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="824" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="780" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="824" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="912" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="868" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="358" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="965" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Dec</text><text x="975" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="997" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="1019" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="1041" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="1063" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="1085" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="1107" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="987" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1009" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1031" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1009" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1031" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1053" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1009" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1075" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1075" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1097" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="965" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="987" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1031" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/></svg>
+      </div>
+      <div class="streak-gap-bottom" style="gap: 80px;">
+        <div class="streak-block">
+          <span class="number green">11</span>
+          <span class="unit">day streak</span>
+          <span class="dates">Nov 15 – Nov 25</span>
+        </div>
+        <div class="divider"></div>
+        <div class="streak-block">
+          <span class="number green">7.5</span>
+          <span class="unit">films per week</span>
+          <span class="dates">on average</span>
+        </div>
+        <div class="divider"></div>
+        <div class="gap-block">
+          <span class="number dim">8</span>
+          <span class="unit">day drought</span>
+          <span class="dates">Feb 21 – Mar 1</span>
+        </div>
+      </div>
+    </section>
+
+      <section class="theme-numbers" style="background: #000000;">
+      <div class="forecast-panel">
+        <div class="weekday-forecast">
+          
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Sun</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">51</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.43★</div>
+      </div>
+    
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Mon</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">37</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.41★</div>
+      </div>
+    
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Tue</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">46</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.35★</div>
+      </div>
+    
+      <div class="forecast-card is-focus">
+        <div class="forecast-day">Wed</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">45</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.45★</div>
+      </div>
+    
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Thu</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">41</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.37★</div>
+      </div>
+    
+      <div class="forecast-card is-dim">
+        <div class="forecast-day">Fri</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">73</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating">3.43★</div>
+      </div>
+    
+      <div class="forecast-card is-spotlight">
+        <div class="forecast-day" style="color: #fff;">Sat</div>
+        <hr class="forecast-hr" />
+        <div class="forecast-count"><span class="forecast-count-num">95</span><span class="forecast-count-label">films</span></div>
+        <div class="forecast-rating" style="color: rgba(255,59,48,0.9);">3.30★</div>
+      </div>
+    
+        </div>
+      </div>
+      <p class="annotation forecast-caption">saturday is movie day</p>
+    </section>
+
+      <section class="theme-numbers" style="background: #000000;">
+      <h2 style="margin-bottom: 0.3em; position: relative; z-index: 1; font-size: 2.5em;">When I Watch</h2>
+      <div style="position: relative; width: 800px; height: 750px; margin: 0 auto;">
+        <!-- Pie chart centered -->
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; border-radius: 50%; background: conic-gradient(
+          #4ADE80 0% 24.3%,
+          #6B9DC9 24.3% 44.2%,
+          #D4C078 44.2% 57.7%,
+          #C9A066 57.7% 69.1%,
+          #A05555 69.1% 80.2%,
+          #9B7DB8 80.2% 90.1%,
+          #7AACB8 90.1% 100%
+        );"></div>
+        <!-- Labels positioned around the pie -->
+        <div style="position: absolute; top: 50px; right: 57px; font-family: 'Anton', sans-serif; font-size: 3em; color: #4ADE80; text-align: left;">
+          <div>SAT</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 0.55em; opacity: 0.9;">24%</div>
+        </div>
+        <div style="position: absolute; top: 450px; right: 22px; font-family: 'Anton', sans-serif; font-size: 2.4em; color: #6B9DC9; text-align: left;">
+          <div>FRI</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 0.55em; opacity: 0.9;">20%</div>
+        </div>
+        <div style="position: absolute; bottom: -50px; left: calc(45% + 3px); transform: translateX(-50%); font-family: 'Anton', sans-serif; font-size: 2.2em; color: #D4C078; text-align: center;">
+          <div>SUN</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 0.55em; opacity: 0.9;">14%</div>
+        </div>
+        <div style="position: absolute; bottom: -17px; left: 73px; font-family: 'Anton', sans-serif; font-size: 2em; color: #C9A066; text-align: right;">
+          <div>THU</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 0.55em; opacity: 0.9;">11%</div>
+        </div>
+        <div style="position: absolute; top: 377px; left: 10px; font-family: 'Anton', sans-serif; font-size: 2em; color: #A05555; text-align: right;">
+          <div>WED</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 0.55em; opacity: 0.9;">11%</div>
+        </div>
+        <div style="position: absolute; top: 187px; left: 13px; font-family: 'Anton', sans-serif; font-size: 2em; color: #9B7DB8; text-align: right;">
+          <div>MON</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 0.55em; opacity: 0.9;">10%</div>
+        </div>
+        <div style="position: absolute; top: 17px; left: 153px; font-family: 'Anton', sans-serif; font-size: 2em; color: #7AACB8; text-align: right;">
+          <div>TUE</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 0.55em; opacity: 0.9;">10%</div>
+        </div>
+      </div>
+    </section>
+
+      <section class="theme-numbers" style="background: #000000;"><h2 style="margin-bottom: 0.5em; position: relative; z-index: 1;">My Movie Eras</h2>
+      <div class="decade-bar-chart">
+        <div class="decade-bar">
+          <span class="count dim">5</span>
+          <div class="bar dim" style="height: 17px;"></div>
+          <span class="decade-label">1920s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">2</span>
+          <div class="bar dim" style="height: 7px;"></div>
+          <span class="decade-label">1950s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">3</span>
+          <div class="bar dim" style="height: 10px;"></div>
+          <span class="decade-label">1960s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">7</span>
+          <div class="bar dim" style="height: 24px;"></div>
+          <span class="decade-label">1970s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">17</span>
+          <div class="bar dim" style="height: 59px;"></div>
+          <span class="decade-label">1980s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">44</span>
+          <div class="bar dim" style="height: 151px;"></div>
+          <span class="decade-label">1990s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">95</span>
+          <div class="bar dim" style="height: 327px;"></div>
+          <span class="decade-label">2000s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count dim">66</span>
+          <div class="bar dim" style="height: 227px;"></div>
+          <span class="decade-label">2010s</span>
+        </div>
+        <div class="decade-bar">
+          <span class="count highlight">122</span>
+          <div class="bar highlight" style="height: 420px;"></div>
+          <span class="decade-label">2020s</span>
+        </div>
+      </div>
+      <p class="annotation" style="color: rgba(255,255,255,0.7);">the 2020s are my era</p>
+    </section>
+
+      <section class="theme-numbers" style="background: #000000;"><h2 style="margin-bottom: 0.4em; position: relative; z-index: 1;">Films by Release Year</h2>
+      <div class="year-bar-chart">
+        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label show">1994</span></div>
+        <div class="year-bar"><span class="count">1</span><div class="bar dim" style="height: 10px;"></div><span class="year-label">1995</span></div>
+        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label">1996</span></div>
+        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label">1997</span></div>
+        <div class="year-bar"><span class="count">10</span><div class="bar dim" style="height: 95px;"></div><span class="year-label">1998</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">1999</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label show">2000</span></div>
+        <div class="year-bar"><span class="count">10</span><div class="bar dim" style="height: 95px;"></div><span class="year-label">2001</span></div>
+        <div class="year-bar"><span class="count">9</span><div class="bar dim" style="height: 86px;"></div><span class="year-label">2002</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2003</span></div>
+        <div class="year-bar"><span class="count">16</span><div class="bar dim" style="height: 152px;"></div><span class="year-label">2004</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label show">2005</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2006</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2007</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2008</span></div>
+        <div class="year-bar"><span class="count">3</span><div class="bar dim" style="height: 29px;"></div><span class="year-label">2009</span></div>
+        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label show">2010</span></div>
+        <div class="year-bar"><span class="count">6</span><div class="bar dim" style="height: 57px;"></div><span class="year-label">2011</span></div>
+        <div class="year-bar"><span class="count">8</span><div class="bar dim" style="height: 76px;"></div><span class="year-label">2012</span></div>
+        <div class="year-bar"><span class="count">5</span><div class="bar dim" style="height: 48px;"></div><span class="year-label">2013</span></div>
+        <div class="year-bar"><span class="count">1</span><div class="bar dim" style="height: 10px;"></div><span class="year-label">2014</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label show">2015</span></div>
+        <div class="year-bar"><span class="count">8</span><div class="bar dim" style="height: 76px;"></div><span class="year-label">2016</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2017</span></div>
+        <div class="year-bar"><span class="count">7</span><div class="bar dim" style="height: 67px;"></div><span class="year-label">2018</span></div>
+        <div class="year-bar"><span class="count">11</span><div class="bar dim" style="height: 105px;"></div><span class="year-label">2019</span></div>
+        <div class="year-bar"><span class="count">2</span><div class="bar dim" style="height: 19px;"></div><span class="year-label show">2020</span></div>
+        <div class="year-bar"><span class="count">12</span><div class="bar dim" style="height: 114px;"></div><span class="year-label">2021</span></div>
+        <div class="year-bar"><span class="count">13</span><div class="bar dim" style="height: 124px;"></div><span class="year-label">2022</span></div>
+        <div class="year-bar"><span class="count">17</span><div class="bar dim" style="height: 162px;"></div><span class="year-label">2023</span></div>
+        <div class="year-bar"><span class="count highlight">40</span><div class="bar highlight" style="height: 380px;"></div><span class="year-label show">2024</span></div>
+        <div class="year-bar"><span class="count">38</span><div class="bar" style="height: 361px; background: #4ADE80;"></div><span class="year-label show">2025</span></div>
+      </div>
+      <p class="annotation" style="color: rgba(255,255,255,0.7);">2024 releases were my jam</p>
+    </section>
+
+      <section class="section-title-slide theme-rate" style="background: #0F2847;">
+      <h2 class="section-title">HOW I RATE</h2>
+    </section>
+
+      <section class="theme-rate" style="background: #0F2847;">
+      <table class="rating-chart" style="transform: translateX(-300px);">
+        <tbody>
+          <tr class="rating-row">
+        <td class="stars">★☆☆☆☆</td>
+        <td class="bar-cell"><div class="bar" style="width: 25px"></div></td>
+        <td class="count">9</td>
+      </tr><tr class="rating-row">
+        <td class="stars">★★☆☆☆</td>
+        <td class="bar-cell"><div class="bar" style="width: 127px"></div></td>
+        <td class="count">46</td>
+      </tr><tr class="rating-row">
+        <td class="stars">★★★☆☆</td>
+        <td class="bar-cell"><div class="bar" style="width: 440px"></div></td>
+        <td class="count">159</td>
+      </tr><tr class="rating-row">
+        <td class="stars">★★★★☆</td>
+        <td class="bar-cell"><div class="bar" style="width: 357px"></div></td>
+        <td class="count">131</td>
+      </tr><tr class="rating-row">
+        <td class="stars">★★★★★</td>
+        <td class="bar-cell"><div class="bar" style="width: 110px"></div></td>
+        <td class="count">40</td>
+      </tr>
+        </tbody>
+      </table>
+      <div style="position: absolute; right: 300px; top: 50%; transform: translateY(-50%); text-align: center;">
+        <div style="font-family: 'Anton', sans-serif; font-size: 4.1em; color: var(--gold); line-height: 1;">3.38</div>
+        <div style="font-size: 1.35em; color: rgba(255,255,255,0.6); margin-top: 0.3em;">avg rating</div>
+      </div>
+    </section>
+
+      <section class="theme-rate" style="background: #0F2847;">
+      <h3>My 39 five-star films:</h3>
+      <ul class="film-list four-col">
+        <li>One Week <span class="year">(1920)</span></li>
+        <li>A Charlie Brown Christmas <span class="year">(1965)</span></li>
+        <li>Grease <span class="year">(1978)</span></li>
+        <li>Burden of Dreams <span class="year">(1982)</span></li>
+        <li>Ferris Bueller's Day Off <span class="year">(1986)</span></li>
+        <li>Big <span class="year">(1988)</span></li>
+        <li>Kindergarten Cop <span class="year">(1990)</span></li>
+        <li>A Few Good Men <span class="year">(1992)</span></li>
+        <li>Rushmore <span class="year">(1998)</span></li>
+        <li>Ocean's Eleven <span class="year">(2001)</span></li>
+        <li>Monsters, Inc. <span class="year">(2001)</span></li>
+        <li>The Bourne Identity <span class="year">(2002)</span></li>
+        <li>Cheaper by the Dozen <span class="year">(2003)</span></li>
+        <li>Love Actually <span class="year">(2003)</span></li>
+        <li>The Incredibles <span class="year">(2004)</span></li>
+        <li>Swing Girls <span class="year">(2004)</span></li>
+        <li>Hotel Rwanda <span class="year">(2004)</span></li>
+        <li>Little Miss Sunshine <span class="year">(2006)</span></li>
+        <li>Inside Man <span class="year">(2006)</span></li>
+        <li>Superbad <span class="year">(2007)</span></li>
+        <li>Freedom Writers <span class="year">(2007)</span></li>
+        <li>Dan in Real Life <span class="year">(2007)</span></li>
+        <li>Youth in Revolt <span class="year">(2009)</span></li>
+        <li>Scott Pilgrim vs. the World <span class="year">(2010)</span></li>
+        <li>Jack Reacher <span class="year">(2012)</span></li>
+        <li>The Double <span class="year">(2013)</span></li>
+        <li>Bridge of Spies <span class="year">(2015)</span></li>
+        <li>La La Land <span class="year">(2016)</span></li>
+        <li>Arrival <span class="year">(2016)</span></li>
+        <li>Sing Street <span class="year">(2016)</span></li>
+        <li>Game Night <span class="year">(2018)</span></li>
+        <li>Beyond the Infinite Two Minutes <span class="year">(2020)</span></li>
+        <li>tick, tick... BOOM! <span class="year">(2021)</span></li>
+        <li>Fire of Love <span class="year">(2022)</span></li>
+        <li>Soulmate <span class="year">(2023)</span></li>
+        <li>Happyend <span class="year">(2024)</span></li>
+        <li>I'm Still Here <span class="year">(2024)</span></li>
+        <li>Dune: Part Two <span class="year">(2024)</span></li>
+        <li>The Ballad of Wallis Island <span class="year">(2025)</span></li>
+      </ul>
+    </section>
+
+      <section class="theme-rate" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a2e1a 50%, #162e16 100%);">
+      <h3>2024 releases I watched</h3>
+      <p class="subtitle">40 films released in 2024</p>
+      <ul class="film-list four-col">
+        <li>Dune: Part Two <span class="stars">★★★★★</span></li>
+        <li>Happyend <span class="stars">★★★★★</span></li>
+        <li>I'm Still Here <span class="stars">★★★★★</span></li>
+        <li>A Complete Unknown <span class="stars">★★★★</span></li>
+        <li>A Real Pain <span class="stars">★★★★</span></li>
+        <li>Challengers <span class="stars">★★★★</span></li>
+        <li>Conclave <span class="stars">★★★★</span></li>
+        <li>Flow <span class="stars">★★★★</span></li>
+        <li>Jim Henson Idea Man <span class="stars">★★★★</span></li>
+        <li>Jingle Bell Run <span class="stars">★★★★</span></li>
+        <li>Nickel Boys <span class="stars">★★★★</span></li>
+        <li>Relay <span class="stars">★★★★</span></li>
+        <li>September 5 <span class="stars">★★★★</span></li>
+        <li>Snack Shack <span class="stars">★★★★</span></li>
+        <li>The Wild Robot <span class="stars">★★★★</span></li>
+        <li>Trap <span class="stars">★★★★</span></li>
+        <li>A Different Man <span class="stars">★★★</span></li>
+        <li>All We Imagine as Light <span class="stars">★★★</span></li>
+        <li>Better Man <span class="stars">★★★</span></li>
+        <li>Blitz <span class="stars">★★★</span></li>
+        <li>Carry-On <span class="stars">★★★</span></li>
+        <li>Chime <span class="stars">★★★</span></li>
+        <li>Friendship <span class="stars">★★★</span></li>
+        <li>Greedy People <span class="stars">★★★</span></li>
+        <li>Hank Green: Pissing Out Cancer <span class="stars">★★★</span></li>
+        <li>Inheritance <span class="stars">★★★</span></li>
+        <li>Joy <span class="stars">★★★</span></li>
+        <li>My Old Ass <span class="stars">★★★</span></li>
+        <li>Saturday Night <span class="stars">★★★</span></li>
+        <li>Sonic the Hedgehog 3 <span class="stars">★★★</span></li>
+        <li>The Apprentice <span class="stars">★★★</span></li>
+        <li>The Life of Chuck <span class="stars">★★★</span></li>
+        <li>The Order <span class="stars">★★★</span></li>
+        <li>The Outrun <span class="stars">★★★</span></li>
+        <li>The Six Triple Eight <span class="stars">★★★</span></li>
+        <li>Get Away <span class="stars">★★</span></li>
+        <li>Horizon: An American Saga – Chapter 1 <span class="stars">★★</span></li>
+        <li>Juror #2 <span class="stars">★★</span></li>
+        <li>Brothers <span class="stars">★</span></li>
+        <li>Here <span class="stars">★</span></li>
+      </ul>
+    </section>
+
+      <section class="theme-rate" style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('../../../dune.jpeg') center/cover no-repeat;">
+        <h2 class="impact">Denis Villeneuve</h2>
+        <p class="subtitle">2 five-star films</p>
+        <p class="annotation">my most reliable director</p>
+      </section>
+
+      <section class="theme-rate" style="background: #0F2847;">
+        <h2 class="impact">DRAMA</h2>
+        <p class="subtitle">23 of my five-stars are drama</p>
+        <p class="annotation">the genre that delivers</p>
+      </section>
+
+      <section class="theme-rate" style="background: #0F2847;">
+        <h2 class="impact">THE 2000s</h2>
+        <p class="subtitle">14 five-star films from this decade</p>
+        <p class="annotation">living in the now</p>
+      </section>
+
+      <section class="section-title-slide" style="background: #1a0a0a;">
+        <h2 class="section-title" style="color: #FF6B6B;">MY HOT TAKES</h2>
+        <p class="subtitle">where I disagreed with everyone</p>
+      </section>
+
+      <section style="background: #1a0a0a;">
+          <div class="two-column-controversy" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto; margin-top: -60px;">
+            <div class="column">
+              <h3 style="color: #FF6B6B; margin-bottom: 0.6em; font-size: 1.6em;">OVERRATED</h3>
+              <ul class="controversy-list" style="margin: 0;">
+                <li><span style="flex: 1;">Barry Lyndon</span> <span class="rating-diff" style="color: var(--gold);">LB: 4.4</span></li>
+                <li><span style="flex: 1;">Se7en</span> <span class="rating-diff" style="color: var(--gold);">LB: 4.4</span></li>
+                <li><span style="flex: 1;">The Truman Show</span> <span class="rating-diff" style="color: var(--gold);">LB: 4.2</span></li>
+                <li><span style="flex: 1;">The Royal Tenenbaums</span> <span class="rating-diff" style="color: var(--gold);">LB: 4.1</span></li>
+                <li><span style="flex: 1;">The Lighthouse</span> <span class="rating-diff" style="color: var(--gold);">LB: 4.0</span></li>
+              </ul>
+            </div>
+            <div class="column">
+              <h3 style="color: #4ADE80; margin-bottom: 0.6em; font-size: 1.6em;">UNDERRATED</h3>
+              <ul class="controversy-list" style="margin: 0;">
+                <li><span style="flex: 1;">Youth in Revolt</span> <span class="rating-diff" style="color: var(--gold);">LB: 3.1</span></li>
+                <li><span style="flex: 1;">Cheaper by the Dozen</span> <span class="rating-diff" style="color: var(--gold);">LB: 3.2</span></li>
+                <li><span style="flex: 1;">Kindergarten Cop</span> <span class="rating-diff" style="color: var(--gold);">LB: 3.2</span></li>
+                <li><span style="flex: 1;">Jack Reacher</span> <span class="rating-diff" style="color: var(--gold);">LB: 3.2</span></li>
+                <li><span style="flex: 1;">Dan in Real Life</span> <span class="rating-diff" style="color: var(--gold);">LB: 3.3</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      <section class="section-title-slide" style="background: #0a1a1a;">
+      <h2 class="section-title" style="color: #22D3D3;">WHEN I WATCH</h2>
+    </section>
+
+      <section style="background: #000; position: relative; padding: 0 !important; overflow: hidden;">
       
-    <section class="theme-opening" style="background: #000000; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h1 class="mega">MY 2025<br>IN FILM</h1>
-          <p class="subtitle">387 movies. 695 hours. One year.</p>
-        </section>
-
-    <section class="theme-opening" style="background: #000000; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="impact">I watched more movies than there are days in a year</h2>
-          <p class="annotation">yes, really</p>
-        </section>
-
-    <section class="theme-opening opening-numbers-white" style="background: #000000; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <svg class="bg-chart" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-            <polyline points="60.00,848.32 64.95,848.32 69.89,848.32 74.84,846.65 79.78,843.30 84.73,843.30 89.67,841.62 94.62,841.62 99.56,841.62 104.51,838.27 109.45,838.27 114.40,838.27 119.34,836.60 124.29,836.60 129.23,836.60 134.18,834.92 139.12,834.92 144.07,831.57 149.01,831.57 153.96,829.90 158.90,829.90 163.85,829.90 168.79,829.90 173.74,828.22 178.68,828.22 183.63,828.22 188.57,828.22 193.52,828.22 198.46,826.55 203.41,826.55 208.35,824.87 213.30,823.20 218.24,823.20 223.19,821.52 228.13,819.85 233.08,818.17 238.02,816.49 242.97,816.49 247.91,814.82 252.86,813.14 257.80,811.47 262.75,809.79 267.69,808.12 272.64,806.44 277.58,804.77 282.53,799.74 287.47,798.07 292.42,796.39 297.36,796.39 302.31,796.39 307.25,796.39 312.20,794.72 317.14,794.72 322.09,794.72 327.03,794.72 331.98,794.72 336.92,794.72 341.87,794.72 346.81,794.72 351.76,789.69 356.70,789.69 361.65,789.69 366.59,789.69 371.54,789.69 376.48,789.69 381.43,788.02 386.37,786.34 391.32,784.66 396.26,784.66 401.21,784.66 406.15,781.31 411.10,781.31 416.04,781.31 420.99,777.96 425.93,772.94 430.88,769.59 435.82,769.59 440.77,766.24 445.71,762.89 450.66,762.89 455.60,759.54 460.55,757.86 465.49,757.86 470.44,756.19 475.38,754.51 480.33,754.51 485.27,749.48 490.22,749.48 495.16,746.13 500.11,744.46 505.05,741.11 510.00,741.11 514.95,739.43 519.89,739.43 524.84,737.76 529.78,736.08 534.73,734.41 539.67,732.73 544.62,731.06 549.56,729.38 554.51,727.71 559.45,726.03 564.40,724.36 569.34,724.36 574.29,724.36 579.23,722.68 584.18,719.33 589.12,717.65 594.07,717.65 599.01,715.98 603.96,715.98 608.90,715.98 613.85,715.98 618.79,712.63 623.74,712.63 628.68,712.63 633.63,705.93 638.57,705.93 643.52,702.58 648.46,702.58 653.41,702.58 658.35,700.90 663.30,700.90 668.24,700.90 673.19,700.90 678.13,700.90 683.08,699.23 688.02,699.23 692.97,697.55 697.91,690.85 702.86,687.50 707.80,685.82 712.75,685.82 717.69,684.15 722.64,684.15 727.58,684.15 732.53,684.15 737.47,682.47 742.42,680.80 747.36,680.80 752.31,680.80 757.25,679.12 762.20,677.45 767.14,675.77 772.09,674.10 777.03,670.75 781.98,669.07 786.92,667.40 791.87,665.72 796.81,662.37 801.76,660.70 806.70,660.70 811.65,653.99 816.59,653.99 821.54,648.97 826.48,648.97 831.43,648.97 836.37,643.94 841.32,640.59 846.26,640.59 851.21,637.24 856.15,637.24 861.10,637.24 866.04,633.89 870.99,628.87 875.93,628.87 880.88,625.52 885.82,623.84 890.77,623.84 895.71,618.81 900.66,617.14 905.60,615.46 910.55,610.44 915.49,608.76 920.44,605.41 925.38,603.74 930.33,603.74 935.27,602.06 940.22,600.39 945.16,597.04 950.11,595.36 955.05,595.36 960.00,593.69 964.95,592.01 969.89,590.34 974.84,585.31 979.78,581.96 984.73,580.28 989.67,580.28 994.62,578.61 999.56,576.93 1004.51,576.93 1009.45,573.58 1014.40,570.23 1019.34,566.88 1024.29,565.21 1029.23,563.53 1034.18,563.53 1039.12,561.86 1044.07,560.18 1049.01,560.18 1053.96,558.51 1058.90,558.51 1063.85,558.51 1068.79,556.83 1073.74,556.83 1078.68,553.48 1083.63,550.13 1088.57,548.45 1093.52,545.10 1098.46,545.10 1103.41,545.10 1108.35,543.43 1113.30,541.75 1118.24,541.75 1123.19,541.75 1128.13,541.75 1133.08,540.08 1138.02,536.73 1142.97,531.70 1147.91,525.00 1152.86,521.65 1157.80,519.97 1162.75,518.30 1167.69,518.30 1172.64,516.62 1177.58,516.62 1182.53,516.62 1187.47,513.27 1192.42,513.27 1197.36,513.27 1202.31,513.27 1207.25,511.60 1212.20,509.92 1217.14,508.25 1222.09,504.90 1227.03,503.22 1231.98,503.22 1236.92,503.22 1241.87,503.22 1246.81,501.55 1251.76,498.20 1256.70,498.20 1261.65,489.82 1266.59,489.82 1271.54,489.82 1276.48,489.82 1281.43,489.82 1286.37,489.82 1291.32,488.14 1296.26,484.79 1301.21,481.44 1306.15,481.44 1311.10,479.77 1316.04,479.77 1320.99,476.42 1325.93,471.39 1330.88,469.72 1335.82,468.04 1340.77,468.04 1345.71,468.04 1350.66,466.37 1355.60,463.02 1360.55,463.02 1365.49,459.66 1370.44,457.99 1375.38,457.99 1380.33,454.64 1385.27,452.96 1390.22,452.96 1395.16,452.96 1400.11,452.96 1405.05,452.96 1410.00,449.61 1414.95,449.61 1419.89,449.61 1424.84,449.61 1429.78,442.91 1434.73,442.91 1439.67,439.56 1444.62,437.89 1449.56,434.54 1454.51,434.54 1459.45,434.54 1464.40,427.84 1469.34,427.84 1474.29,427.84 1479.23,427.84 1484.18,427.84 1489.12,424.48 1494.07,422.81 1499.01,421.13 1503.96,416.11 1508.90,414.43 1513.85,414.43 1518.79,414.43 1523.74,414.43 1528.68,414.43 1533.63,414.43 1538.57,409.41 1543.52,409.41 1548.46,409.41 1553.41,406.06 1558.35,404.38 1563.30,402.71 1568.24,387.63 1573.19,387.63 1578.13,385.95 1583.08,382.60 1588.02,380.93 1592.97,379.25 1597.91,379.25 1602.86,374.23 1607.80,374.23 1612.75,370.88 1617.69,367.53 1622.64,365.85 1627.58,365.85 1632.53,359.15 1637.47,352.45 1642.42,347.42 1647.36,345.75 1652.31,339.05 1657.25,334.02 1662.20,332.35 1667.14,323.97 1672.09,317.27 1677.03,313.92 1681.98,308.89 1686.92,308.89 1691.87,302.19 1696.81,300.52 1701.76,295.49 1706.70,293.81 1711.65,293.81 1716.59,293.81 1721.54,290.46 1726.48,290.46 1731.43,288.79 1736.37,283.76 1741.32,272.04 1746.26,272.04 1751.21,272.04 1756.15,272.04 1761.10,272.04 1766.04,270.36 1770.99,265.34 1775.93,255.28 1780.88,255.28 1785.82,250.26 1790.77,246.91 1795.71,245.23 1800.66,241.88 1805.60,240.21 1810.55,228.48 1815.49,226.80 1820.44,225.13 1825.38,213.40 1830.33,205.03 1835.27,205.03 1840.22,205.03 1845.16,205.03 1850.11,203.35 1855.05,203.35 1860.00,200.00" fill="none" stroke="rgba(48, 209, 88, 0.22)" stroke-width="4"/>
-            <polygon points="60,850 60.00,848.32 64.95,848.32 69.89,848.32 74.84,846.65 79.78,843.30 84.73,843.30 89.67,841.62 94.62,841.62 99.56,841.62 104.51,838.27 109.45,838.27 114.40,838.27 119.34,836.60 124.29,836.60 129.23,836.60 134.18,834.92 139.12,834.92 144.07,831.57 149.01,831.57 153.96,829.90 158.90,829.90 163.85,829.90 168.79,829.90 173.74,828.22 178.68,828.22 183.63,828.22 188.57,828.22 193.52,828.22 198.46,826.55 203.41,826.55 208.35,824.87 213.30,823.20 218.24,823.20 223.19,821.52 228.13,819.85 233.08,818.17 238.02,816.49 242.97,816.49 247.91,814.82 252.86,813.14 257.80,811.47 262.75,809.79 267.69,808.12 272.64,806.44 277.58,804.77 282.53,799.74 287.47,798.07 292.42,796.39 297.36,796.39 302.31,796.39 307.25,796.39 312.20,794.72 317.14,794.72 322.09,794.72 327.03,794.72 331.98,794.72 336.92,794.72 341.87,794.72 346.81,794.72 351.76,789.69 356.70,789.69 361.65,789.69 366.59,789.69 371.54,789.69 376.48,789.69 381.43,788.02 386.37,786.34 391.32,784.66 396.26,784.66 401.21,784.66 406.15,781.31 411.10,781.31 416.04,781.31 420.99,777.96 425.93,772.94 430.88,769.59 435.82,769.59 440.77,766.24 445.71,762.89 450.66,762.89 455.60,759.54 460.55,757.86 465.49,757.86 470.44,756.19 475.38,754.51 480.33,754.51 485.27,749.48 490.22,749.48 495.16,746.13 500.11,744.46 505.05,741.11 510.00,741.11 514.95,739.43 519.89,739.43 524.84,737.76 529.78,736.08 534.73,734.41 539.67,732.73 544.62,731.06 549.56,729.38 554.51,727.71 559.45,726.03 564.40,724.36 569.34,724.36 574.29,724.36 579.23,722.68 584.18,719.33 589.12,717.65 594.07,717.65 599.01,715.98 603.96,715.98 608.90,715.98 613.85,715.98 618.79,712.63 623.74,712.63 628.68,712.63 633.63,705.93 638.57,705.93 643.52,702.58 648.46,702.58 653.41,702.58 658.35,700.90 663.30,700.90 668.24,700.90 673.19,700.90 678.13,700.90 683.08,699.23 688.02,699.23 692.97,697.55 697.91,690.85 702.86,687.50 707.80,685.82 712.75,685.82 717.69,684.15 722.64,684.15 727.58,684.15 732.53,684.15 737.47,682.47 742.42,680.80 747.36,680.80 752.31,680.80 757.25,679.12 762.20,677.45 767.14,675.77 772.09,674.10 777.03,670.75 781.98,669.07 786.92,667.40 791.87,665.72 796.81,662.37 801.76,660.70 806.70,660.70 811.65,653.99 816.59,653.99 821.54,648.97 826.48,648.97 831.43,648.97 836.37,643.94 841.32,640.59 846.26,640.59 851.21,637.24 856.15,637.24 861.10,637.24 866.04,633.89 870.99,628.87 875.93,628.87 880.88,625.52 885.82,623.84 890.77,623.84 895.71,618.81 900.66,617.14 905.60,615.46 910.55,610.44 915.49,608.76 920.44,605.41 925.38,603.74 930.33,603.74 935.27,602.06 940.22,600.39 945.16,597.04 950.11,595.36 955.05,595.36 960.00,593.69 964.95,592.01 969.89,590.34 974.84,585.31 979.78,581.96 984.73,580.28 989.67,580.28 994.62,578.61 999.56,576.93 1004.51,576.93 1009.45,573.58 1014.40,570.23 1019.34,566.88 1024.29,565.21 1029.23,563.53 1034.18,563.53 1039.12,561.86 1044.07,560.18 1049.01,560.18 1053.96,558.51 1058.90,558.51 1063.85,558.51 1068.79,556.83 1073.74,556.83 1078.68,553.48 1083.63,550.13 1088.57,548.45 1093.52,545.10 1098.46,545.10 1103.41,545.10 1108.35,543.43 1113.30,541.75 1118.24,541.75 1123.19,541.75 1128.13,541.75 1133.08,540.08 1138.02,536.73 1142.97,531.70 1147.91,525.00 1152.86,521.65 1157.80,519.97 1162.75,518.30 1167.69,518.30 1172.64,516.62 1177.58,516.62 1182.53,516.62 1187.47,513.27 1192.42,513.27 1197.36,513.27 1202.31,513.27 1207.25,511.60 1212.20,509.92 1217.14,508.25 1222.09,504.90 1227.03,503.22 1231.98,503.22 1236.92,503.22 1241.87,503.22 1246.81,501.55 1251.76,498.20 1256.70,498.20 1261.65,489.82 1266.59,489.82 1271.54,489.82 1276.48,489.82 1281.43,489.82 1286.37,489.82 1291.32,488.14 1296.26,484.79 1301.21,481.44 1306.15,481.44 1311.10,479.77 1316.04,479.77 1320.99,476.42 1325.93,471.39 1330.88,469.72 1335.82,468.04 1340.77,468.04 1345.71,468.04 1350.66,466.37 1355.60,463.02 1360.55,463.02 1365.49,459.66 1370.44,457.99 1375.38,457.99 1380.33,454.64 1385.27,452.96 1390.22,452.96 1395.16,452.96 1400.11,452.96 1405.05,452.96 1410.00,449.61 1414.95,449.61 1419.89,449.61 1424.84,449.61 1429.78,442.91 1434.73,442.91 1439.67,439.56 1444.62,437.89 1449.56,434.54 1454.51,434.54 1459.45,434.54 1464.40,427.84 1469.34,427.84 1474.29,427.84 1479.23,427.84 1484.18,427.84 1489.12,424.48 1494.07,422.81 1499.01,421.13 1503.96,416.11 1508.90,414.43 1513.85,414.43 1518.79,414.43 1523.74,414.43 1528.68,414.43 1533.63,414.43 1538.57,409.41 1543.52,409.41 1548.46,409.41 1553.41,406.06 1558.35,404.38 1563.30,402.71 1568.24,387.63 1573.19,387.63 1578.13,385.95 1583.08,382.60 1588.02,380.93 1592.97,379.25 1597.91,379.25 1602.86,374.23 1607.80,374.23 1612.75,370.88 1617.69,367.53 1622.64,365.85 1627.58,365.85 1632.53,359.15 1637.47,352.45 1642.42,347.42 1647.36,345.75 1652.31,339.05 1657.25,334.02 1662.20,332.35 1667.14,323.97 1672.09,317.27 1677.03,313.92 1681.98,308.89 1686.92,308.89 1691.87,302.19 1696.81,300.52 1701.76,295.49 1706.70,293.81 1711.65,293.81 1716.59,293.81 1721.54,290.46 1726.48,290.46 1731.43,288.79 1736.37,283.76 1741.32,272.04 1746.26,272.04 1751.21,272.04 1756.15,272.04 1761.10,272.04 1766.04,270.36 1770.99,265.34 1775.93,255.28 1780.88,255.28 1785.82,250.26 1790.77,246.91 1795.71,245.23 1800.66,241.88 1805.60,240.21 1810.55,228.48 1815.49,226.80 1820.44,225.13 1825.38,213.40 1830.33,205.03 1835.27,205.03 1840.22,205.03 1845.16,205.03 1850.11,203.35 1855.05,203.35 1860.00,200.00 1860,850" fill="rgba(48, 209, 88, 0.10)"/>
-            <text x="134.18" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Jan</text><text x="282.53" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Feb</text><text x="425.93" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Mar</text><text x="579.23" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Apr</text><text x="727.58" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">May</text><text x="880.88" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Jun</text><text x="1029.23" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Jul</text><text x="1182.53" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Aug</text><text x="1335.82" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Sep</text><text x="1484.18" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Oct</text><text x="1637.47" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Nov</text><text x="1785.82" y="920" fill="rgba(255,255,255,0.4)" font-size="24" text-anchor="middle" font-family="Inter, sans-serif">Dec</text>
-          </svg>
-          <div class="contrast-stats">
-            <div class="stat-block">
-              <span class="number">387</span>
-              <span class="label">unique films watched</span>
-            </div>
-          </div>
-        </section>
-
-    <section class="theme-opening opening-numbers-white" style="background: #000000; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <div class="stat-pair">
-            <div class="stat">
-              <span class="number">695</span>
-              <span class="unit">hours</span>
-            </div>
-            <div class="equals">or</div>
-            <div class="stat">
-              <span class="number">29</span>
-              <span class="unit">days</span>
-            </div>
-          </div>
-          <p class="annotation">that's the same as flying to tokyo and back 23 times</p>
-        </section>
-
-    <section class="theme-numbers" style="background: #000000; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;"><h2 style="margin-bottom: 0.5em; position: relative; z-index: 1;">Films by Month</h2>
-          <div class="monthly-bar-chart">
-            <div class="month-bar">
-              <span class="count dim">15</span>
-              <div class="bar dim" style="height: 102px;"></div>
-              <span class="month-label">Jan</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">18</span>
-              <div class="bar dim" style="height: 123px;"></div>
-              <span class="month-label">Feb</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">30</span>
-              <div class="bar dim" style="height: 205px;"></div>
-              <span class="month-label">Mar</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">25</span>
-              <div class="bar dim" style="height: 170px;"></div>
-              <span class="month-label">Apr</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">25</span>
-              <div class="bar dim" style="height: 170px;"></div>
-              <span class="month-label">May</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">39</span>
-              <div class="bar dim" style="height: 266px;"></div>
-              <span class="month-label">Jun</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">30</span>
-              <div class="bar dim" style="height: 205px;"></div>
-              <span class="month-label">Jul</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">28</span>
-              <div class="bar dim" style="height: 191px;"></div>
-              <span class="month-label">Aug</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">27</span>
-              <div class="bar dim" style="height: 184px;"></div>
-              <span class="month-label">Sep</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">29</span>
-              <div class="bar dim" style="height: 198px;"></div>
-              <span class="month-label">Oct</span>
-            </div>
-            <div class="month-bar">
-              <span class="count highlight">66</span>
-              <div class="bar highlight" style="height: 450px;"></div>
-              <span class="month-label">Nov</span>
-            </div>
-            <div class="month-bar">
-              <span class="count dim">56</span>
-              <div class="bar dim" style="height: 382px;"></div>
-              <span class="month-label">Dec</span>
-            </div>
-          </div>
-        </section>
-
-    <section class="theme-numbers" style="background: #000000; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <div class="calendar-top">
-            <svg viewBox="0 0 1150 400" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: auto;"><text x="40" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Jan</text><text x="50" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="72" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="94" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="116" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="138" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="160" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="182" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="106" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="172" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="62" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="84" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="106" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="172" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="40" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="62" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="150" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="172" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="62" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="172" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="40" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="62" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="84" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="225" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Feb</text><text x="235" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="257" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="279" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="301" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="323" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="345" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="367" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="357" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="247" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="291" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="313" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="357" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="291" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="313" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="335" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="225" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="247" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="269" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="335" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="410" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Mar</text><text x="420" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="442" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="464" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="486" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="508" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="530" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="552" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="542" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="432" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="454" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="476" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="542" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="454" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="476" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="498" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="542" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="476" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="498" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="520" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="542" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="454" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="476" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="498" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="542" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="410" y="178" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="178" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="595" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Apr</text><text x="605" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="627" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="649" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="671" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="693" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="715" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="737" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="639" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="595" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="639" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="683" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="727" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="595" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="661" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="683" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="727" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="661" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="156" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="780" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">May</text><text x="790" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="812" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="834" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="856" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="878" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="900" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="922" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="868" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="890" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="780" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="802" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="824" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="846" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="890" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="846" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="890" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="912" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="780" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="846" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="868" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="965" y="40" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Jun</text><text x="975" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="997" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="1019" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="1041" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="1063" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="1085" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="1107" y="60" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="965" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="987" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1031" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="68" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1097" y="68" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1009" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1053" y="90" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="90" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="987" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="112" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1053" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1075" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="112" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="134" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="134" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="156" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="40" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Jul</text><text x="50" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="72" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="94" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="116" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="138" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="160" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="182" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="84" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="150" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="172" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="62" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="150" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="172" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="62" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="106" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="128" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="150" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="172" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="62" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="106" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="150" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="172" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="40" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="62" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="84" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="106" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="128" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="225" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Aug</text><text x="235" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="257" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="279" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="301" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="323" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="345" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="367" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="335" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="247" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="269" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="313" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="291" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="357" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="225" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="269" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="335" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="247" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="269" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="291" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="313" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="335" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="357" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="225" y="358" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="410" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Sep</text><text x="420" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="442" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="464" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="486" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="508" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="530" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="552" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="432" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="476" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="542" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="410" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="476" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="520" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="542" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="432" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="476" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="520" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="542" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="410" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="432" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="454" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="476" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="498" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="520" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="542" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="410" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="432" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="454" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><text x="595" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Oct</text><text x="605" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="627" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="649" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="671" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="693" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="715" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="737" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="661" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="683" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="705" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="683" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="639" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="661" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="705" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="727" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="595" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="617" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="639" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="661" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="705" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="727" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="595" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="617" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="639" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="661" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="683" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="705" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="780" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Nov</text><text x="790" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="812" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="834" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="856" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="878" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="900" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="922" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="912" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="824" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="780" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="824" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="912" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="868" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="802" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="824" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="846" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="868" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="890" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="912" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="780" y="358" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><text x="965" y="220" fill="rgba(255,255,255,0.5)" font-size="14" font-family="Inter, sans-serif" font-weight="600">Dec</text><text x="975" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><text x="997" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">M</text><text x="1019" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="1041" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">W</text><text x="1063" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">T</text><text x="1085" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">F</text><text x="1107" y="240" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter, sans-serif" text-anchor="middle">S</text><rect x="987" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1009" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1031" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="248" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="248" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1009" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1031" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1053" y="270" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1075" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="270" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="292" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1009" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1075" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1097" y="292" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="965" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="987" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1031" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1053" y="314" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1075" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1097" y="314" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="965" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="987" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/><rect x="1009" y="336" width="20" height="20" rx="2" fill="rgba(255,255,255,0.08)"/><rect x="1031" y="336" width="20" height="20" rx="2" fill="rgba(74,222,128,0.7)"/></svg>
-          </div>
-          <div class="streak-gap-bottom" style="gap: 80px;">
-            <div class="streak-block">
-              <span class="number green">11</span>
-              <span class="unit">day streak</span>
-              <span class="dates">Nov 15 – Nov 25</span>
-            </div>
-            <div class="divider"></div>
-            <div class="streak-block">
-              <span class="number green">7.5</span>
-              <span class="unit">films per week</span>
-              <span class="dates">on average</span>
-            </div>
-            <div class="divider"></div>
-            <div class="gap-block">
-              <span class="number dim">8</span>
-              <span class="unit">day drought</span>
-              <span class="dates">Feb 21 – Mar 1</span>
-            </div>
-          </div>
-        </section>
-
-    <section class="theme-numbers" style="background: #000000; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <div class="forecast-panel">
-            <div class="weekday-forecast">
-              
-          <div class="forecast-card is-dim">
-            <div class="forecast-day">Sun</div>
-            <hr class="forecast-hr" />
-            <div class="forecast-count"><span class="forecast-count-num">51</span><span class="forecast-count-label">films</span></div>
-            <div class="forecast-rating">3.43★</div>
-          </div>
+      <!-- 2x2 Full-bleed Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: 100%; height: 100%;">
         
-          <div class="forecast-card is-dim">
-            <div class="forecast-day">Mon</div>
-            <hr class="forecast-hr" />
-            <div class="forecast-count"><span class="forecast-count-num">37</span><span class="forecast-count-label">films</span></div>
-            <div class="forecast-rating">3.41★</div>
-          </div>
+        <!-- Quadrant 1: First Film - Green (from slide 8 SAT) + Nosferatu poster -->
+        <div style="background: linear-gradient(135deg, rgba(26,58,42,0.88) 0%, rgba(31,64,48,0.88) 100%), url('../../../nosferatu.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 3px solid rgba(255,255,255,0.1); border-bottom: 3px solid rgba(255,255,255,0.1);">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #4ADE80; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">First Film</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 4.5em; color: #fff; line-height: 0.95; text-transform: uppercase;">Nosferatu</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">JAN 1 →</div>
+          <div style="position: absolute; bottom: 20px; right: 30px; font-family: 'Anton', sans-serif; font-size: 8em; color: rgba(74,222,128,0.15); line-height: 1;">01</div>
+        </div>
         
-          <div class="forecast-card is-dim">
-            <div class="forecast-day">Tue</div>
-            <hr class="forecast-hr" />
-            <div class="forecast-count"><span class="forecast-count-num">46</span><span class="forecast-count-label">films</span></div>
-            <div class="forecast-rating">3.35★</div>
-          </div>
+        <!-- Quadrant 2: Last Film - Blue (from slide 8 FRI) + Last Holiday poster -->
+        <div style="background: linear-gradient(135deg, rgba(26,42,58,0.88) 0%, rgba(32,53,69,0.88) 100%), url('../../../lastholiday.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-bottom: 3px solid rgba(255,255,255,0.1);">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #6B9DC9; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">Last Film</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 4em; color: #fff; line-height: 0.95; text-transform: uppercase;">Last Holiday</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">← DEC 31</div>
+          <div style="position: absolute; bottom: 20px; right: 30px; font-family: 'Anton', sans-serif; font-size: 8em; color: rgba(107,157,201,0.15); line-height: 1;">365</div>
+        </div>
         
-          <div class="forecast-card is-focus">
-            <div class="forecast-day">Wed</div>
-            <hr class="forecast-hr" />
-            <div class="forecast-count"><span class="forecast-count-num">45</span><span class="forecast-count-label">films</span></div>
-            <div class="forecast-rating">3.45★</div>
-          </div>
+        <!-- Quadrant 3: Oldest - Gold (from slide 8 SUN) + One Week poster -->
+        <div style="background: linear-gradient(135deg, rgba(58,48,32,0.88) 0%, rgba(69,56,40,0.88) 100%), url('https://a.ltrbxd.com/resized/sm/upload/fv/a5/cl/eu/oneweek-1200-1200-675-675-crop-000000.jpg?v=ce21fca8ec') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 3px solid rgba(255,255,255,0.1);">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #D4C078; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">Oldest Film</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 4.5em; color: #fff; line-height: 0.95; text-transform: uppercase;">One Week</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">1920 · 105 YEARS OLD</div>
+          <div style="position: absolute; bottom: 20px; right: 30px; font-family: 'Anton', sans-serif; font-size: 6em; color: rgba(212,192,120,0.15); line-height: 1;">1920</div>
+        </div>
         
-          <div class="forecast-card is-dim">
-            <div class="forecast-day">Thu</div>
-            <hr class="forecast-hr" />
-            <div class="forecast-count"><span class="forecast-count-num">41</span><span class="forecast-count-label">films</span></div>
-            <div class="forecast-rating">3.37★</div>
-          </div>
+        <!-- Quadrant 4: Longest - Purple (from slide 8 MON) + Avatar poster -->
+        <div style="background: linear-gradient(135deg, rgba(42,26,58,0.88) 0%, rgba(53,32,64,0.88) 100%), url('../../../avatar.jpeg') center/cover no-repeat; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #9B7DB8; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">Longest Sit</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 3em; color: #fff; line-height: 0.95; text-transform: uppercase;">Avatar:<br>Fire and Ash</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">3H 18M</div>
+          <div style="position: absolute; bottom: 20px; right: 30px; font-family: 'Anton', sans-serif; font-size: 6em; color: rgba(155,125,184,0.15); line-height: 1;">198</div>
+        </div>
         
-          <div class="forecast-card is-dim">
-            <div class="forecast-day">Fri</div>
-            <hr class="forecast-hr" />
-            <div class="forecast-count"><span class="forecast-count-num">73</span><span class="forecast-count-label">films</span></div>
-            <div class="forecast-rating">3.43★</div>
-          </div>
-        
-          <div class="forecast-card is-spotlight">
-            <div class="forecast-day" style="color: #fff;">Sat</div>
-            <hr class="forecast-hr" />
-            <div class="forecast-count"><span class="forecast-count-num">95</span><span class="forecast-count-label">films</span></div>
-            <div class="forecast-rating" style="color: rgba(255,59,48,0.9);">3.30★</div>
-          </div>
-        
-            </div>
-          </div>
-          <p class="annotation forecast-caption">saturday is movie day</p>
-        </section>
+      </div>
+      
+      <!-- Center crosshair accent -->
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+        <div style="width: 12px; height: 12px; background: #fff; border-radius: 50%;"></div>
+      </div>
+      
+    </section>
 
-    <section class="theme-numbers" style="background: #000000; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <div class="big-number">38%</div>
-          <p class="label">of films watched on weekends</p>
-          <p class="annotation">weekday watcher</p>
-        </section>
+      <section style="background: #0a0a0a;">
+      <h2 class="section-title">YOU SHOULD WATCH</h2>
+    </section>
 
-    <section class="section-title-slide theme-rate" style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="section-title">HOW I RATE</h2>
-        </section>
-
-    <section class="theme-rate" style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <table class="rating-chart" style="transform: translateX(-300px);">
-            <tbody>
-              <tr class="rating-row">
-            <td class="stars">★☆☆☆☆</td>
-            <td class="bar-cell"><div class="bar" style="width: 25px"></div></td>
-            <td class="count">9</td>
-          </tr><tr class="rating-row">
-            <td class="stars">★★☆☆☆</td>
-            <td class="bar-cell"><div class="bar" style="width: 127px"></div></td>
-            <td class="count">46</td>
-          </tr><tr class="rating-row">
-            <td class="stars">★★★☆☆</td>
-            <td class="bar-cell"><div class="bar" style="width: 440px"></div></td>
-            <td class="count">159</td>
-          </tr><tr class="rating-row">
-            <td class="stars">★★★★☆</td>
-            <td class="bar-cell"><div class="bar" style="width: 357px"></div></td>
-            <td class="count">131</td>
-          </tr><tr class="rating-row">
-            <td class="stars">★★★★★</td>
-            <td class="bar-cell"><div class="bar" style="width: 110px"></div></td>
-            <td class="count">40</td>
-          </tr>
-            </tbody>
-          </table>
-          <div style="position: absolute; right: 300px; top: 50%; transform: translateY(-50%); text-align: center;">
-            <div style="font-family: 'Anton', sans-serif; font-size: 4.1em; color: var(--gold); line-height: 1;">3.38</div>
-            <div style="font-size: 1.35em; color: rgba(255,255,255,0.6); margin-top: 0.3em;">avg rating</div>
-          </div>
-        </section>
-
-    <section class="section-title-slide" style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="section-title" style="color: #fff;">WHAT MAKES<br>A PERFECT MOVIE</h2>
-        </section>
-
-    <section class="theme-rate" style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h3>My 39 five-star films:</h3>
-          <ul class="film-list four-col">
-            <li>One Week <span class="year">(1920)</span></li>
-            <li>A Charlie Brown Christmas <span class="year">(1965)</span></li>
-            <li>Grease <span class="year">(1978)</span></li>
-            <li>Burden of Dreams <span class="year">(1982)</span></li>
-            <li>Ferris Bueller's Day Off <span class="year">(1986)</span></li>
-            <li>Big <span class="year">(1988)</span></li>
-            <li>Kindergarten Cop <span class="year">(1990)</span></li>
-            <li>A Few Good Men <span class="year">(1992)</span></li>
-            <li>Rushmore <span class="year">(1998)</span></li>
-            <li>Ocean's Eleven <span class="year">(2001)</span></li>
-            <li>Monsters, Inc. <span class="year">(2001)</span></li>
-            <li>The Bourne Identity <span class="year">(2002)</span></li>
-            <li>Cheaper by the Dozen <span class="year">(2003)</span></li>
-            <li>Love Actually <span class="year">(2003)</span></li>
-            <li>The Incredibles <span class="year">(2004)</span></li>
-            <li>Swing Girls <span class="year">(2004)</span></li>
-            <li>Hotel Rwanda <span class="year">(2004)</span></li>
-            <li>Little Miss Sunshine <span class="year">(2006)</span></li>
-            <li>Inside Man <span class="year">(2006)</span></li>
-            <li>Superbad <span class="year">(2007)</span></li>
-            <li>Freedom Writers <span class="year">(2007)</span></li>
-            <li>Dan in Real Life <span class="year">(2007)</span></li>
-            <li>Youth in Revolt <span class="year">(2009)</span></li>
-            <li>Scott Pilgrim vs. the World <span class="year">(2010)</span></li>
-            <li>Jack Reacher <span class="year">(2012)</span></li>
-            <li>The Double <span class="year">(2013)</span></li>
-            <li>Bridge of Spies <span class="year">(2015)</span></li>
-            <li>La La Land <span class="year">(2016)</span></li>
-            <li>Arrival <span class="year">(2016)</span></li>
-            <li>Sing Street <span class="year">(2016)</span></li>
-            <li>Game Night <span class="year">(2018)</span></li>
-            <li>Beyond the Infinite Two Minutes <span class="year">(2020)</span></li>
-            <li>tick, tick... BOOM! <span class="year">(2021)</span></li>
-            <li>Fire of Love <span class="year">(2022)</span></li>
-            <li>Soulmate <span class="year">(2023)</span></li>
-            <li>Happyend <span class="year">(2024)</span></li>
-            <li>I'm Still Here <span class="year">(2024)</span></li>
-            <li>Dune: Part Two <span class="year">(2024)</span></li>
-            <li>The Ballad of Wallis Island <span class="year">(2025)</span></li>
+      <section style="background: linear-gradient(rgba(10, 26, 26, 0.85), rgba(10, 26, 26, 0.85)), url('https://a.ltrbxd.com/resized/sm/upload/s2/9d/ka/r6/fire-1200-1200-675-675-crop-000000.jpg?v=4ee0e00199') calc(50%) center/cover no-repeat; justify-content: flex-end !important; align-items: flex-start !important;">
+        <div style="margin-bottom: 80px; margin-left: 40px; text-align: left;">
+          <h3>Most rewatched:</h3>
+          <ul class="film-list">
+            <li>Fire of Love <span class="count">(2x)</span></li>
           </ul>
-        </section>
+          <p class="annotation">comfort food cinema</p>
+        </div>
+      </section>
 
-    <section class="theme-rate" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%); --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h3>2025 releases I watched</h3>
-          <p class="subtitle">41 films released this year</p>
-          <ul class="film-list four-col">
-            <li>The Ballad of Wallis Island <span class="stars">★★★★★</span></li>
-            <li>Companion <span class="stars">★★★★</span></li>
-            <li>Den of Thieves 2: Pantera <span class="stars">★★★★</span></li>
-            <li>Warfare <span class="stars">★★★★</span></li>
-            <li>The Phoenician Scheme <span class="stars">★★★★</span></li>
-            <li>Weapons <span class="stars">★★★★</span></li>
-            <li>Deep Cover <span class="stars">★★★★</span></li>
-            <li>The Thursday Murder Club <span class="stars">★★★★</span></li>
-            <li>A House of Dynamite <span class="stars">★★★★</span></li>
-            <li>Neighborhood Watch <span class="stars">★★★★</span></li>
-            <li>The Baltimorons <span class="stars">★★★★</span></li>
-            <li>Wake Up Dead Man <span class="stars">★★★★</span></li>
-            <li>Avatar: Fire and Ash <span class="stars">★★★★</span></li>
-            <li>Twinless <span class="stars">★★★★</span></li>
-            <li>Black Bag <span class="stars">★★★</span></li>
-            <li>Mickey 17 <span class="stars">★★★</span></li>
-            <li>Mission: Impossible – The Final Reckoning <span class="stars">★★★</span></li>
-            <li>The Amateur <span class="stars">★★★</span></li>
-            <li>Sinners <span class="stars">★★★</span></li>
-            <li>Flight Risk <span class="stars">★★★</span></li>
-            <li>Superman <span class="stars">★★★</span></li>
-            <li>The Fantastic 4: First Steps <span class="stars">★★★</span></li>
-            <li>Materialists <span class="stars">★★★</span></li>
-            <li>KPop Demon Hunters <span class="stars">★★★</span></li>
-            <li>Code 3 <span class="stars">★★★</span></li>
-            <li>Steve <span class="stars">★★★</span></li>
-            <li>The Long Walk <span class="stars">★★★</span></li>
-            <li>Roofman <span class="stars">★★★</span></li>
-            <li>Oh, Hi! <span class="stars">★★★</span></li>
-            <li>Oy to the World <span class="stars">★★★</span></li>
-            <li>The Housemaid <span class="stars">★★★</span></li>
-            <li>The Gorge <span class="stars">★★</span></li>
-            <li>The Accountant² <span class="stars">★★</span></li>
-            <li>Mountainhead <span class="stars">★★</span></li>
-            <li>Prisoner of War <span class="stars">★★</span></li>
-            <li>Highest 2 Lowest <span class="stars">★★</span></li>
-            <li>The Woman in Cabin 10 <span class="stars">★★</span></li>
-            <li>A Suite Holiday Romance <span class="stars">★★</span></li>
-            <li>Christmas Above the Clouds <span class="stars">★★</span></li>
-            <li>TRON: Ares <span class="stars">★★</span></li>
-            <li>Ballerina <span class="stars" style="opacity: 0.4;">—</span></li>
-          </ul>
-        </section>
+      <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/fv/a5/cl/eu/oneweek-1200-1200-675-675-crop-000000.jpg?v=ce21fca8ec') center/cover no-repeat;">
+      <p class="category">Origins of Cinema</p>
+      <h1 class="film-title">One Week</h1>
+      <p class="year">1920</p>
+    </section>
 
-    <section class="theme-rate" style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-            <h2 class="impact">Denis Villeneuve</h2>
-            <p class="subtitle">2 five-star films</p>
-            <p class="annotation">my most reliable director</p>
-          </section>
+      <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/i2/1n/s8/1i/game-night-1200-1200-675-675-crop-000000.jpg?v=81838ee29f') center/cover no-repeat;">
+      <p class="category">Funny</p>
+      <h1 class="film-title">Game Night</h1>
+      <p class="year">2018</p>
+    </section>
 
-    <section class="theme-rate" style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-            <h2 class="impact">DRAMA</h2>
-            <p class="subtitle">23 of my five-stars are drama</p>
-            <p class="annotation">the genre that delivers</p>
-          </section>
+      <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/0d/4e/zr/an/zmrVrjB2widEujVHkGhmzPtgw7G-1200-1200-675-675-crop-000000.jpg?v=2afbf68239') center/cover no-repeat;">
+      <p class="category">International</p>
+      <h1 class="film-title">Happyend</h1>
+      <p class="year">2024</p>
+    </section>
 
-    <section class="theme-rate" style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-            <h2 class="impact">THE 2000s</h2>
-            <p class="subtitle">14 five-star films from this decade</p>
-            <p class="annotation">living in the now</p>
-          </section>
+      <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/alternative-backdrop/1/0/1/1/3/1/3/tmdb/hbwqS382gTbM5kFy4Q0wg9bTD2m-1200-1200-675-675-crop-000000.jpg?v=ff0046c500') center/cover no-repeat;">
+      <p class="category">Best Musical</p>
+      <h1 class="film-title">The Ballad of Wallis Island</h1>
+      <p class="year">2025</p>
+    </section>
 
-    <section class="theme-rate" style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h3>A perfect movie for me is:</h3>
-          <ul class="pattern-list">
-            <li>Directed by <strong>Denis Villeneuve</strong></li>
-            <li>A <strong>Drama</strong></li>
-            <li>From the <strong>2000s</strong></li>
-            <li>About <strong>105</strong> minutes long</li>
-          </ul>
-        </section>
+      <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/oi/7t/zx/jy/oceans-eleven-1200-1200-675-675-crop-000000.jpg?v=42780e9996') center/cover no-repeat;">
+      <p class="category">Crime Movie</p>
+      <h1 class="film-title">Ocean's Eleven</h1>
+      <p class="year">2001</p>
+    </section>
 
-    <section class="section-title-slide" style="background: #1a0a0a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-            <h2 class="section-title" style="color: #FF6B6B;">MY HOT TAKES</h2>
-            <p class="subtitle">where I disagreed with everyone</p>
-          </section>
+      <section style="background: #0F2847;">
+      <h2 class="impact">QUESTIONS?</h2>
+    </section>
 
-    <section style="background: #1a0a0a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-              <h3>OVERRATED</h3>
-              <p class="subtitle">they loved it, I didn't</p>
-              <ul class="controversy-list">
-                <li><span style="flex: 1;">Barry Lyndon</span> <span class="rating-diff">LB: 4.4</span> <span class="rating">★★</span></li>
-                <li><span style="flex: 1;">Se7en</span> <span class="rating-diff">LB: 4.4</span> <span class="rating">★★</span></li>
-                <li><span style="flex: 1;">The Truman Show</span> <span class="rating-diff">LB: 4.2</span> <span class="rating">★★</span></li>
-                <li><span style="flex: 1;">The Royal Tenenbaums</span> <span class="rating-diff">LB: 4.1</span> <span class="rating">★★</span></li>
-                <li><span style="flex: 1;">The Lighthouse</span> <span class="rating-diff">LB: 4.0</span> <span class="rating">★★</span></li>
-              </ul>
-            </section>
+      <section style="background: #000000;"></section>
 
-    <section style="background: #1a0a0a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-              <h3>UNDERRATED</h3>
-              <p class="subtitle">I loved it, they didn't</p>
-              <ul class="controversy-list">
-                <li><span style="flex: 1;">Youth in Revolt</span> <span class="rating-diff">LB: 3.1</span> <span class="rating">★★★★★</span></li>
-                <li><span style="flex: 1;">Cheaper by the Dozen</span> <span class="rating-diff">LB: 3.2</span> <span class="rating">★★★★★</span></li>
-                <li><span style="flex: 1;">Kindergarten Cop</span> <span class="rating-diff">LB: 3.2</span> <span class="rating">★★★★★</span></li>
-                <li><span style="flex: 1;">Jack Reacher</span> <span class="rating-diff">LB: 3.2</span> <span class="rating">★★★★★</span></li>
-                <li><span style="flex: 1;">Dan in Real Life</span> <span class="rating-diff">LB: 3.3</span> <span class="rating">★★★★★</span></li>
-              </ul>
-            </section>
+      <section class="theme-numbers" style="background: #000000;">
+      <h2 style="margin-bottom: 0.4em;">How I Rate Each Era</h2>
+      <div class="decade-ratings-grid">
+        <div class="decade-rating-item top">
+          <span class="decade-name">1920s</span>
+          <span class="rating-value">3.60★</span>
+          <span class="film-count">5 films</span>
+        </div>
+        <div class="decade-rating-item">
+          <span class="decade-name">2010s</span>
+          <span class="rating-value">3.54★</span>
+          <span class="film-count">65 films</span>
+        </div>
+        <div class="decade-rating-item">
+          <span class="decade-name">1980s</span>
+          <span class="rating-value">3.53★</span>
+          <span class="film-count">17 films</span>
+        </div>
+        <div class="decade-rating-item">
+          <span class="decade-name">1950s</span>
+          <span class="rating-value">3.50★</span>
+          <span class="film-count">2 films</span>
+        </div>
+        <div class="decade-rating-item">
+          <span class="decade-name">2000s</span>
+          <span class="rating-value">3.46★</span>
+          <span class="film-count">95 films</span>
+        </div>
+        <div class="decade-rating-item">
+          <span class="decade-name">1990s</span>
+          <span class="rating-value">3.36★</span>
+          <span class="film-count">44 films</span>
+        </div>
+        <div class="decade-rating-item">
+          <span class="decade-name">1960s</span>
+          <span class="rating-value">3.33★</span>
+          <span class="film-count">3 films</span>
+        </div>
+        <div class="decade-rating-item">
+          <span class="decade-name">1970s</span>
+          <span class="rating-value">3.29★</span>
+          <span class="film-count">7 films</span>
+        </div>
+        <div class="decade-rating-item">
+          <span class="decade-name">2020s</span>
+          <span class="rating-value">3.26★</span>
+          <span class="film-count">121 films</span>
+        </div>
+      </div>
+      <p class="annotation" style="color: rgba(255,255,255,0.7);">silent films hit different</p>
+    </section>
 
-    <section class="section-title-slide" style="background: #1a0a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="section-title" style="color: #E879F9;">MY TASTE DNA</h2>
-        </section>
+      <section class="section-title-slide" style="background: #1a0a1a;">
+      <h2 class="section-title" style="color: #E879F9;">MY TASTE DNA</h2>
+    </section>
 
-    <section style="background: #1a0a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h3>TOP GENRES</h3>
-          <ul class="ranked-list">
-            <li><span class="rank">#1</span> Comedy <span class="count">(191)</span></li><li><span class="rank">#2</span> Drama <span class="count">(187)</span></li><li><span class="rank">#3</span> Romance <span class="count">(99)</span></li><li><span class="rank">#4</span> Thriller <span class="count">(79)</span></li><li><span class="rank">#5</span> Action <span class="count">(59)</span></li>
-          </ul>
-        </section>
+      <section style="background: #1a0a1a;">
+      <h3>TOP GENRES</h3>
+      <ul class="ranked-list">
+        <li><span class="rank">#1</span> Comedy <span class="count">(191)</span></li><li><span class="rank">#2</span> Drama <span class="count">(187)</span></li><li><span class="rank">#3</span> Romance <span class="count">(99)</span></li><li><span class="rank">#4</span> Thriller <span class="count">(79)</span></li><li><span class="rank">#5</span> Action <span class="count">(59)</span></li>
+      </ul>
+    </section>
 
-    <section style="background: #1a0a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="impact">COMEDY</h2>
-          <div class="big-number">191</div>
-          <p class="annotation">most-watched genre</p>
-        </section>
+      <section style="background: #1a0a1a;">
+      <h2 class="impact">COMEDY</h2>
+      <div class="big-number">191</div>
+      <p class="annotation">most-watched genre</p>
+    </section>
 
-    <section style="background: #1a0a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="impact">Wes Anderson</h2>
-          <div class="big-number">7</div>
-          <p class="annotation">films from my top director</p>
-        </section>
+      <section style="background: #1a0a1a;">
+      <h2 class="impact">Wes Anderson</h2>
+      <div class="big-number">7</div>
+      <p class="annotation">films from my top director</p>
+    </section>
 
-    <section style="background: #1a0a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-            <h3>Wes Anderson's films I watched:</h3>
-            <ul class="film-list">
-              <li>Rushmore <span class="rating">★★★★★</span></li><li>The Royal Tenenbaums <span class="rating">★★</span></li><li>Poison <span class="rating">★★★★</span></li><li>The French Dispatch of the Liberty, Kansas Evening Sun <span class="rating">★★★</span></li><li>The Swan <span class="rating">★★★★</span></li><li>The Rat Catcher <span class="rating">★★★</span></li><li>The Phoenician Scheme <span class="rating">★★★★</span></li>
-            </ul>
-          </section>
+      <section style="background: #1a0a1a;">
+        <h3>Wes Anderson's films I watched:</h3>
+        <ul class="film-list">
+          <li>Rushmore <span class="rating">★★★★★</span></li><li>The Royal Tenenbaums <span class="rating">★★</span></li><li>Poison <span class="rating">★★★★</span></li><li>The French Dispatch of the Liberty, Kansas Evening Sun <span class="rating">★★★</span></li><li>The Swan <span class="rating">★★★★</span></li><li>The Rat Catcher <span class="rating">★★★</span></li><li>The Phoenician Scheme <span class="rating">★★★★</span></li>
+        </ul>
+      </section>
 
-    <section style="background: #1a0a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="impact">THE 2020s</h2>
-          <div class="big-number">128</div>
-          <p class="annotation">my dominant decade</p>
-        </section>
-
-    <section class="section-title-slide" style="background: #0a1a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="section-title" style="color: #22D3D3;">WHEN I WATCH</h2>
-        </section>
-
-    <section style="background: #0a1a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h3>First film of 2025:</h3>
-          <h2 class="film-title">Nosferatu</h2>
-          <p class="date">2025-01-01</p>
-          <p class="rating">★★</p>
-        </section>
-
-    <section style="background: #0a1a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h3>Most recent:</h3>
-          <h2 class="film-title">Last Holiday</h2>
-          <p class="date">2025-12-31</p>
-          <p class="rating">★★★</p>
-        </section>
-
-    <section style="background: #0a1a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-            <h3>Oldest film I watched:</h3>
-            <h2 class="film-title">One Week</h2>
-            <div class="big-number">1920</div>
-            <p class="annotation">105 years old</p>
-          </section>
-
-    <section style="background: #0a1a1a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-            <h3>Longest sit:</h3>
-            <h2 class="film-title">Avatar: Fire and Ash</h2>
-            <div class="big-number">198</div>
-            <p class="label">minutes</p>
-          </section>
-
-    <section style="background: linear-gradient(rgba(10, 26, 26, 0.85), rgba(10, 26, 26, 0.85)), url('https://a.ltrbxd.com/resized/sm/upload/s2/9d/ka/r6/fire-1200-1200-675-675-crop-000000.jpg?v=4ee0e00199') calc(50%) center/cover no-repeat; justify-content: flex-end !important; align-items: flex-start !important; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-            <div style="margin-bottom: 80px; margin-left: 40px; text-align: left;">
-              <h3>Most rewatched:</h3>
-              <ul class="film-list">
-                <li>Fire of Love <span class="count">(2x)</span></li>
-              </ul>
-              <p class="annotation">comfort food cinema</p>
-            </div>
-          </section>
-
-    <section class="light-slide" style="background: #FFFFFF; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="section-title">TL;DR</h2>
-          <ul class="summary-list">
-            <li><strong>387</strong> films in one year</li>
-            <li><strong>29</strong> days of my life</li>
-            <li><strong>3.38</strong> average rating</li>
-            <li><strong>Comedy</strong> is my genre</li>
-            <li><strong>Wes Anderson</strong> is my director</li>
-          </ul>
-        </section>
-
-    <section style="background: #0A84FF; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h1 class="mega">THAT'S<br>A WRAP</h1>
-          <p class="subtitle">2025</p>
-        </section>
-
-    <section style="background: #0a0a0a; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --gold: #FFD60A; --green: #30D158;">
-          <h2 class="section-title">YOU SHOULD WATCH</h2>
-        </section>
-
-    <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/fv/a5/cl/eu/oneweek-1200-1200-675-675-crop-000000.jpg?v=ce21fca8ec') center/cover no-repeat; --bg-dark: #0a0a0a; --accent: #B91C1C; --gold: #FFD60A;">
-          <p class="category">Origins of Cinema</p>
-          <h1 class="film-title">One Week</h1>
-          <p class="year">1920</p>
-        </section>
-
-    <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/i2/1n/s8/1i/game-night-1200-1200-675-675-crop-000000.jpg?v=81838ee29f') center/cover no-repeat; --bg-dark: #0a0a0a; --accent: #B91C1C; --gold: #FFD60A;">
-          <p class="category">Funny</p>
-          <h1 class="film-title">Game Night</h1>
-          <p class="year">2018</p>
-        </section>
-
-    <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/0d/4e/zr/an/zmrVrjB2widEujVHkGhmzPtgw7G-1200-1200-675-675-crop-000000.jpg?v=2afbf68239') center/cover no-repeat; --bg-dark: #0a0a0a; --accent: #B91C1C; --gold: #FFD60A;">
-          <p class="category">International</p>
-          <h1 class="film-title">Happyend</h1>
-          <p class="year">2024</p>
-        </section>
-
-    <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/alternative-backdrop/1/0/1/1/3/1/3/tmdb/hbwqS382gTbM5kFy4Q0wg9bTD2m-1200-1200-675-675-crop-000000.jpg?v=ff0046c500') center/cover no-repeat; --bg-dark: #0a0a0a; --accent: #B91C1C; --gold: #FFD60A;">
-          <p class="category">Best Musical</p>
-          <h1 class="film-title">The Ballad of Wallis Island</h1>
-          <p class="year">2025</p>
-        </section>
-
-    <section style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%), url('https://a.ltrbxd.com/resized/sm/upload/oi/7t/zx/jy/oceans-eleven-1200-1200-675-675-crop-000000.jpg?v=42780e9996') center/cover no-repeat; --bg-dark: #0a0a0a; --accent: #B91C1C; --gold: #FFD60A;">
-          <p class="category">Crime Movie</p>
-          <h1 class="film-title">Ocean's Eleven</h1>
-          <p class="year">2001</p>
-        </section>
-
-    <section style="background: #0F2847; --bg-dark: #0a0a0a; --ocean-navy: #0F2847; --accent: #B91C1C; --accent-dark: #991B1B; --gold: #FFD60A; --red: #B91C1C; --blue: #0A84FF; --green: #30D158; --orange: #FF9500;">
-          <h2 class="impact">QUESTIONS?</h2>
-        </section>
-
+      <section style="background: #1a0a1a;">
+      <h2 class="impact">THE 2020s</h2>
+      <div class="big-number">128</div>
+      <p class="annotation">my dominant decade</p>
+    </section>
     </div>
   </div>
   <div id="section-indicator"></div>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slide 21 — Option C: Bold Grid</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&display=swap');
+    
+    html, body { margin: 0; padding: 0; overflow: hidden; width: 100%; height: 100vh; }
+    .reveal, .reveal .slides, .reveal .slides section { 
+      width: 100% !important; height: 100vh !important; margin: 0; padding: 0; 
+    }
+    
+    .reveal .slides section {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+    <!-- OPTION C: Bold Editorial Grid with Color Blocks -->
+    <section style="background: #000; position: relative; padding: 0 !important; overflow: hidden;">
+      
+      <!-- 2x2 Full-bleed Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: 100%; height: 100%;">
+        
+        <!-- Quadrant 1: First Film - Deep Purple -->
+        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 3px solid rgba(255,255,255,0.1); border-bottom: 3px solid rgba(255,255,255,0.1);">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #A855F7; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">First Film</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 4.5em; color: #fff; line-height: 0.95; text-transform: uppercase;">Nosferatu</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">JAN 1 →</div>
+          <!-- Decorative number -->
+          <div style="position: absolute; bottom: 20px; right: 30px; font-family: 'Anton', sans-serif; font-size: 8em; color: rgba(168,85,247,0.1); line-height: 1;">01</div>
+        </div>
+        
+        <!-- Quadrant 2: Last Film - Warm Coral -->
+        <div style="background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%); padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-bottom: 3px solid rgba(255,255,255,0.1);">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #FCA5A5; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">Last Film</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 4em; color: #fff; line-height: 0.95; text-transform: uppercase;">Last Holiday</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">← DEC 31</div>
+          <div style="position: absolute; bottom: 20px; right: 30px; font-family: 'Anton', sans-serif; font-size: 8em; color: rgba(252,165,165,0.1); line-height: 1;">365</div>
+        </div>
+        
+        <!-- Quadrant 3: Oldest - Gold/Sepia -->
+        <div style="background: linear-gradient(135deg, #78350f 0%, #92400e 100%); padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border-right: 3px solid rgba(255,255,255,0.1);">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #FDE68A; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">Oldest Film</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 4.5em; color: #fff; line-height: 0.95; text-transform: uppercase;">One Week</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">1920 · 105 YEARS OLD</div>
+          <div style="position: absolute; bottom: 20px; right: 30px; font-family: 'Anton', sans-serif; font-size: 6em; color: rgba(253,230,138,0.1); line-height: 1;">1920</div>
+        </div>
+        
+        <!-- Quadrant 4: Longest - Ocean Blue -->
+        <div style="background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%); padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #7DD3FC; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;">Longest Sit</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 3em; color: #fff; line-height: 0.95; text-transform: uppercase;">Avatar:<br>Fire and Ash</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.1em; color: rgba(255,255,255,0.5); margin-top: 16px;">3H 18M</div>
+          <div style="position: absolute; bottom: 20px; right: 30px; font-family: 'Anton', sans-serif; font-size: 6em; color: rgba(125,211,252,0.1); line-height: 1;">198</div>
+        </div>
+        
+      </div>
+      
+      <!-- Center crosshair accent -->
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+        <div style="width: 12px; height: 12px; background: #fff; border-radius: 50%;"></div>
+      </div>
+      
+    </section>
+  
+    </div>
+  </div>
+<script>var bg = document.querySelector("section").style.background; document.body.style.background = bg; document.querySelector(".reveal").style.background = bg;</script>
+</body>
+</html>
+
